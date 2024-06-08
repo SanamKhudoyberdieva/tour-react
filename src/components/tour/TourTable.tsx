@@ -25,7 +25,7 @@ const TourTable = () => {
           <tr>
             <td>1</td>
             <td>
-              <Link to={'/'}>Tur nomi</Link>
+              <Link to={`/tour/order/${2}`}>Tur nomi</Link>
             </td>
             <td>
                 6.06.2024, 09:10 - 20.06.2024, 09:10
@@ -53,7 +53,7 @@ const TourTable = () => {
           <tr className="table-warning">
             <td>1</td>
             <td>
-              <Link to={'/'}>Tur nomi</Link>
+              <Link to={`/tour/order/${2}`}>Tur nomi</Link>
             </td>
             <td>
                 6.06.2024, 09:10 - 20.06.2024, 09:10
@@ -81,7 +81,7 @@ const TourTable = () => {
           <tr className="table-danger">
             <td>1</td>
             <td>
-              <Link to={'/'}>Tur nomi</Link>
+              <Link to={`/tour/order/${2}`}>Tur nomi</Link>
             </td>
             <td>
                 6.06.2024, 09:10 - 20.06.2024, 09:10

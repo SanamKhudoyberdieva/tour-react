@@ -2,7 +2,8 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import MainLayout from "./layout";
 import Dashboard from "./pages/dashboard";
 import Tour from "./pages/tour";
-import TourCreate from "./pages/tour/create"
+import TourCreate from "./pages/tour/create";
+import TourOrderCreate from "./pages/tour/order/index";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
 
           <Route path="/tour" element={<Tour />} />
           <Route path="/tour/create" element={<TourCreate />} />
+          <Route path="/tour/order/:id" element={<TourOrderCreate />} />
 
         </Route>
       </Routes>
