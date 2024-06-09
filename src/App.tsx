@@ -5,6 +5,7 @@ import Tour from "./pages/tour";
 import TourCreate from "./pages/tour/create";
 import TourOrderCreate from "./pages/tour/order/index";
 import Airplane from "./pages/airplane";
+import Hostel from "./pages/hostel";
 
 function App() {
 
@@ -21,6 +22,8 @@ function App() {
           <Route path="/tour/order/:id" element={<TourOrderCreate />} />
 
           <Route path="/airplane" element={<Airplane />} />
+
+          <Route path="/hostel" element={<Hostel />} />
 
         </Route>
       </Routes>
