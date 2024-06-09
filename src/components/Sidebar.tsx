@@ -54,11 +54,15 @@ const Sidebar = () => {
             <div>Buyurtmalar</div>
           </a>
         </li>
-        <li className="menu-item">
-          <a href="./airplane.html" className="menu-link">
+        <li
+          className={`menu-item ${
+            location.pathname.includes("airplane") && "active"
+          }`} 
+          >
+          <Link to={'/airplane'} className="menu-link">
             <FontAwesomeIcon className="menu-icon tf-icons" icon={faPlane} />
             <div>Havo yo'llari</div>
-          </a>
+          </Link>
         </li>
         <li className="menu-item">
           <a href="./hostel.html" className="menu-link">

@@ -4,6 +4,7 @@ import Dashboard from "./pages/dashboard";
 import Tour from "./pages/tour";
 import TourCreate from "./pages/tour/create";
 import TourOrderCreate from "./pages/tour/order/index";
+import Airplane from "./pages/airplane";
 
 function App() {
 
@@ -19,10 +20,12 @@ function App() {
           <Route path="/tour/create" element={<TourCreate />} />
           <Route path="/tour/order/:id" element={<TourOrderCreate />} />
 
+          <Route path="/airplane" element={<Airplane />} />
+
         </Route>
       </Routes>
     </BrowserRouter>
   )
 }
 
-export default App
+export default App;
