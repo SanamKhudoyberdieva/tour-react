@@ -13,6 +13,9 @@ import Branch from "./pages/branch/index";
 import BranchCreate from "./pages/branch/create";
 import BranchView from './pages/branch/view/index';
 import BranchEdit from "./pages/branch/edit/index";
+import Role from "./pages/role/index";
+import RoleCreate from "./pages/role/create";
+import RoleView from './pages/role/view/index';
 
 function App() {
 
@@ -40,6 +43,10 @@ function App() {
           <Route path="/branch/create" element={<BranchCreate />} />
           <Route path="/branch/view/:id" element={<BranchView />} />
           <Route path="/branch/edit/:id" element={<BranchEdit />} />
+
+          <Route path="/role" element={<Role />} />
+          <Route path="/role/create" element={<RoleCreate />} />
+          <Route path="/role/view/:id" element={<RoleView />} />
 
         </Route>
       </Routes>
