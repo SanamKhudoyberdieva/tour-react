@@ -9,6 +9,10 @@ import Hostel from "./pages/hostel";
 import Admin from "./pages/admin/index";
 import AdminCreate from "./pages/admin/create";
 import AdminView from './pages/admin/view/index';
+import Branch from "./pages/branch/index";
+import BranchCreate from "./pages/branch/create";
+import BranchView from './pages/branch/view/index';
+import BranchEdit from "./pages/branch/edit/index";
 
 function App() {
 
@@ -31,6 +35,11 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/create" element={<AdminCreate />} />
           <Route path="/admin/view/:id" element={<AdminView />} />
+
+          <Route path="/branch" element={<Branch />} />
+          <Route path="/branch/create" element={<BranchCreate />} />
+          <Route path="/branch/view/:id" element={<BranchView />} />
+          <Route path="/branch/edit/:id" element={<BranchEdit />} />
 
         </Route>
       </Routes>
