@@ -48,11 +48,14 @@ const Sidebar = () => {
             <div>Tur paket</div>
           </Link>
         </li>
-        <li className="menu-item">
-          <a href="./orders.html" className="menu-link">
+        <li className={`menu-item ${
+          location.pathname.includes("order") && "active"
+        }`}
+        >
+          <Link to={'/order'} className="menu-link">
             <FontAwesomeIcon className="menu-icon tf-icons" icon={faRectangleList} />
             <div>Buyurtmalar</div>
-          </a>
+          </Link>
         </li>
         <li
           className={`menu-item ${
@@ -73,11 +76,14 @@ const Sidebar = () => {
             <div>Mehmonxonalar</div>
           </Link>
         </li>
-        <li className="menu-item">
-          <a href="./room.html" className="menu-link">
+        <li className={`menu-item ${
+            location.pathname.includes("room") && "active"
+          }`}
+        >
+          <Link to={'/room'} className="menu-link">
             <FontAwesomeIcon className="menu-icon tf-icons" icon={faBed} />
             <div>Xonalar</div>
-          </a>
+          </Link>
         </li>
         <li className={`menu-item ${
             location.pathname.includes("admin") && "active"

@@ -31,7 +31,7 @@ const Index = () => {
               <tbody>
                 <tr>
                   <td>1</td>
-                  <td><Link to={'/'}>Asosiy meneger</Link></td>
+                  <td><Link to={'/role/view/2'}>Asosiy meneger</Link></td>
                   <td>asosiy-meneger</td>
                   <td>
                     <button className="btn btn-icon">

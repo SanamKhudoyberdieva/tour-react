@@ -6,6 +6,7 @@ import TourCreate from "./pages/tour/create";
 import TourOrderCreate from "./pages/tour/order/index";
 import Airplane from "./pages/airplane";
 import Hostel from "./pages/hostel";
+import Room from "./pages/room";
 import Admin from "./pages/admin/index";
 import AdminCreate from "./pages/admin/create";
 import AdminView from './pages/admin/view/index';
@@ -16,6 +17,7 @@ import BranchEdit from "./pages/branch/edit/index";
 import Role from "./pages/role/index";
 import RoleCreate from "./pages/role/create";
 import RoleView from './pages/role/view/index';
+import Order from "./pages/order/index";
 
 function App() {
 
@@ -34,6 +36,10 @@ function App() {
           <Route path="/airplane" element={<Airplane />} />
 
           <Route path="/hostel" element={<Hostel />} />
+
+          <Route path="/room" element={<Room />} />
+
+          <Route path="/order" element={<Order />} />
 
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/create" element={<AdminCreate />} />
