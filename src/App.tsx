@@ -9,15 +9,15 @@ import Hostel from "./pages/hostel";
 import Room from "./pages/room";
 import Admin from "./pages/admin/index";
 import AdminCreate from "./pages/admin/create";
-import AdminView from './pages/admin/view/index';
+import AdminView from "./pages/admin/view/index";
 import AdminEdit from "./pages/admin/edit/index";
 import Branch from "./pages/branch/index";
 import BranchCreate from "./pages/branch/create";
-import BranchView from './pages/branch/view/index';
+import BranchView from "./pages/branch/view/index";
 import BranchEdit from "./pages/branch/edit/index";
 import Role from "./pages/role/index";
 import RoleCreate from "./pages/role/create";
-import RoleView from './pages/role/view/index';
+import RoleView from "./pages/role/view/index";
 import Order from "./pages/order/index";
 import OrderView from "./pages/order/view/index";
 
