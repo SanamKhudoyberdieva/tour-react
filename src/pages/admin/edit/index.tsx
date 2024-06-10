@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
-const Create = () => {
+const Index = () => {
   return (
     <>
       <div
@@ -12,7 +12,7 @@ const Create = () => {
           <span className="text-muted fw-light"
             ><Link to={'/admin'}>Adminstratorlar</Link>
             / </span>
-          Yaratish
+          O'zgartirish
         </h4>
         <Link className="btn btn-info" to={'/admin'}
           >Orqaga</Link>
@@ -92,4 +92,4 @@ const Create = () => {
   )
 }
 
-export default Create;
+export default Index;

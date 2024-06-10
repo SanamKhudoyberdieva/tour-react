@@ -11,7 +11,7 @@ const Index = () => {
       >
         <h4 className="py-3 mb-0">
         <span className="text-muted fw-light">
-          <Link to={'/'}>Asosiy</Link> /
+          <Link to={'/'}>Asosiy</Link> / {' '}
         </span>
         Buyurtmalar
       </h4>
@@ -37,10 +37,10 @@ const Index = () => {
               <thead>
                 <tr>
                 <th>#</th>
-                <th>Soni</th>
+                <th>Tur nomi</th>
                 <th>Asosiy Buyurtmachi</th>
                 <th>Telefon Raqam</th>
-                <th>Jinsi</th>
+                <th>Yaratuvchi</th>
                 <th>To'lov holati</th>
                 <th>TO'lovgacha muddat</th>
                 <th>&nbsp;</th>
@@ -55,17 +55,29 @@ const Index = () => {
                     value=""
                     />
                 </td>
+                <td></td>
+                <td></td>
+                <td>
+                  <select 
+                    className="form-select"
+                  >
+                    <option value="0"></option>
+                    <option value="1">To'langan</option>
+                    <option value="2">Kutilmoqda</option>
+                    <option value="2">Yopilgan</option>
+                  </select>
+                </td>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                 <td>1</td>
-                <td>3 kishi</td>
+                <td><Link to={'/order/view/2'}>Umra ziyorati 2024</Link></td>
                 <td>
-                  <Link to={'/'}>Esonov Omon</Link>
+                  Esonov Omon
                 </td>
                 <td>+998 99 613 22 33</td>
-                <td>Erkak</td>
+                <td>Markaziy filyal</td>
                 <td>Kutilmoqda</td>
                 <td>23 soat</td>
                 <td>

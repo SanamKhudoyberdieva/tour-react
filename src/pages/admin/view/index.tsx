@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Index = () => {
   return (
-    <div>
+    <>
       <div
         className="d-flex mb-4 align-items-center justify-content-between"
       >
@@ -73,7 +73,7 @@ const Index = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

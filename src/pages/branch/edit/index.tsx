@@ -2,14 +2,14 @@ import { Link } from "react-router-dom";
 
 const Edit = () => {
   return (
-    <div>
+    <>
       <div
         className="d-flex mb-4 align-items-center justify-content-between">
         <h4 className="py-3 mb-0">
           <span className="text-muted fw-light"
-            ><Link to={'/'}>Asosiy</Link> /</span>
+            ><Link to={'/'}>Asosiy</Link> / </span>
           <span className="text-muted fw-light"
-            ><Link to={'/branch'}>Filyallar</Link> /</span>
+            ><Link to={'/branch'}>Filyallar</Link> / </span>
           O'zgartirish
         </h4>
         <Link className="btn btn-info" to={'/branch'}>Orqaga</Link>
@@ -75,7 +75,7 @@ const Edit = () => {
           </div>
         </form>
       </div>
-    </div>
+    </>
   )
 }
 

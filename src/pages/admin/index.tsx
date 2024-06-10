@@ -1,11 +1,11 @@
-import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import Pagination from "../../components/Pagination";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Index = () => {
   return (
-    <div>
+    <>
       <div
         className="d-flex mb-4 align-items-center justify-content-between"
       >
@@ -30,6 +30,7 @@ const Index = () => {
                   <th>#</th>
                   <th>FISH</th>
                   <th>Telefon raqam</th>
+                  <th>Filyal</th>
                   <th>Email</th>
                   <th>Buyurtmalar soni</th>
                   <th>Holat</th>
@@ -44,6 +45,7 @@ const Index = () => {
                       >Toxirjonova Dildora Sardorovna</Link>
                   </td>
                   <td>+998 99 617 45 65</td>
+                  <td>Markaziy filyal</td>
                   <td>toxirjonova45@gmail.com</td>
                   <td>67</td>
                   <td>
@@ -55,7 +57,7 @@ const Index = () => {
                   <td>
                     <Link
                       className="btn p-1"
-                      to={'/admin/update/2'}
+                      to={'/admin/edit/2'}
                     >
                       <FontAwesomeIcon icon={faPen}/>
                     </Link>
@@ -70,7 +72,7 @@ const Index = () => {
           <Pagination/>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Pagination from "../components/Pagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 
@@ -16,19 +15,6 @@ const Airplane = () => {
       </div>
       <div className="card">
         <div className="card-body">
-          <div
-            className="d-flex flex-column-reverse flex-md-row align-items-center justify-content-between mb-3">
-            <div className="d-flex align-items-center">
-              <label
-                className="form-label text-nowrap mb-0 me-2"
-                >Размер стр:</label>
-              <select className="form-select">
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-              </select>
-            </div>
-          </div>
           <div className="table-responsive mb-4">
             <table className="table table-striped table-hover">
               <thead>
@@ -41,18 +27,6 @@ const Airplane = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td></td>
-                  <td>
-                    <input
-                      type="text"
-                      className="form-control"
-                    />
-                  </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
                 <tr>
                   <td>1</td>
                   <td>Boeing 737</td>
@@ -98,7 +72,6 @@ const Airplane = () => {
               </tbody>
             </table>
           </div>
-          <Pagination />
         </div>
       </div>
     </div>

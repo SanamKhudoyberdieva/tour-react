@@ -10,6 +10,7 @@ import Room from "./pages/room";
 import Admin from "./pages/admin/index";
 import AdminCreate from "./pages/admin/create";
 import AdminView from './pages/admin/view/index';
+import AdminEdit from "./pages/admin/edit/index";
 import Branch from "./pages/branch/index";
 import BranchCreate from "./pages/branch/create";
 import BranchView from './pages/branch/view/index';
@@ -18,6 +19,7 @@ import Role from "./pages/role/index";
 import RoleCreate from "./pages/role/create";
 import RoleView from './pages/role/view/index';
 import Order from "./pages/order/index";
+import OrderView from "./pages/order/view/index";
 
 function App() {
 
@@ -40,10 +42,12 @@ function App() {
           <Route path="/room" element={<Room />} />
 
           <Route path="/order" element={<Order />} />
+          <Route path="/order/view/:id" element={<OrderView />} />
 
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/create" element={<AdminCreate />} />
           <Route path="/admin/view/:id" element={<AdminView />} />
+          <Route path="/admin/edit/:id" element={<AdminEdit />} />
 
           <Route path="/branch" element={<Branch />} />
           <Route path="/branch/create" element={<BranchCreate />} />

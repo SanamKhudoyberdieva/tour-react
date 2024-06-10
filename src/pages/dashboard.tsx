@@ -2,7 +2,6 @@ import { Carousel } from "react-bootstrap";
 import Banner from "../../public/img/monte.png";
 import Banner2 from "../../public/img/monte.png";
 
-
 const Dashboard = () => {
   return (
     <div>
