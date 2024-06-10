@@ -7,9 +7,9 @@ const Index = () => {
         className="d-flex mb-4 align-items-center justify-content-between">
         <h4 className="py-3 mb-0">
           <span className="text-muted fw-light"
-            ><Link to={'/'}>Asosiy</Link> /</span>
+            ><Link to={'/'}>Asosiy</Link> / </span>
           <span className="text-muted fw-light"
-            ><Link to={'/role'}>Rollar</Link> /</span>
+            ><Link to={'/role'}>Rollar</Link> / </span>
           Asosiy meneger
         </h4>
         <Link className="btn btn-info" to={'/role'}>Orqaga</Link>
@@ -21,7 +21,7 @@ const Index = () => {
               className="table table-striped table-hover report-table">
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th style={{ width: "30px" }}>#</th>
                   <th>Tur paket</th>
                   <th>
                     <div className="d-flex justify-content-end">
@@ -94,7 +94,7 @@ const Index = () => {
               className="table table-striped table-hover report-table">
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th style={{ width: "30px" }}>#</th>
                   <th>Buyurtmalar</th>
                   <th>
                     <div className="d-flex justify-content-end">
@@ -167,7 +167,7 @@ const Index = () => {
               className="table table-striped table-hover report-table">
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th style={{ width: "30px" }}>#</th>
                   <th>Havo yo'llari</th>
                   <th>
                     <div className="d-flex justify-content-end">
@@ -240,7 +240,7 @@ const Index = () => {
               className="table table-striped table-hover report-table">
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th style={{ width: "30px" }}>#</th>
                   <th>Mexmonxonalar</th>
                   <th>
                     <div className="d-flex justify-content-end">
@@ -313,7 +313,7 @@ const Index = () => {
               className="table table-striped table-hover report-table">
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th style={{ width: "30px" }}>#</th>
                   <th>Xonalar</th>
                   <th>
                     <div className="d-flex justify-content-end">
@@ -386,7 +386,7 @@ const Index = () => {
               className="table table-striped table-hover report-table">
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th style={{ width: "30px" }}>#</th>
                   <th>Adminstrator</th>
                   <th>
                     <div className="d-flex justify-content-end">
