@@ -79,11 +79,14 @@ const Sidebar = () => {
             <div>Xonalar</div>
           </a>
         </li>
-        <li className="menu-item">
-          <a href="./adminstrator.html" className="menu-link">
+        <li className={`menu-item ${
+            location.pathname.includes("admin") && "active"
+          }`}
+        >
+          <Link to={'/admin'} className="menu-link">
             <FontAwesomeIcon className="menu-icon tf-icons" icon={faUserTie} />
             <div>Adminstrator</div>
-          </a>
+          </Link>
         </li>
         <li className="menu-item">
           <a href="./role.html" className="menu-link">

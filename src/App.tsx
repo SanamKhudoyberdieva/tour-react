@@ -6,6 +6,9 @@ import TourCreate from "./pages/tour/create";
 import TourOrderCreate from "./pages/tour/order/index";
 import Airplane from "./pages/airplane";
 import Hostel from "./pages/hostel";
+import Admin from "./pages/admin/index";
+import AdminCreate from "./pages/admin/create";
+import AdminView from './pages/admin/view/index';
 
 function App() {
 
@@ -24,6 +27,10 @@ function App() {
           <Route path="/airplane" element={<Airplane />} />
 
           <Route path="/hostel" element={<Hostel />} />
+
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/create" element={<AdminCreate />} />
+          <Route path="/admin/view/:id" element={<AdminView />} />
 
         </Route>
       </Routes>

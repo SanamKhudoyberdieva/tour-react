@@ -1,4 +1,7 @@
+import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import Pagination from "../../components/Pagination";
 
 const Index = () => {
   return (
@@ -50,102 +53,21 @@ const Index = () => {
                     />
                   </td>
                   <td>
-                    <a
+                    <Link
                       className="btn p-1"
-                      href="./adminstrator-create.html"
+                      to={'/admin/update/2'}
                     >
-                      <i className="fas fa-pen"></i>
-                    </a>
+                      <FontAwesomeIcon icon={faPen}/>
+                    </Link>
                     <button className="btn p-1">
-                      <i className="fas fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>
-                    <a href="./adminstrator-view.html"
-                      >Nuriddinov Alisher Farxodvich</a
-                    >
-                  </td>
-                  <td>+998 93 517 75 65</td>
-                  <td>alisher45200@gmail.com</td>
-                  <td>82</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="parent_id"
-                    />
-                  </td>
-                  <td>
-                    <a
-                      className="btn p-1"
-                      href="./adminstrator-create.html"
-                    >
-                      <i className="fas fa-pen"></i>
-                    </a>
-                    <button className="btn p-1">
-                      <i className="fas fa-trash"></i>
+                      <FontAwesomeIcon icon={faTrash}/>
                     </button>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div
-            className="d-flex flex-column flex-md-row justify-content-between align-items-center"
-          >
-            <span className="mb-2 mb-md-0"
-              >Показаны записи 10 из 12</span
-            >
-            <ul
-              className="pagination m-0 align-items-center"
-              role="navigation"
-              aria-label="Pagination"
-            >
-              <li className="prev">
-                <a
-                  className=""
-                  role="button"
-                  aria-disabled="false"
-                  aria-label="Previous page"
-                  rel="prev"
-                  ><button className="page-link">
-                    <i className="fa-solid fa-angle-left"></i></button
-                ></a>
-              </li>
-              <li className="page-item active">
-                <a
-                  rel="prev"
-                  role="button"
-                  className="page-link"
-                  aria-label="Page 1"
-                  >1</a
-                >
-              </li>
-              <li className="page-item">
-                <a
-                  rel="canonical"
-                  role="button"
-                  className="page-link"
-                  aria-label="Page 2 is your current page"
-                  aria-current="page"
-                  >2</a
-                >
-              </li>
-              <li className="next disabled">
-                <a
-                  className=" "
-                  role="button"
-                  aria-disabled="true"
-                  aria-label="Next page"
-                  rel="next"
-                  ><button className="page-link">
-                    <i className="fa-solid fa-angle-right"></i></button
-                ></a>
-              </li>
-            </ul>
-          </div>
+          <Pagination/>
         </div>
       </div>
     </div>
