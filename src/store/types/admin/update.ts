@@ -1,6 +1,5 @@
-import { AdminCreateType } from "./create";
+import { AdminCreateType } from "..";
 
 export interface AdminUpdateType extends AdminCreateType {
-    password: string;
-    id: number | null;
-  }
+  id: number | null;
+}
