@@ -15,6 +15,8 @@ const initialState: AdminMeType = {
   phone: "",
   is_deleted: null,
   moduleItemKeys: [],
+  organization: null,
+  organization_id: null
 };
 
 const adminSlice = createSlice({

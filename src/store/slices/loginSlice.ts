@@ -27,7 +27,9 @@ const initialState: LoginState = {
   role_id: null,
   full_name: "",
   phone: "",
-  is_deleted: null
+  is_deleted: null,
+  organization: null,
+  organization_id: null
 };
 
 const loginSlice = createSlice({
