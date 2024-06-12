@@ -20,12 +20,14 @@ import RoleCreate from "./pages/role/create";
 import RoleView from "./pages/role/view/index";
 import Order from "./pages/order/index";
 import OrderView from "./pages/order/view/index";
+import Login from "./pages/login";
 
 function App() {
 
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/login" element={<Login />} />
         <Route element={<MainLayout />} >
           {/* Public Routes */}
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
