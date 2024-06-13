@@ -41,3 +41,9 @@ export * from "./setting/delete";
 export * from "./tour/get";
 export * from "./tour/getAll";
 export * from "./tour/delete";
+
+export * from "./news/get";
+export * from "./news/getAll";
+export * from "./news/create";
+export * from "./news/update";
+export * from "./news/delete";

@@ -21,6 +21,10 @@ import RoleView from "./pages/role/view/index";
 import Order from "./pages/order/index";
 import OrderView from "./pages/order/view/index";
 import Login from "./pages/login";
+import News from "./pages/news/index";
+import NewsCreate from "./pages/news/create";
+import NewsView from "./pages/news/view/index";
+import NewsEdit from "./pages/news/edit/index";
 
 function App() {
 
@@ -55,6 +59,11 @@ function App() {
           <Route path="/branch/create" element={<BranchCreate />} />
           <Route path="/branch/view/:id" element={<BranchView />} />
           <Route path="/branch/edit/:id" element={<BranchEdit />} />
+
+          <Route path="/news" element={<News />} />
+          <Route path="/news/create" element={<NewsCreate />} />
+          <Route path="/news/view/:id" element={<NewsView />} />
+          <Route path="/news/edit/:id" element={<NewsEdit />} />
 
           <Route path="/role" element={<Role />} />
           <Route path="/role/create" element={<RoleCreate />} />

@@ -102,11 +102,14 @@ const Sidebar = () => {
             <div>Role</div>
           </Link>
         </li>
-        <li className="menu-item">
-          <a href="./news.html" className="menu-link">
+        <li className={`menu-item ${
+            location.pathname.includes("news") && "active"
+          }`}
+        >
+          <Link to={'/news'} className="menu-link">
             <FontAwesomeIcon className="menu-icon tf-icons" icon={faNewspaper} />
             <div>Yangiliklar</div>
-          </a>
+          </Link>
         </li>
         <li className={`menu-item ${
             location.pathname.includes("branch") && "active"

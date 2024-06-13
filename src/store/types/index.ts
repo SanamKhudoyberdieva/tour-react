@@ -12,3 +12,9 @@ export * from "./airway/create";
 export * from "./airway/airway";
 
 export * from "./branch/branch";
+
+export * from "./news/new";
+export * from "./news/news";
+export * from "./news/create";
+
+
