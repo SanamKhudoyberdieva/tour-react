@@ -10,3 +10,5 @@ export * from "./admin/update";
 
 export * from "./airway/create";
 export * from "./airway/airway";
+
+export * from "./branch/branch";

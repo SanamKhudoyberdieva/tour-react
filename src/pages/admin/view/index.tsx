@@ -1,6 +1,31 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getAdminById } from '../../../api';
+import { useTranslation } from 'react-i18next';
+import { AdminType } from '../../../store/types';
+import { Link, useParams } from 'react-router-dom';
+import AdminViewTable from '../../../components/admin/AdminViewTable';
 
 const Index = () => {
+  const param = useParams();
+  const { t } = useTranslation();
+  const [data, setData] = useState<AdminType | null>(null);
+
+  const handleGetById = async (id: number) => {
+    try {
+      const res = await getAdminById(id);
+      setData(res.data);
+    } catch (error) {
+      console.log("error getAdminById: ", error);
+    }
+  };
+
+  useEffect(() => {
+    if (!param || !param.id) return;
+    handleGetById(+param.id);
+  }, [param]);
+
+  if (!data) return <></>;
+
   return (
     <>
       <div
@@ -8,69 +33,18 @@ const Index = () => {
       >
         <h4 className="py-3 mb-0">
           <span className="text-muted fw-light"
-            ><Link to={'/'}>Asosiy</Link> / </span>
+            ><Link to={'/'}>{t('home')}</Link> / </span>
           <span className="text-muted fw-light"
             ><Link to={'/admin'}>Adminstratorlar</Link>
             / </span>
-          Toxirjonova Dildora Sardorovna
+            {data.username}
         </h4>
         <Link className="btn btn-info" to={'/admin'}
           >Orqaga</Link>
       </div>
       <div className="card mb-3">
         <div className="card-body">
-          <div className="row">
-            <div className="col-md-6">
-              <table
-                className="table table-striped table-bordered detail-view"
-              >
-                <tbody>
-                  <tr>
-                    <th>Идентификатор</th>
-                    <td>1</td>
-                  </tr>
-                  <tr></tr>
-                  <tr>
-                    <th>FISH</th>
-                    <td>Toxirjonova Dildora Sardorovna</td>
-                  </tr>
-                  <tr>
-                    <th>Telefon raqam</th>
-                    <td>+998 99 617 45 65</td>
-                  </tr>
-                  <tr>
-                    <th>Elektron manzil</th>
-                    <td>toxirjonova45@gmail.com</td>
-                  </tr>
-                  <tr>
-                    <th>Buyurtmalar soni</th>
-                    <td>67</td>
-                  </tr>
-                  <tr>
-                    <th>Holati</th>
-                    <td>Faol</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div className="col-md-6">
-              <table
-                className="table table-striped table-bordered detail-view"
-              >
-                <tbody>
-                  <tr></tr>
-                  <tr>
-                    <th>Yaratuvchi</th>
-                    <td>Muxtorova Malika</td>
-                  </tr>
-                  <tr>
-                    <th>Yaratilgan</th>
-                    <td>18.05.2024</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <AdminViewTable data={data} />
         </div>
       </div>
     </>
