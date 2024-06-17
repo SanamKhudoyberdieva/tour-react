@@ -1,11 +1,2 @@
-**dashboard carousel btn
-**order edit page
-**news page 
-
-
-
-<!--  -->
-admin: order number
-news: name_en, description_en
-hostel: stars
-organization: director, orders number, workers number
+**organization : director?
+**news: desc_en, name_en , pagination

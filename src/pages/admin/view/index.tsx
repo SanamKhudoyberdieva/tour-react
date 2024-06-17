@@ -35,12 +35,12 @@ const Index = () => {
           <span className="text-muted fw-light"
             ><Link to={'/'}>{t('home')}</Link> / </span>
           <span className="text-muted fw-light"
-            ><Link to={'/admin'}>Adminstratorlar</Link>
+            ><Link to={'/admin'}>{t('admins')} </Link>
             / </span>
             {data.username}
         </h4>
         <Link className="btn btn-info" to={'/admin'}
-          >Orqaga</Link>
+          >{t('back')}</Link>
       </div>
       <div className="card mb-3">
         <div className="card-body">

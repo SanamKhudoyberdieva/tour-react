@@ -3,6 +3,7 @@ export * from "./general/nameDesc";
 export * from "./general/pagination";
 
 export * from "./admin/me";
+export * from "./admin/all";
 export * from "./admin/auth";
 export * from "./admin/admin";
 export * from "./admin/create";

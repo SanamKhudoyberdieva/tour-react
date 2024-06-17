@@ -10,8 +10,8 @@ const NewsViewTable = ({data}: {data: NewsType}) => {
       className="table table-striped table-bordered detail-view">
       <tbody>
         <tr>
-          <th>Идентификатор</th>
-          <td>1</td>
+          <th>{t('id')}</th>
+          <td>{data.id}</td>
         </tr>
         <tr>
           <th>{t('image')}</th>
@@ -46,12 +46,20 @@ const NewsViewTable = ({data}: {data: NewsType}) => {
           <td>{data.position}</td>
         </tr>
         <tr>
-          <th>Yaratuvchi</th>
+          <th>{t('created')}</th>
           <td>{data.created?.full_name}</td>
         </tr>
         <tr>
-          <th>Yaratilgan</th>
+          <th>{t('created-at')}</th>
           <td>{formateDate(data.created_at)}</td>
+        </tr>
+        <tr>
+          <th>{t('updated')}</th>
+          <td>{data.updated?.full_name}</td>
+        </tr>
+        <tr>
+          <th>{t('updated-at')}</th>
+          <td>{formateDate(data.updated_at)}</td>
         </tr>
       </tbody>
     </table>

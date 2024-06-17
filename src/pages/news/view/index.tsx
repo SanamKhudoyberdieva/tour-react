@@ -1,10 +1,10 @@
+import { getNew } from "../../../api";
+import i18n from "../../../utils/i18n";
+import { getName } from "../../../utils";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useParams } from "react-router-dom";
 import { NewsType } from "../../../store/types";
-import { getNew } from "../../../api";
-import { getName } from "../../../utils";
-import i18n from "../../../utils/i18n";
+import { Link, useParams } from "react-router-dom";
 import NewsViewTable from "../../../components/news/NewsViewTable";
 
 const Index = () => {

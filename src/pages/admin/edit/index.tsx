@@ -16,7 +16,7 @@ const Index = () => {
   const [data, setData] = useState<AdminType | null>(null);
   const admin = useSelector((state: RootState) => state.adminReducer);
   const { roles } = useSelector((state: RootState) => state.rolesReducer);
-  const { branches } = useSelector((state: RootState) => state.branchesReducer);
+  const { organizations } = useSelector((state: RootState) => state.organizationsReducer);
 
   const initialValues: AdminUpdateType = {
     full_name: "",
@@ -106,14 +106,14 @@ const Index = () => {
       >
         <h4 className="py-3 mb-0">
           <span className="text-muted fw-light"
-            ><Link to={'/'}>Asosiy</Link> / </span>
+            ><Link to={'/'}>{t('home')}</Link> / </span>
           <span className="text-muted fw-light"
-            ><Link to={'/admin'}>Adminstratorlar</Link>
+            ><Link to={'/admin'}>{t('admins')} </Link>
             / </span>
-          O'zgartirish
+          {t('edit')}
         </h4>
         <Link className="btn btn-info" to={'/admin'}
-          >Orqaga</Link>
+          >{t('back')}</Link>
       </div>
       {admin.id !== data.id && (
         <div className="mb-2 mb-md-4">
@@ -242,7 +242,7 @@ const Index = () => {
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label" htmlFor="user-organization_id">
-                {t("branch")}
+                {t("organization")}
               </label>
               <select
                 className="form-select"
@@ -256,13 +256,13 @@ const Index = () => {
                 onBlur={formik.handleBlur}
               >
                 <option value={0}></option>
-                {branches &&
-                branches.map((x, idx) => (
+                {organizations &&
+                organizations.map((x, idx) => (
                   <option
-                    key={"admin-create-branches-index-" + idx}
+                    key={"admin-create-organizations-index-" + idx}
                     value={x.id}
                   >
-                    {x.name_uz}
+                    {x.name}
                   </option>
                 ))}
               </select>

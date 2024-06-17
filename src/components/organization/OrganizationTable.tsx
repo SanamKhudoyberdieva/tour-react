@@ -49,6 +49,7 @@ const OrganizationTable = () => {
             <th>{t('director')}</th>
             <th>{t('city')}</th>
             <th>{t('application-count')}</th>
+            <th>{t('worker-count')}</th>
             <th>{t('created-at')}</th>
             <th>&nbsp;</th>
           </tr>
@@ -65,6 +66,9 @@ const OrganizationTable = () => {
             </td>
             <td>
               {x.application_count}
+            </td>
+            <td>
+              {x.worker_count}
             </td>
             <td>
               {formateDate(x.created_at)}

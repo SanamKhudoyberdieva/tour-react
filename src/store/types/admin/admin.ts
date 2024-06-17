@@ -1,4 +1,5 @@
-import { RoleType } from "..";
+import { RoleType } from "../role/role";
+
 export interface AdminType {
     id: number,
     organization: null,
@@ -13,5 +14,6 @@ export interface AdminType {
     last_visit: string,
     is_active: boolean,
     deleted_at: string | null,
-    is_deleted: string | null
+    is_deleted: string | null,
+    application_count: number
 }

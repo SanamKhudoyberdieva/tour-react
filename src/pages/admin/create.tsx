@@ -12,7 +12,7 @@ const Create = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { roles } = useSelector((state: RootState) => state.rolesReducer);
-  const { branches } = useSelector((state: RootState) => state.branchesReducer);
+  const { organizations } = useSelector((state: RootState) => state.organizationsReducer);
 
   const initialValues: AdminCreateType = {
     is_active: false,
@@ -51,14 +51,14 @@ const Create = () => {
       >
         <h4 className="py-3 mb-0">
           <span className="text-muted fw-light"
-            ><Link to={'/'}>Asosiy</Link> / </span>
+            ><Link to={'/'}>{t('home')}</Link> / </span>
           <span className="text-muted fw-light"
-            ><Link to={'/admin'}>Adminstratorlar</Link>
+            ><Link to={'/admin'}>{t('admins')} </Link>
             / </span>
-          Yaratish
+          {t('create')}
         </h4>
         <Link className="btn btn-info" to={'/admin'}
-          >Orqaga</Link>
+          >{t('back')}</Link>
       </div>
       <div className="card">
         <form onSubmit={formik.handleSubmit} className="card-body">
@@ -164,7 +164,7 @@ const Create = () => {
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label" htmlFor="user-organization_id">
-                {t("branch")}
+                {t("organization")}
               </label>
               <select
                 className="form-select"
@@ -178,13 +178,13 @@ const Create = () => {
                 onBlur={formik.handleBlur}
               >
                 <option value={0}></option>
-                {branches &&
-                branches.map((x, idx) => (
+                {organizations &&
+                organizations.map((x, idx) => (
                   <option
-                    key={"admin-create-branches-index-" + idx}
+                    key={"admin-create-organizations-index-" + idx}
                     value={x.id}
                   >
-                    {x.name_uz}
+                    {x.name}
                   </option>
                 ))}
               </select>
