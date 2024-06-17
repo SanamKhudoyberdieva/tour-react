@@ -28,6 +28,8 @@ export * from "./extraPackage/delete";
 
 export * from "./hotels/get";
 export * from "./hotels/getAll";
+export * from "./hotels/create";
+export * from "./hotels/update";
 export * from "./hotels/delete";
 
 export * from "./organization/get";

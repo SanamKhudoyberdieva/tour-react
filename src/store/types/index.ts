@@ -12,6 +12,9 @@ export * from "./admin/update";
 export * from "./airway/create";
 export * from "./airway/airway";
 
+export * from "./hostel/hostel";
+export * from "./hostel/create";
+
 export * from "./organization/create";
 export * from "./organization/organization";
 
