@@ -32,6 +32,8 @@ export * from "./hotels/delete";
 
 export * from "./organization/get";
 export * from "./organization/getAll";
+export * from "./organization/create";
+export * from "./organization/update";
 export * from "./organization/delete";
 
 export * from "./setting/get";

@@ -112,11 +112,11 @@ const Sidebar = () => {
           </Link>
         </li>
         <li className={`menu-item ${
-            location.pathname.includes("branch") && "active"
+            location.pathname.includes("organization") && "active"
           }`}>
-          <Link to={'/branch'} className="menu-link">
+          <Link to={'/organization'} className="menu-link">
             <FontAwesomeIcon className="menu-icon tf-icons" icon={faCodeBranch} />
-            <div>Filyallar</div>
+            <div>Organizatsiya</div>
           </Link>
         </li>
         <li className="menu-item">

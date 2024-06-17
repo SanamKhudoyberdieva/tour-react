@@ -11,10 +11,10 @@ import Admin from "./pages/admin/index";
 import AdminCreate from "./pages/admin/create";
 import AdminView from "./pages/admin/view/index";
 import AdminEdit from "./pages/admin/edit/index";
-import Branch from "./pages/branch/index";
-import BranchCreate from "./pages/branch/create";
-import BranchView from "./pages/branch/view/index";
-import BranchEdit from "./pages/branch/edit/index";
+import Organization from "./pages/organization/index";
+import OrganizationCreate from "./pages/organization/create";
+import OrganizationView from "./pages/organization/view/index";
+import OrganizationEdit from "./pages/organization/edit/index";
 import Role from "./pages/role/index";
 import RoleCreate from "./pages/role/create";
 import RoleView from "./pages/role/view/index";
@@ -55,10 +55,10 @@ function App() {
           <Route path="/admin/view/:id" element={<AdminView />} />
           <Route path="/admin/edit/:id" element={<AdminEdit />} />
 
-          <Route path="/branch" element={<Branch />} />
-          <Route path="/branch/create" element={<BranchCreate />} />
-          <Route path="/branch/view/:id" element={<BranchView />} />
-          <Route path="/branch/edit/:id" element={<BranchEdit />} />
+          <Route path="/organization" element={<Organization />} />
+          <Route path="/organization/create" element={<OrganizationCreate />} />
+          <Route path="/organization/view/:id" element={<OrganizationView />} />
+          <Route path="/organization/edit/:id" element={<OrganizationEdit />} />
 
           <Route path="/news" element={<News />} />
           <Route path="/news/create" element={<NewsCreate />} />

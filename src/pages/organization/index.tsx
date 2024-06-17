@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import BranchTable from "../../components/branch/BranchTable";
+import OrganizationTable from "../../components/organization/OrganizationTable";
 
 const Index = () => {
   const { t } = useTranslation();
@@ -13,14 +13,14 @@ const Index = () => {
           <span className="text-muted fw-light">
             <Link to={'/'}>{t('home')}</Link> / {' '}
           </span>
-          Filyallar
+          {t('organizations')}
         </h4>
-        <Link className="btn btn-success" to={'/branch/create'}
-          >Filyal qo'shish</Link>
+        <Link className="btn btn-success" to={'/organization/create'}
+          >{t('add-organizatin')}</Link>
       </div>
       <div className="card">
         <div className="card-body">
-          <BranchTable/>
+          <OrganizationTable/>
         </div>
       </div>
     </>

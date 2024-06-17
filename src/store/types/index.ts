@@ -11,7 +11,8 @@ export * from "./admin/update";
 export * from "./airway/create";
 export * from "./airway/airway";
 
-export * from "./branch/branch";
+export * from "./organization/create";
+export * from "./organization/organization";
 
 export * from "./news/new";
 export * from "./news/news";

@@ -6,6 +6,6 @@
 
 <!--  -->
 admin: order number
-organization ==? branch
-
 news: name_en, description_en
+hostel: stars
+organization: director, orders number, workers number
