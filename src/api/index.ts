@@ -55,3 +55,10 @@ export * from "./news/getAll";
 export * from "./news/create";
 export * from "./news/update";
 export * from "./news/delete";
+
+export * from "./room/get";
+export * from "./room/getAll";
+export * from "./room/create";
+export * from "./room/update";
+export * from "./room/delete";
+

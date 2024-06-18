@@ -21,6 +21,9 @@ export * from "./extraPackage/create";
 export * from "./hostel/hostel";
 export * from "./hostel/create";
 
+export * from "./room/room";
+export * from "./room/create";
+
 export * from "./organization/create";
 export * from "./organization/organization";
 
