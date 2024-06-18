@@ -1,67 +1,64 @@
 import { RootState } from "../store";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { HostelType } from "../store/types";
+import { AirwayType } from "../store/types";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { setHostels } from "../store/slices/hostelSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { createHotel, deleteHotel, getHotels, updateHotel } from "../api";
+import { setExtraPackages } from "../store/slices/extraPackageSlice";
 import { faCheck, faPen, faPlus, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { createExtraPackage, deleteExtraPackage, getExtraPackages, updateExtraPackage } from "../api";
 
-const Hostel = () => {
+const ExtraPackage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [stars, setStars] = useState(0);
   const [name_uz, setName_uz] = useState("");
   const [name_ru, setName_ru] = useState("");
   const [position, setPosition] = useState(0);
   const [description_uz, setDescription_uz] = useState("");
   const [description_ru, setDescription_ru] = useState("");
   const [updateId, setUpdateId] = useState<number | null>(null);
-  const { hostels } = useSelector((state: RootState) => state.hostelsReducer);
+  const { extraPackages } = useSelector((state: RootState) => state.extraPackagesReducer);
 
   const handleGetAll = async () => {
     try {
-      const res = await getHotels();
-      dispatch(setHostels(res.data));
+      const res = await getExtraPackages();
+      dispatch(setExtraPackages(res.data));
     } catch (error) {
-      console.log("error getHotels: ", error);
+      console.log("error getExtraPackages: ", error);
     }
   };
 
   const handleCreate = async () => {
     try {
-      await createHotel({
+      await createExtraPackage({
         name_uz,
         name_ru,
         description_ru,
         description_uz,
-        position,
-        stars
+        position: position,
       });
       handleClearData();
       handleGetAll();
     } catch (error) {
-      console.log("error createHotel: ", error);
+      console.log("error createExtraPackage: ", error);
     }
   };
 
   const handleUpdate = async (id: number) => {
     try {
-      await updateHotel(id, {
+      await updateExtraPackage(id, {
         name_uz,
         name_ru,
         description_ru,
         description_uz,
-        position,
-        stars
+        position: position,
       });
       setUpdateId(null);
       handleClearData();
       handleGetAll();
     } catch (error) {
-      console.log("errr updateHotel: ", error);
+      console.log("errr updateExtraPackage: ", error);
     }
   };
 
@@ -70,10 +67,10 @@ const Hostel = () => {
     if (!confirmed) return;
 
     try {
-      await deleteHotel(id);
+      await deleteExtraPackage(id);
       handleGetAll();
     } catch (error) {
-      console.log("errr deleteHotel: ", error);
+      console.log("errr deleteExtraPackage: ", error);
     }
   };
 
@@ -83,14 +80,12 @@ const Hostel = () => {
     setDescription_ru(""),
     setDescription_uz(""),
     setPosition(0);
-    setStars(0);
   };
 
-  const selectUpdate = (x: HostelType) => {
+  const selectUpdate = (x: AirwayType) => {
     handleClearData();
     setName_uz(x.name_uz);
     setName_ru(x.name_ru);
-    setStars(x.stars);
     setDescription_ru(x.description_ru),
     setDescription_uz(x.description_uz),
     setPosition(x.position);
@@ -108,12 +103,12 @@ const Hostel = () => {
         <h4 className="py-3 mb-0">
           <span className="text-muted fw-light"
             ><Link to={'/'}>{t('home')}</Link> / </span>
-          {t('hotels')}
+          {t('extra-packages')}
         </h4>
       </div>
       <div className="card">
         <div className="card-body">
-          <div className="table-responsive">
+          <div className="table-responsive mb-4">
             <table className="table table-striped table-hover">
               <thead>
                 <tr>
@@ -122,15 +117,14 @@ const Hostel = () => {
                   <th>Nomi</th>
                   <th>Описание</th>
                   <th>Tavsifi</th>
-                  <th>{t('stars')}</th>
                   <th>{t('position-in-the-list')}</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-              {hostels &&
-                hostels.map((x, idx) => (
-                <tr key={"hostel-row-id-hostels-table-" + x.id}>
+              {extraPackages &&
+                extraPackages.map((x, idx) => (
+                <tr key={"extraPackage-row-id-extraPackages-table-" + x.id}>
                   <td>{idx + 1}</td>
                   <td>
                     {updateId == x.id ? (
@@ -184,21 +178,7 @@ const Hostel = () => {
                     {updateId == x.id ? (
                       <input
                         className="form-control"
-                        type="number"
-                        value={stars}
-                        onChange={(e) =>
-                          setStars(parseInt(e.target.value))
-                        }
-                      />
-                    ) : (
-                      x.stars
-                    )}
-                  </td>
-                  <td>
-                    {updateId == x.id ? (
-                      <input
-                        className="form-control"
-                        type="number"
+                        type="text"
                         value={position}
                         onChange={(e) =>
                           setPosition(parseInt(e.target.value))
@@ -282,14 +262,6 @@ const Hostel = () => {
                   <td>
                     <input
                       className="form-control"
-                      type="text"
-                      value={stars}
-                      onChange={(e) => setStars(parseInt(e.target.value))}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      className="form-control"
                       type="number"
                       value={position}
                       onChange={(e) => setPosition(parseInt(e.target.value))}
@@ -315,4 +287,4 @@ const Hostel = () => {
   )
 }
 
-export default Hostel;
+export default ExtraPackage;

@@ -5,6 +5,8 @@ import rolesSlice from "./slices/rolesSlice";
 import branchSlice from "./slices/organizationSlice";
 import airwaySlice from "./slices/airwaySlice";
 import hostelSlice from "./slices/hostelSlice";
+import citySlice from "./slices/citySlice";
+import extraPackageSlice from "./slices/extraPackageSlice";
 
 const rootReducer = combineReducers({
   loginReducer: loginSlice,
@@ -12,7 +14,9 @@ const rootReducer = combineReducers({
   rolesReducer: rolesSlice,
   organizationsReducer: branchSlice,
   airwaysReducer: airwaySlice,
-  hostelsReducer: hostelSlice
+  hostelsReducer: hostelSlice,
+  citiesReducer: citySlice,
+  extraPackagesReducer: extraPackageSlice
 })
 
 export default rootReducer;

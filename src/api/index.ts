@@ -20,10 +20,14 @@ export * from "./application/delete";
 
 export * from "./city/get";
 export * from "./city/getAll";
+export * from "./city/create";
+export * from "./city/update";
 export * from "./city/delete";
 
 export * from "./extraPackage/get";
 export * from "./extraPackage/getAll";
+export * from "./extraPackage/create";
+export * from "./extraPackage/update";
 export * from "./extraPackage/delete";
 
 export * from "./hotels/get";

@@ -25,6 +25,8 @@ import News from "./pages/news/index";
 import NewsCreate from "./pages/news/create";
 import NewsView from "./pages/news/view/index";
 import NewsEdit from "./pages/news/edit/index";
+import City from "./pages/city";
+import ExtraPackage from "./pages/extraPackage";
 
 function App() {
 
@@ -42,6 +44,10 @@ function App() {
           <Route path="/tour/order/:id" element={<TourOrderCreate />} />
 
           <Route path="/airplane" element={<Airplane />} />
+
+          <Route path="/city" element={<City />} />
+
+          <Route path="/extra-packages" element={<ExtraPackage />} />
 
           <Route path="/hostel" element={<Hostel />} />
 
