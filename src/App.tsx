@@ -15,9 +15,10 @@ import Organization from "./pages/organization/index";
 import OrganizationCreate from "./pages/organization/create";
 import OrganizationView from "./pages/organization/view/index";
 import OrganizationEdit from "./pages/organization/edit/index";
-import Role from "./pages/role/index";
-import RoleCreate from "./pages/role/create";
-import RoleView from "./pages/role/view/index";
+import Role from "./pages/roles/index";
+import RoleCreate from "./pages/roles/create";
+import RoleView from "./pages/roles/view/view";
+import RoleUpdate from "./pages/roles/update/[id]";
 import Order from "./pages/order/index";
 import OrderView from "./pages/order/view/index";
 import Login from "./pages/login";
@@ -74,6 +75,7 @@ function App() {
           <Route path="/role" element={<Role />} />
           <Route path="/role/create" element={<RoleCreate />} />
           <Route path="/role/view/:id" element={<RoleView />} />
+          <Route path="/role/edit/:id" element={<RoleUpdate />} />
 
         </Route>
       </Routes>

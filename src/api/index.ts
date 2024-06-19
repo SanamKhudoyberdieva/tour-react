@@ -62,3 +62,14 @@ export * from "./room/create";
 export * from "./room/update";
 export * from "./room/delete";
 
+export * from "./role/items/list";
+export * from "./role/items/create";
+export * from "./role/items/getAll";
+export * from "./role/getById";
+export * from "./role/getAll";
+export * from "./role/create";
+export * from "./role/update";
+
+export * from "./modules/getModule";
+export * from "./modules/getModuleItem";
+

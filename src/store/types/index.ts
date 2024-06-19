@@ -31,4 +31,8 @@ export * from "./news/new";
 export * from "./news/news";
 export * from "./news/create";
 
+export * from "./module/module";
+export * from "./moduleItem/moduleItem";
+
+
 
