@@ -2,8 +2,23 @@ import { Link } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 import LanguageDropdown from "./LanguageDropdown";
 import noPhotoImage from "../../public/img/no-photo.webp";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import { logOut } from "../store/slices/loginSlice";
 
-const Navbar = () => {
+interface NavbarProps {
+  setIsShowAside: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const Navbar: React.FC<NavbarProps> = ({ setIsShowAside }) => {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  const admin = useSelector((state: RootState) => state.adminReducer);
+
+  const hendleLogOut = () => {
+    dispatch(logOut());
+  };
   return (
     <nav
       className="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
@@ -11,7 +26,7 @@ const Navbar = () => {
       <div
         className="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none"
       >
-        <button className="btn nav-item nav-link px-0 me-xl-4">
+        <button className="btn nav-item nav-link px-0 me-xl-4" onClick={() => setIsShowAside(true)}>
           <svg
             aria-hidden="true"
             focusable="false"
@@ -72,7 +87,7 @@ const Navbar = () => {
                   </div>
                 </div>
                 <div className="dropdown-divider"></div>
-                <Link to="" className="dropdown-item" >
+                <Link to="/" className="dropdown-item" onClick={hendleLogOut} >
                   <i className="bx bx-power-off me-2"></i>
                   <span className="align-middle">Log out</span>
                 </Link>
