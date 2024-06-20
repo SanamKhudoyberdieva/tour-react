@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBed, faChartPie, faChevronLeft, faCircleCheck, faCodeBranch, faGear, faHotel, faNewspaper, faPlane, faRectangleList, faTicket, faUserTie } from "@fortawesome/free-solid-svg-icons";
+import { faBed, faBox, faChartPie, faChevronLeft, faCircleCheck, faCity, faCodeBranch, faGear, faHotel, faNewspaper, faPlane, faRectangleList, faTicket, faUserTie } from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -119,11 +119,29 @@ const Sidebar = () => {
             <div>Organizatsiya</div>
           </Link>
         </li>
+        <li className={`menu-item ${
+            location.pathname.includes("city") && "active"
+          }`}
+        >
+          <Link to={'/city'} className="menu-link">
+            <FontAwesomeIcon className="menu-icon tf-icons" icon={faCity} />
+            <div>Davlatlar</div>
+          </Link>
+        </li>
+        <li className={`menu-item ${
+            location.pathname.includes("extra-packages") && "active"
+          }`}
+        >
+          <Link to={'/extra-packages'} className="menu-link">
+            <FontAwesomeIcon className="menu-icon tf-icons" icon={faBox} />
+            <div>extra packages</div>
+          </Link>
+        </li>
         <li className="menu-item">
-          <a href="./settings.html" className="menu-link">
+          <Link to={'/'} className="menu-link">
             <FontAwesomeIcon className="menu-icon tf-icons" icon={faGear} />
             <div>Sozlamalar</div>
-          </a>
+          </Link>
         </li>
       </ul>
     </aside>

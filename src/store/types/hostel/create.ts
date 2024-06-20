@@ -2,7 +2,6 @@ import { NameDescType } from "..";
 
 export interface HostelCreateType extends NameDescType {
   position: number,
-  address_uz: string,
-  address_ru: string,
-  stars: number
+  stars: number,
+  city_id: number
 }

@@ -15,9 +15,10 @@ import Organization from "./pages/organization/index";
 import OrganizationCreate from "./pages/organization/create";
 import OrganizationView from "./pages/organization/view/index";
 import OrganizationEdit from "./pages/organization/edit/index";
-import Role from "./pages/role/index";
-import RoleCreate from "./pages/role/create";
-import RoleView from "./pages/role/view/index";
+import Role from "./pages/roles/index";
+import RoleCreate from "./pages/roles/create";
+import RoleView from "./pages/roles/view/view";
+import RoleUpdate from "./pages/roles/update/[id]";
 import Order from "./pages/order/index";
 import OrderView from "./pages/order/view/index";
 import Login from "./pages/login";
@@ -25,6 +26,8 @@ import News from "./pages/news/index";
 import NewsCreate from "./pages/news/create";
 import NewsView from "./pages/news/view/index";
 import NewsEdit from "./pages/news/edit/index";
+import City from "./pages/city";
+import ExtraPackage from "./pages/extraPackage";
 
 function App() {
 
@@ -42,6 +45,10 @@ function App() {
           <Route path="/tour/order/:id" element={<TourOrderCreate />} />
 
           <Route path="/airplane" element={<Airplane />} />
+
+          <Route path="/city" element={<City />} />
+
+          <Route path="/extra-packages" element={<ExtraPackage />} />
 
           <Route path="/hostel" element={<Hostel />} />
 
@@ -68,6 +75,7 @@ function App() {
           <Route path="/role" element={<Role />} />
           <Route path="/role/create" element={<RoleCreate />} />
           <Route path="/role/view/:id" element={<RoleView />} />
+          <Route path="/role/edit/:id" element={<RoleUpdate />} />
 
         </Route>
       </Routes>

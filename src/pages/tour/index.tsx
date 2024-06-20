@@ -4,8 +4,42 @@ import TourTable from "../../components/tour/TourTable";
 import FilterOne from "../../components/tour/Filter/First";
 import FilterTwo from "../../components/tour/Filter/Second";
 import FilterThree from "../../components/tour/Filter/Third";
+import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import { TourPaginationType } from "../../store/types";
+import { deleteTour, getTours } from "../../api";
 
 const Index = () => {
+  const { t } = useTranslation();
+  const [data, setData] = useState<TourPaginationType | null>(null);
+
+  const handleGet = async () => {
+    try {
+      const res = await getTours();
+      setData(res.data);
+    } catch (error) {
+      console.log("error getTours: ", error);
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    const confirmed = window.confirm(t('are-you-sure-you-want-to-delete'));
+    if (!confirmed) return;
+    
+    try {
+      await deleteTour(id);
+      handleGet();
+    } catch (error) {
+      console.log("error deleteTour: ", error);
+    }
+  };
+
+  useEffect(() => {
+    handleGet();
+  }, []);
+
+  if (!data) return;
+
   return (
     <>
       <div
@@ -49,7 +83,7 @@ const Index = () => {
               </select>
             </div>
           </div>
-          <TourTable />
+          <TourTable data={data} />
           <Pagination />
         </div>
       </div>

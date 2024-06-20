@@ -20,10 +20,14 @@ export * from "./application/delete";
 
 export * from "./city/get";
 export * from "./city/getAll";
+export * from "./city/create";
+export * from "./city/update";
 export * from "./city/delete";
 
 export * from "./extraPackage/get";
 export * from "./extraPackage/getAll";
+export * from "./extraPackage/create";
+export * from "./extraPackage/update";
 export * from "./extraPackage/delete";
 
 export * from "./hotels/get";
@@ -51,3 +55,21 @@ export * from "./news/getAll";
 export * from "./news/create";
 export * from "./news/update";
 export * from "./news/delete";
+
+export * from "./room/get";
+export * from "./room/getAll";
+export * from "./room/create";
+export * from "./room/update";
+export * from "./room/delete";
+
+export * from "./role/items/list";
+export * from "./role/items/create";
+export * from "./role/items/getAll";
+export * from "./role/getById";
+export * from "./role/getAll";
+export * from "./role/create";
+export * from "./role/update";
+
+export * from "./modules/getModule";
+export * from "./modules/getModuleItem";
+

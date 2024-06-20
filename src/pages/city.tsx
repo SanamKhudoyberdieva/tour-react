@@ -1,67 +1,55 @@
 import { RootState } from "../store";
 import { Link } from "react-router-dom";
-import { RoomType } from "../store/types";
+import { CityType } from "../store/types";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { setRooms } from "../store/slices/roomSlice";
+import { setCities } from "../store/slices/citySlice";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { createRoom, deleteRoom, getRooms, updateRoom } from "../api";
+import { createCity, deleteCity, getCities, updateCity } from "../api";
 import { faCheck, faPen, faPlus, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-const Room = () => {
+const City = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [count, setCount] = useState(0);
   const [name_uz, setName_uz] = useState("");
   const [name_ru, setName_ru] = useState("");
-  const [position, setPosition] = useState(0);
-  const [description_uz, setDescription_uz] = useState("");
-  const [description_ru, setDescription_ru] = useState("");
   const [updateId, setUpdateId] = useState<number | null>(null);
-  const { rooms } = useSelector((state: RootState) => state.roomsReducer);
+  const { cities } = useSelector((state: RootState) => state.citiesReducer);
 
   const handleGetAll = async () => {
     try {
-      const res = await getRooms();
-      dispatch(setRooms(res.data));
+      const res = await getCities();
+      dispatch(setCities(res.data));
     } catch (error) {
-      console.log("error getRooms: ", error);
+      console.log("error getCities: ", error);
     }
   };
 
   const handleCreate = async () => {
     try {
-      await createRoom({
+      await createCity({
         name_uz,
         name_ru,
-        description_ru,
-        description_uz,
-        position,
-        count
       });
       handleClearData();
       handleGetAll();
     } catch (error) {
-      console.log("error createRoom: ", error);
+      console.log("error createCity: ", error);
     }
   };
 
   const handleUpdate = async (id: number) => {
     try {
-      await updateRoom(id, {
+      await updateCity(id, {
         name_uz,
         name_ru,
-        description_ru,
-        description_uz,
-        position,
-        count
       });
       setUpdateId(null);
       handleClearData();
       handleGetAll();
     } catch (error) {
-      console.log("error updateRoom: ", error);
+      console.log("errr updateCity: ", error);
     }
   };
 
@@ -70,30 +58,22 @@ const Room = () => {
     if (!confirmed) return;
 
     try {
-      await deleteRoom(id);
+      await deleteCity(id);
       handleGetAll();
     } catch (error) {
-      console.log("errr deleteRoom: ", error);
+      console.log("errr deleteCity: ", error);
     }
   };
 
   const handleClearData = () => {
     setName_uz("");
     setName_ru("");
-    setDescription_ru(""),
-    setDescription_uz(""),
-    setPosition(0);
-    setCount(0);
   };
 
-  const selectUpdate = (x: RoomType) => {
+  const selectUpdate = (x: CityType) => {
     handleClearData();
     setName_uz(x.name_uz);
     setName_ru(x.name_ru);
-    setCount(x.count);
-    setDescription_ru(x.description_ru),
-    setDescription_uz(x.description_uz),
-    setPosition(x.position);
     setUpdateId(x.id);
   };
 
@@ -108,7 +88,7 @@ const Room = () => {
         <h4 className="py-3 mb-0">
           <span className="text-muted fw-light"
             ><Link to={'/'}>{t('home')}</Link> / </span>
-          {t('rooms')}
+          {t('cities')}
         </h4>
       </div>
       <div className="card">
@@ -120,17 +100,13 @@ const Room = () => {
                   <th>#</th>
                   <th>Название</th>
                   <th>Nomi</th>
-                  <th>Описание</th>
-                  <th>Tavsifi</th>
-                  <th>{t('count')}</th>
-                  <th>{t('position-in-the-list')}</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-              {rooms &&
-                rooms.map((x, idx) => (
-                <tr key={"room-row-id-rooms-table-" + x.id}>
+              {cities &&
+                cities.map((x, idx) => (
+                <tr key={"city-row-id-cities-table-" + x.id}>
                   <td>{idx + 1}</td>
                   <td>
                     {updateId == x.id ? (
@@ -154,58 +130,6 @@ const Room = () => {
                       />
                     ) : (
                       x.name_uz
-                    )}
-                  </td>
-                  <td>
-                    {updateId == x.id ? (
-                      <input
-                        className="form-control"
-                        type="text"
-                        value={description_ru}
-                        onChange={(e) => setDescription_ru(e.target.value)}
-                      />
-                    ) : (
-                      x.description_ru
-                    )}
-                  </td>
-                  <td>
-                    {updateId == x.id ? (
-                      <input
-                        className="form-control"
-                        type="text"
-                        value={description_uz}
-                        onChange={(e) => setDescription_uz(e.target.value)}
-                      />
-                    ) : (
-                      x.description_uz
-                    )}
-                  </td>
-                  <td>
-                    {updateId == x.id ? (
-                      <input
-                        className="form-control"
-                        type="number"
-                        value={count}
-                        onChange={(e) =>
-                          setCount(parseInt(e.target.value))
-                        }
-                      />
-                    ) : (
-                      x.count
-                    )}
-                  </td>
-                  <td>
-                    {updateId == x.id ? (
-                      <input
-                        className="form-control"
-                        type="number"
-                        value={position}
-                        onChange={(e) =>
-                          setPosition(parseInt(e.target.value))
-                        }
-                      />
-                    ) : (
-                      x.position
                     )}
                   </td>
                   <td>
@@ -264,38 +188,6 @@ const Room = () => {
                     />
                   </td>
                   <td>
-                    <input
-                      className="form-control"
-                      type="text"
-                      value={description_ru}
-                      onChange={(e) => setDescription_ru(e.target.value)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      className="form-control"
-                      type="text"
-                      value={description_uz}
-                      onChange={(e) => setDescription_uz(e.target.value)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      className="form-control"
-                      type="number"
-                      value={count}
-                      onChange={(e) => setCount(parseInt(e.target.value))}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      className="form-control"
-                      type="number"
-                      value={position}
-                      onChange={(e) => setPosition(parseInt(e.target.value))}
-                    />
-                  </td>
-                  <td>
                     <button
                       type="submit"
                       className="btn btn-icon btn-success"
@@ -315,4 +207,4 @@ const Room = () => {
   )
 }
 
-export default Room;
+export default City;

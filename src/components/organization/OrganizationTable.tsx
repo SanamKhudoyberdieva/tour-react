@@ -19,6 +19,7 @@ const OrganizationTable = () => {
   const handleGetAll = async () => {
     try {
       const res = await getOrganizations();
+      console.log("API Response:", res.data);
       dispatch(setOrganizations(res.data));
     } catch (error) {
       console.log("error getOrganizations: ", error);
@@ -38,6 +39,7 @@ const OrganizationTable = () => {
   };
 
   useEffect(() => {
+    console.log("Organizations State:", organizations);
     handleGetAll();
   }, []);
 
