@@ -17,7 +17,6 @@ const OrganizationTable = () => {
   const handleGetAll = async () => {
     try {
       const res = await getOrganizations();
-      console.log("API Response:", res.data);
       dispatch(setOrganizations(res.data));
     } catch (error) {
       console.log("error getOrganizations: ", error);
@@ -37,7 +36,6 @@ const OrganizationTable = () => {
   };
 
   useEffect(() => {
-    console.log("Organizations State:", organizations);
     handleGetAll();
   }, []);
 
@@ -62,7 +60,7 @@ const OrganizationTable = () => {
           <tr key={"organizations-list-id-" + x.id}>
             <td>{idx + 1}</td>
             <td><Link to={`/organization/view/${x.id}`}>{x.name}</Link></td>
-            <td>{x.director}</td>
+            <td>{x.director?.full_name}</td>
             <td>
               {x.city}
             </td>
