@@ -6,13 +6,17 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { setHostels } from "../store/slices/hostelSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { createHotel, deleteHotel, getHotels, updateHotel } from "../api";
+import { createHotel, deleteHotel, getCities, getHotels, updateHotel } from "../api";
 import { faCheck, faPen, faPlus, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { setCities } from "../store/slices/citySlice";
+import { getName } from "../utils";
+import i18n from "../utils/i18n";
 
 const Hostel = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [stars, setStars] = useState(0);
+  const [city_id, setCity_id] = useState(0);
   const [name_uz, setName_uz] = useState("");
   const [name_ru, setName_ru] = useState("");
   const [position, setPosition] = useState(0);
@@ -20,6 +24,7 @@ const Hostel = () => {
   const [description_ru, setDescription_ru] = useState("");
   const [updateId, setUpdateId] = useState<number | null>(null);
   const { hostels } = useSelector((state: RootState) => state.hostelsReducer);
+  const { cities } = useSelector((state: RootState) => state.citiesReducer);
 
   const handleGetAll = async () => {
     try {
@@ -27,6 +32,15 @@ const Hostel = () => {
       dispatch(setHostels(res.data));
     } catch (error) {
       console.log("error getHotels: ", error);
+    }
+  };
+
+  const handleGetCities = async () => {
+    try {
+      const res = await getCities();
+      dispatch(setCities(res.data));
+    } catch (error) {
+      console.log("error getCities: ", error);
     }
   };
 
@@ -38,7 +52,8 @@ const Hostel = () => {
         description_ru,
         description_uz,
         position,
-        stars
+        stars,
+        city_id
       });
       handleClearData();
       handleGetAll();
@@ -55,7 +70,8 @@ const Hostel = () => {
         description_ru,
         description_uz,
         position,
-        stars
+        stars,
+        city_id
       });
       setUpdateId(null);
       handleClearData();
@@ -84,6 +100,7 @@ const Hostel = () => {
     setDescription_uz(""),
     setPosition(0);
     setStars(0);
+    setCity_id(0)
   };
 
   const selectUpdate = (x: HostelType) => {
@@ -95,10 +112,12 @@ const Hostel = () => {
     setDescription_uz(x.description_uz),
     setPosition(x.position);
     setUpdateId(x.id);
+    setCity_id(x.city.id)
   };
 
   useEffect(() => {
     handleGetAll();
+    handleGetCities()
   }, []);
 
   return (
@@ -122,6 +141,7 @@ const Hostel = () => {
                   <th>Nomi</th>
                   <th>Описание</th>
                   <th>Tavsifi</th>
+                  <th>{t('city')}</th>
                   <th>{t('stars')}</th>
                   <th>{t('position-in-the-list')}</th>
                   <th></th>
@@ -178,6 +198,30 @@ const Hostel = () => {
                       />
                     ) : (
                       x.description_uz
+                    )}
+                  </td>
+                  <td>
+                    {updateId == x.id ? (
+                      <select
+                        className="form-select"
+                        id="user-city_id"
+                        name="city_id"
+                        value={city_id}
+                        onChange={(e) => setCity_id(parseInt(e.target.value))}
+                      >
+                        <option value={0}></option>
+                        {cities &&
+                          cities.map((city, idx) => (
+                          <option
+                            key={"city_id-option-" + city.id}
+                            value={city.id}
+                          >
+                            {getName(city, i18n.language)}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      getName(x.city, i18n.language)
                     )}
                   </td>
                   <td>
@@ -280,9 +324,29 @@ const Hostel = () => {
                     />
                   </td>
                   <td>
+                    <select
+                      className="form-select"
+                      id="user-city_id"
+                      name="city_id"
+                      value={city_id}
+                      onChange={(e) => setCity_id(parseInt(e.target.value))}
+                    >
+                      <option value={0}></option>
+                      {cities &&
+                        cities.map((city) => (
+                        <option
+                          key={"city_id-option-" + city.id}
+                          value={city.id}
+                        >
+                          {getName(city, i18n.language)}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                  <td>
                     <input
                       className="form-control"
-                      type="text"
+                      type="number"
                       value={stars}
                       onChange={(e) => setStars(parseInt(e.target.value))}
                     />

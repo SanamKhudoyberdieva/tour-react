@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { TourPaginationType } from "../../store/types";
 
-const TourTable = () => {
+const TourTable = ({data}: {data: TourPaginationType}) => {
   return (
     <div className="table-responsive mb-4">
       <table className="table table-striped table-hover">
