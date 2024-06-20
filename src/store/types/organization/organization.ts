@@ -6,7 +6,10 @@ export interface OrganizationType extends  ActionsType {
   city: string,
   address: string,
   description: string,
-  director: string,
+  director: {
+    id: number,
+    full_name: string
+  } | null,
   director_id: number,
   application_count: number,
   worker_count: number

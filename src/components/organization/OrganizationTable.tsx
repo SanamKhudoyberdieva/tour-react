@@ -12,7 +12,9 @@ import { setOrganizations } from "../../store/slices/organizationSlice";
 const OrganizationTable = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { organizations } = useSelector((state: RootState) => state.organizationsReducer);
+  const { organizations } = useSelector(
+    (state: RootState) => state.organizationsReducer,
+  );
 
   const handleGetAll = async () => {
     try {
@@ -24,9 +26,9 @@ const OrganizationTable = () => {
   };
 
   const handleDelete = async (id: number) => {
-    const confirmed = window.confirm(t('are-you-sure-you-want-to-delete'));
+    const confirmed = window.confirm(t("are-you-sure-you-want-to-delete"));
     if (!confirmed) return;
-    
+
     try {
       await deleteOrganization(id);
       handleGetAll();
@@ -45,48 +47,45 @@ const OrganizationTable = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th>{t('name')}</th>
-            <th>{t('director')}</th>
-            <th>{t('city')}</th>
-            <th>{t('application-count')}</th>
-            <th>{t('worker-count')}</th>
-            <th>{t('created-at')}</th>
+            <th>{t("name")}</th>
+            <th>{t("director")}</th>
+            <th>{t("city")}</th>
+            <th>{t("application-count")}</th>
+            <th>{t("worker-count")}</th>
+            <th>{t("created-at")}</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
-        {organizations &&
-        organizations.map((x, idx) => (
-          <tr key={"organizations-list-id-" + x.id}>
-            <td>{idx + 1}</td>
-            <td><Link to={`/organization/view/${x.id}`}>{x.name}</Link></td>
-            <td>{x.director}</td>
-            <td>
-              {x.city}
-            </td>
-            <td>
-              {x.application_count}
-            </td>
-            <td>
-              {x.worker_count}
-            </td>
-            <td>
-              {formateDate(x.created_at)}
-            </td>
-            <td>
-              <Link className="btn p-1" to={`/organization/edit/${x.id}`}>
-                <FontAwesomeIcon icon={faPen}/>
-              </Link>
-              <button className="btn p-1">
-                <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(x.id)}/>
-              </button>
-            </td>
-          </tr>
-        ))}
+          {organizations &&
+            organizations.map((x, idx) => (
+              <tr key={"organizations-list-id-" + x.id}>
+                <td>{idx + 1}</td>
+                <td>
+                  <Link to={`/organization/view/${x.id}`}>{x.name}</Link>
+                </td>
+                <td>{x.director?.full_name}</td>
+                <td>{x.city}</td>
+                <td>{x.application_count}</td>
+                <td>{x.worker_count}</td>
+                <td>{formateDate(x.created_at)}</td>
+                <td>
+                  <Link className="btn p-1" to={`/organization/edit/${x.id}`}>
+                    <FontAwesomeIcon icon={faPen} />
+                  </Link>
+                  <button className="btn p-1">
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      onClick={() => handleDelete(x.id)}
+                    />
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 
 export default OrganizationTable;
