@@ -13,10 +13,12 @@ const initialState: AdminMeType = {
   username: "",
   full_name: "",
   phone: "",
-  is_deleted: null,
+  is_deleted: false,
   moduleItemKeys: [],
   organization: null,
-  organization_id: null
+  organization_id: null,
+  admins: undefined,
+  application_count: 0
 };
 
 const adminSlice = createSlice({

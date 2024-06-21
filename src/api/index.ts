@@ -48,6 +48,7 @@ export * from "./setting/delete";
 
 export * from "./tour/get";
 export * from "./tour/getAll";
+export * from "./tour/create";
 export * from "./tour/delete";
 
 export * from "./news/get";

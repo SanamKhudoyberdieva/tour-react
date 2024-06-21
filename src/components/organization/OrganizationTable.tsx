@@ -19,7 +19,6 @@ const OrganizationTable = () => {
   const handleGetAll = async () => {
     try {
       const res = await getOrganizations();
-      console.log("API Response:", res.data);
       dispatch(setOrganizations(res.data));
     } catch (error) {
       console.log("error getOrganizations: ", error);
@@ -39,7 +38,6 @@ const OrganizationTable = () => {
   };
 
   useEffect(() => {
-    console.log("Organizations State:", organizations);
     handleGetAll();
   }, []);
 
@@ -59,31 +57,34 @@ const OrganizationTable = () => {
           </tr>
         </thead>
         <tbody>
-          {organizations &&
-            organizations.map((x, idx) => (
-              <tr key={"organizations-list-id-" + x.id}>
-                <td>{idx + 1}</td>
-                <td>
-                  <Link to={`/organization/view/${x.id}`}>{x.name}</Link>
-                </td>
-                <td>{x.director?.full_name}</td>
-                <td>{x.city}</td>
-                <td>{x.application_count}</td>
-                <td>{x.worker_count}</td>
-                <td>{formateDate(x.created_at)}</td>
-                <td>
-                  <Link className="btn p-1" to={`/organization/edit/${x.id}`}>
-                    <FontAwesomeIcon icon={faPen} />
-                  </Link>
-                  <button className="btn p-1">
-                    <FontAwesomeIcon
-                      icon={faTrash}
-                      onClick={() => handleDelete(x.id)}
-                    />
-                  </button>
-                </td>
-              </tr>
-            ))}
+        {organizations &&
+        organizations.map((x, idx) => (
+          <tr key={"organizations-list-id-" + x.id}>
+            <td>{idx + 1}</td>
+            <td><Link to={`/organization/view/${x.id}`}>{x.name}</Link></td>
+            <td>{x.director?.full_name}</td>
+            <td>
+              {x.city}
+            </td>
+            <td>
+              {x.application_count}
+            </td>
+            <td>
+              {x.worker_count}
+            </td>
+            <td>
+              {formateDate(x.created_at)}
+            </td>
+            <td>
+              <Link className="btn p-1" to={`/organization/edit/${x.id}`}>
+                <FontAwesomeIcon icon={faPen}/>
+              </Link>
+              <button className="btn p-1">
+                <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(x.id)}/>
+              </button>
+            </td>
+          </tr>
+        ))}
         </tbody>
       </table>
     </div>

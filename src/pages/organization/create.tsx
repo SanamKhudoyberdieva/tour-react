@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { createOrganization } from "../../api";
 import { Link, useNavigate } from "react-router-dom";
 import { OrganizationCreateType } from "../../store/types";
+import SearchDirectorInput from "../../components/organization/SearchDirectorInput";
 
 const Create = () => {
   const { t } = useTranslation();
@@ -113,7 +114,7 @@ const Create = () => {
               />
             </div>
             <div className="col-md-6 mb-3">
-              <label className="form-label" htmlFor="organization-director">
+              {/* <label className="form-label" htmlFor="organization-director">
                 {t('director')}
               </label>
               <input
@@ -125,7 +126,8 @@ const Create = () => {
                 value={formik.values.director_id}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-              />
+              /> */}
+              <SearchDirectorInput/>
             </div>
           </div>
           <div>

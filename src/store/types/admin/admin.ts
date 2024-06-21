@@ -1,9 +1,10 @@
+import { OrganizationType } from "..";
 import { RoleType } from "../role/role";
 
 export interface AdminType {
     id: number,
-    organization: null,
-    organization_id: null,
+    organization: OrganizationType | null,
+    organization_id: number | null,
     username: string,
     full_name: string,
     phone: string,
@@ -14,6 +15,6 @@ export interface AdminType {
     last_visit: string,
     is_active: boolean,
     deleted_at: string | null,
-    is_deleted: string | null,
+    is_deleted: boolean,
     application_count: number
 }

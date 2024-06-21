@@ -49,7 +49,7 @@ const AdminTable = () => {
               <Link to={`/admin/view/${x.id}`}>{x.full_name}</Link>
             </td>
             <td>{x.phone}</td>
-            <td>{x.organization}</td>
+            <td>{x.organization?.name}</td>
             <td>{x.application_count}</td>
             <td>{formateDate(x.last_visit)}</td>
             <td>

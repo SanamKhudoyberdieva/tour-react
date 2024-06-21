@@ -1,8 +1,71 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { object, string } from "yup";
+import { TourCreateType } from "../../store/types";
+import { createTour } from "../../api";
+import { useFormik } from "formik";
+import CreateGeneralInfo from "../../components/tour/create/CreateGeneralInfo";
+import CreateAirwaysInfo from "../../components/tour/create/CreateAirwaysInfo";
+import CreateHostelInfo from "../../components/tour/create/CreateHostelInfo";
+import CreatePackageContentInfo from "../../components/tour/create/CreatePackageContentInfo";
+import CreateExtraPackageInfo from "../../components/tour/create/CreateExtraPackageInfo";
 
 const Create = () => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { airways } = useSelector((state: RootState) => state.airwaysReducer);
+  const { cities } = useSelector((state: RootState) => state.citiesReducer);
+  const { extraPackages } = useSelector((state: RootState) => state.extraPackagesReducer);
+  const { hostels } = useSelector((state: RootState) => state.hostelsReducer);
+  const { rooms } = useSelector((state: RootState) => state.roomsReducer);
+
+  const initialValues = {
+    airways: [{ airway_id: 0, city_from_id: 0, city_to_id: 0, from: "", position: 0, to: "" }],
+    baby_price: 0,
+    city_from_id: 0,
+    description_ru: "",
+    description_uz: "",
+    extra_packages: [{ extra_package_id: 0, price: 0 }],
+    from: "",
+    hotels: [{ from: "", hotel_id: 0, nutrition_type: "", position: 0, price: 0, to: "" }],
+    name_ru: "",
+    name_uz: "",
+    navigate: [{ description_ru: "", description_uz: "", from: "", name_ru: "", name_uz: "", position: 0, to: "" }],
+    night_count: 0,
+    nutrition_type: "",
+    place_by_request: false,
+    position: 0,
+    rooms: [{ count: 0, gender: 0, price: 0, room_id: 0 }],
+    tarif_type: "",
+    to: ""
+  };
+
+  const validationSchema = object({
+    name_uz: string().required("Необходимо заполнить «Название на узбекском»."),
+    name_ru: string().required("Необходимо заполнить «Название на русском»."),
+  });
+
+  const onSubmit = async (values: TourCreateType) => {
+    try {
+      await createTour(values);
+      navigate("/tour", { replace: true });
+    } catch (error) {
+      console.log("error createTour: ", error);
+    }
+  };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit,
+  });
+
   return (
     <>
       <div
@@ -17,509 +80,11 @@ const Create = () => {
         </h4>
         <Link className="btn btn-info" to={'/tour'}>Orqaga</Link>
       </div>
-      <div className="card mb-4">
-        <div className="card-body">
-          <div className="row">
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label" >тур</label>
-              <input
-                type="text"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label" 
-                >ночей</label>
-              <input
-                type="number"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label">вылет от</label>
-              <input
-                type="datetime-local"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label">до</label>
-              <input
-                type="datetime-local"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-4 col-6 mb-3">
-              <label className="form-label" 
-                >город отправления</label>
-                <input
-                type="text"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-4 col-6 mb-3">
-              <label className="form-label">
-                город
-              </label>
-              <select className="form-select">
-                <option value="1">O'zbekistom</option>
-                <option value="1">Turkiya</option>
-              </select>
-            </div>
-            <div className="col-md-4 col-6 mb-3">
-              <label className="form-label" 
-                >страна</label>
-                <select className="form-select">
-                <option value="1">Toskent</option>
-                <option value="1">Istanbul</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="card mb-4">
-        <div className="card-body">
-          <div className="row">
-            <div className="col-md-4 col-6 mb-3">
-              <label className="form-label" 
-                >дыхательные пути</label>
-              <select className="form-select">
-                <option value="option1">Gulbahor Airways</option>
-                <option value="option2">O'zb Airways</option>
-                <option value="option3">Semurg' Airways</option>
-              </select>
-            </div>
-            <div className="col-md-4 col-6 mb-3">
-              <label className="form-label" 
-                >билет</label>
-              <input
-                type="number"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-4 col-6 mb-3">
-              <label className="form-label" 
-                >СТАТУС ТРАНСПОРТ</label>
-              <input
-                type="text"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label" 
-                > город отправлени</label>
-                <input
-                type="text"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label">город</label>
-              <select className="form-select">
-                <option value="1">O'zbekistom</option>
-                <option value="1">Dubai</option>
-                <option value="1">Turkiya</option>
-              </select>
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label">от</label>
-              <input
-                type="datetime-local"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label">до</label>
-              <input
-                type="datetime-local"
-                className="form-control"
-              />
-            </div>
-            <hr />
-            <div className="col-md-4 col-6 mb-3">
-              <label className="form-label" 
-                >дыхательные пути</label>
-              <select className="form-select">
-                <option value="option1">Gulbahor Airways</option>
-                <option value="option2">O'zb Airways</option>
-                <option value="option3">Semurg' Airways</option>
-              </select>
-            </div>
-            <div className="col-md-4 col-6 mb-3">
-              <label className="form-label" 
-                >билет</label>
-              <input
-                type="number"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-4 col-6 mb-3">
-              <label className="form-label" 
-                >СТАТУС ТРАНСПОРТ</label>
-              <input
-                type="text"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label" 
-                >город отправления</label>
-              <input
-                type="text"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label" 
-                >город</label>
-              <select className="form-select">
-                <option value="1">O'zbekistom</option>
-                <option value="2">Dubai</option>
-                <option value="3">Turkiya</option>
-              </select>
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label">от</label>
-              <input
-                type="datetime-local"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label">до</label>
-              <input
-                type="datetime-local"
-                className="form-control"
-              />
-            </div>
-          </div>
-          <div>
-            <button className="btn btn-success">добавлять</button>
-          </div>
-        </div>
-      </div>
-      <div className="card mb-4">
-        <div className="card-body">
-          <div className="row">
-            <div className="col-md-3 col-6 mb-3">
-              <div className="form-group">
-                <label className="form-label" >гостиница</label>
-                <select className="form-select">
-                  <option value="option1">Hilton</option>
-                  <option value="option2">Wyndham</option>
-                  <option value="option3">City Palace</option>
-                </select>
-              </div>
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label" 
-                >питание</label>
-              <div className="d-flex">
-                <select className="form-select me-2">
-                  <option value="1">BB</option>
-                  <option value="1">PP</option>
-                </select>
-                <input
-                  type="number"
-                  className="form-control"
-                />
-              </div>
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label">от</label>
-              <input
-                type="datetime-local"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label">до</label>
-              <input
-                type="datetime-local"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label">2Adl Количество</label>
-              <input
-                type="number"
-                className="form-control"
-              />
-              <label className="form-label">2Adl цена</label>
-              <input
-                type="number"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label">3Adl Количество</label>
-              <input
-                type="number"
-                className="form-control"
-              />
-              <label className="form-label">3Adl цена</label>
-              <input
-                type="number"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label">4Adl (Мужчины) Количество</label>
-              <input
-                type="number"
-                className="form-control"
-              />
-              <label className="form-label">4Adl (Мужчины) цена</label>
-              <input
-                type="number"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label">4Adl (женщины) Количество</label>
-              <input
-                type="number"
-                className="form-control"
-              />
-              <label className="form-label">4Adl (женщины) цена</label>
-              <input
-                type="number"
-                className="form-control"
-              />
-            </div>
-            <hr />
-            <div className="col-md-3 col-6 mb-3">
-              <div className="form-group">
-                <label className="form-label">гостиница</label>
-                <select className="form-select">
-                  <option value="option1">Hilton</option>
-                  <option value="option2">Wyndham</option>
-                  <option value="option3">City Palace</option>
-                </select>
-              </div>
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label" 
-                >питание</label>
-              <select className="form-select">
-                <option value="1">BB</option>
-                <option value="1">PP</option>
-              </select>
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label">от</label>
-              <input
-                type="datetime-local"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label">до</label>
-              <input
-                type="datetime-local"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label" 
-                >2Adl Количество</label>
-                <input
-                type="number"
-                className="form-control"
-              />
-              <label className="form-label" 
-                >2Adl цена</label>
-                <input
-                type="number"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label" 
-                >3Adl Количество</label>
-                <input
-                type="number"
-                className="form-control"
-              />
-              <label className="form-label" 
-                >3Adl цена</label>
-                <input
-                type="number"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label" 
-                >4Adl (Мужчины) Количество</label>
-                <input
-                type="number"
-                className="form-control"
-              />
-              <label className="form-label" 
-                >4Adl (Мужчины) цена</label>
-                <input
-                type="number"
-                className="form-control"
-              />
-            </div>
-            <div className="col-md-3 col-6 mb-3">
-              <label className="form-label" 
-                >4Adl (женщины) Количество</label>
-                <input
-                type="number"
-                className="form-control"
-              />
-              <label className="form-label" 
-                >4Adl (женщины) цена</label>
-                <input
-                type="number"
-                className="form-control"
-              />
-            </div>
-          </div>
-          <div>
-            <button className="btn btn-success">добавлять</button>
-          </div>
-        </div>
-      </div>
-      <div className="card mb-4">
-        <div className="card-body">
-          <div className="table-responsive mb-4">
-            <table className="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Состав пакета</th>
-                  <th>от</th>
-                  <th>до</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Трансфер: Airport-Hotel-Airport(NHA TRANG)</td>
-                  <td>04.06.2024</td>
-                  <td>04.06.2024</td>
-                  <td>
-                    <button className="btn btn-icon btn-success">
-                      <FontAwesomeIcon icon={faPen} />
-                    </button>
-                    <button className="btn btn-icon btn-danger">
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>
-                    <input
-                      className="form-control"
-                      type="text"
-                      value="" />
-                  </td>
-                  <td>
-                    <input
-                      className="form-control"
-                      type="text"
-                      value="" />
-                  </td>
-                  <td>
-                    <input
-                      className="form-control"
-                      type="text"
-                      value="" />
-                  </td>
-                  <td>
-                    <button
-                      type="submit"
-                      className="btn btn-icon btn-success">
-                        <FontAwesomeIcon icon={faPlus} />
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div className="card mb-4">
-        <div className="card-body">
-          <div className="table-responsive mb-4">
-            <table className="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Дополнительные услуги</th>
-                  <th>от</th>
-                  <th>до</th>
-                  <th>количество</th>
-                  <th>цена</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Страхование</td>
-                  <td>04.06.2024</td>
-                  <td>04.06.2024</td>
-                  <td>2</td>
-                  <td>$50</td>
-                  <td>
-                    <button className="btn btn-icon btn-success">
-                      <FontAwesomeIcon icon={faPen} />
-                    </button>
-                    <button className="btn btn-icon btn-danger">
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>
-                    <input
-                      className="form-control"
-                      type="text"
-                      value="" />
-                  </td>
-                  <td>
-                    <input
-                      className="form-control"
-                      type="text"
-                      value="" />
-                  </td>
-                  <td>
-                    <input
-                      className="form-control"
-                      type="text"
-                      value="" />
-                  </td>
-                  <td>
-                    <input
-                      className="form-control"
-                      type="text"
-                      value="" />
-                  </td>
-                  <td>
-                    <input
-                      className="form-control"
-                      type="text"
-                      value="" />
-                  </td>
-                  <td>
-                    <button
-                      type="submit"
-                      className="btn btn-icon btn-success">
-                        <FontAwesomeIcon icon={faPlus} />
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <CreateGeneralInfo />
+      <CreateAirwaysInfo formik={formik} airways={airways} cities={cities} />
+      <CreateHostelInfo />
+      <CreatePackageContentInfo />
+      <CreateExtraPackageInfo />
       <div className="card">
         <div className="card-body">
           <div className="row">
