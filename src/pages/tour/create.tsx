@@ -109,7 +109,7 @@ const Create = () => {
           Orqaga
         </Link>
       </div>
-      <CreateGeneralInfo />
+      <CreateGeneralInfo formik={formik} cities={cities} />
       {airways && cities && (
         <CreateAirwaysInfo formik={formik} airways={airways} cities={cities} />
       )}
