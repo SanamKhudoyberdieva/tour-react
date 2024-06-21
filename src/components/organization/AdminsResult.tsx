@@ -26,7 +26,6 @@ const AdminsResult = ({
 console.log("admin", admin)
   return (
     <div className="pr-input-result-container">
-      <h1>hello</h1>
       {admin &&
         admin.map((admin, i) => (
           <label className="pr-checkbox-container mb-2" key={"admin-index-" + i}>
