@@ -2,7 +2,11 @@ import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBed, faBox, faChartPie, faChevronLeft, faCircleCheck, faCity, faCodeBranch, faGear, faHotel, faNewspaper, faPlane, faRectangleList, faTicket, faUserTie } from "@fortawesome/free-solid-svg-icons";
 
-const Sidebar = () => {
+interface SidebarProps {
+  setIsShowAside: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ setIsShowAside }) => {
   const location = useLocation();
 
   return (
@@ -18,9 +22,10 @@ const Sidebar = () => {
           </span>
         </Link>
         <button
+          onClick={() => setIsShowAside(false)}
           className="layout-menu-toggle menu-link text-large ms-auto d-flex d-xl-none"
         >
-            <FontAwesomeIcon icon={faChevronLeft} />
+          <FontAwesomeIcon className="align-middle" icon={faChevronLeft} />
         </button>
       </div>
 

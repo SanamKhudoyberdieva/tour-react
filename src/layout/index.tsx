@@ -4,7 +4,7 @@ import Sidebar from "../components/Sidebar";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { logOut } from "../store/slices/loginSlice";
-import { getAdmin, getAirways, getCities, getExtraPackages, getHotels, getRoles } from "../api";
+import { getAdmin, getAirways, getCities, getExtraPackages, getHotels, getOrganizations, getRoles } from "../api";
 import { setAdmin } from "../store/slices/adminSlice";
 import { AxiosErrorType } from "../api/api";
 import { setRoles } from "../store/slices/rolesSlice";
@@ -12,6 +12,7 @@ import { setAirways } from "../store/slices/airwaySlice";
 import { setCities } from "../store/slices/citySlice";
 import { setHostels } from "../store/slices/hostelSlice";
 import { setExtraPackages } from "../store/slices/extraPackageSlice";
+import { setOrganizations } from "../store/slices/organizationSlice";
 
 const Layout = () => {
   const [isShowAside, setIsShowAside] = useState(false);
@@ -63,6 +64,15 @@ const Layout = () => {
     }
   };
 
+  const handleGetOrganization = async () => {
+    try {
+      const res = await getOrganizations();
+      dispatch(setOrganizations(res.data));
+    } catch (error) {
+      console.log("error getOrganizations: ", error);
+    }
+  };
+
   const handleGetMe = async () => {
     try {
       const res = await getAdmin();
@@ -94,15 +104,14 @@ const Layout = () => {
     handleGetCities();
     handleGetHostels();
     handleGetExtraPackages();
+    handleGetOrganization();
   }, []);
 
   return (
-    <div
-    //  className="aside-mob-show"
-    >
+    <div className={isShowAside ? "aside-mob-show" : ""}>
       <div className="layout-wrapper layout-content-navbar">
         <div className="layout-container">
-          <Sidebar  />
+          <Sidebar setIsShowAside={setIsShowAside} />
           {/* <!-- Layout container --> */}
           <div className="layout-page">
             <Navbar setIsShowAside={setIsShowAside} />
@@ -121,6 +130,7 @@ const Layout = () => {
         {/* <!-- Overlay --> */}
         <div
           className="layout-overlay layout-menu-toggle"
+          onClick={() => setIsShowAside(false)}
         ></div>
       </div>
     </div>

@@ -17,6 +17,7 @@ const SearchDirectorInput = () => {
     admins?.filter((admin: { full_name: string }) =>
       admin.full_name.toLowerCase().includes(searchAdmin.toLowerCase()),
     ) || [];
+    
   console.log("searchAdmin", searchAdmin);
   console.log("filteredAdmins", admins);
 

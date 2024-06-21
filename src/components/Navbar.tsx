@@ -1,12 +1,11 @@
+import { RootState } from "../store";
 import { Link } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
-import LanguageDropdown from "./LanguageDropdown";
-import noPhotoImage from "../../public/img/no-photo.webp";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store";
+import LanguageDropdown from "./LanguageDropdown";
 import { logOut } from "../store/slices/loginSlice";
-
+import { useDispatch, useSelector } from "react-redux";
+import noPhotoImage from "../../public/img/no-photo.webp";
 interface NavbarProps {
   setIsShowAside: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -70,7 +69,7 @@ const Navbar: React.FC<NavbarProps> = ({ setIsShowAside }) => {
                   <div className="d-flex">
                     <div className="flex-shrink-0 me-3 dt-dropdown-user">
                       <div className="avatar avatar-online">
-                        <Link to="">
+                        <Link to={`/admin/view/${admin.id}`}>
                           <img
                             src={noPhotoImage}
                             alt=""
@@ -81,15 +80,15 @@ const Navbar: React.FC<NavbarProps> = ({ setIsShowAside }) => {
                     </div>
                     <div className="flex-grow-1">
                       <span className="fw-semibold d-block">
-                      <Link to="">Admin name</Link>
+                      <Link to={`/admin/view/${admin.id}`}>{admin.full_name}</Link>
                       </span>
                     </div>
                   </div>
                 </div>
                 <div className="dropdown-divider"></div>
-                <Link to="/" className="dropdown-item" onClick={hendleLogOut} >
+                <Link to="/login" className="dropdown-item" onClick={hendleLogOut} >
                   <i className="bx bx-power-off me-2"></i>
-                  <span className="align-middle">Log out</span>
+                  <span className="align-middle">{t('log-out')}</span>
                 </Link>
               </Dropdown.Menu>
             </Dropdown>
