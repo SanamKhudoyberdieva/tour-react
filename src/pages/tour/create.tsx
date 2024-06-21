@@ -1,23 +1,20 @@
-import { Link, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { object, string } from "yup";
-import { TourCreateType } from "../../store/types";
-import { createTour } from "../../api";
 import { useFormik } from "formik";
+import { object, string } from "yup";
+import { createTour } from "../../api";
+import { RootState } from "../../store";
+import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { TourCreateType } from "../../store/types";
+import { Link, useNavigate } from "react-router-dom";
+import CreateHostelInfo from "../../components/tour/create/CreateHostelInfo";
 import CreateGeneralInfo from "../../components/tour/create/CreateGeneralInfo";
 import CreateAirwaysInfo from "../../components/tour/create/CreateAirwaysInfo";
-import CreateHostelInfo from "../../components/tour/create/CreateHostelInfo";
-import CreatePackageContentInfo from "../../components/tour/create/CreatePackageContentInfo";
 import CreateExtraPackageInfo from "../../components/tour/create/CreateExtraPackageInfo";
+import CreatePackageContentInfo from "../../components/tour/create/CreatePackageContentInfo";
 
 const Create = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const { airways } = useSelector((state: RootState) => state.airwaysReducer);
   const { cities } = useSelector((state: RootState) => state.citiesReducer);
@@ -101,10 +98,10 @@ const Create = () => {
       <div className="d-flex mb-4 align-items-center justify-content-between">
         <h4 className="py-3 mb-0">
           <span className="text-muted fw-light">
-            <Link to={"/"}>Asosiy</Link> /
+            <Link to={"/"}>Asosiy</Link> / {' '}
           </span>
           <span className="text-muted fw-light">
-            <Link to={"/tour"}>Tur Paketlar</Link> /
+            <Link to={"/tour"}>Tur Paketlar</Link> / {' '}
           </span>
           Yaratish
         </h4>
@@ -116,7 +113,7 @@ const Create = () => {
       {airways && cities && (
         <CreateAirwaysInfo formik={formik} airways={airways} cities={cities} />
       )}
-      <CreateHostelInfo />
+      <CreateHostelInfo formik={formik} hostels={hostels} />
       <CreatePackageContentInfo />
       <CreateExtraPackageInfo />
       <div className="card">

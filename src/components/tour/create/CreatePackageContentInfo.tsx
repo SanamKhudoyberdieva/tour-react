@@ -2,6 +2,7 @@ import { faPen, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const CreatePackageContentInfo = () => {
+  
   return (
     <div className="card mb-4">
       <div className="card-body">

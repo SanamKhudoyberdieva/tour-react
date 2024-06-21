@@ -1,9 +1,8 @@
+import { FormikProps } from "formik";
+import i18n from "../../../utils/i18n";
+import { getName } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import { AirwayType, CityType } from "../../../store/types";
-import { FormikProps } from "formik";
-import { getName } from "../../../utils";
-import i18n from "../../../utils/i18n";
-
 interface CreateAirwaysInfoProps {
   formik: FormikProps<any>;
   airways: AirwayType[];
@@ -12,7 +11,7 @@ interface CreateAirwaysInfoProps {
 
 const CreateAirwaysInfo: React.FC<CreateAirwaysInfoProps> = ({ formik, airways, cities }) => {
   const { t } = useTranslation();
-console.log("airways", airways)
+
   return (
     <div className="card mb-4">
       <div className="card-body">
@@ -98,27 +97,35 @@ console.log("airways", airways)
               ))}
             </select>
           </div>
-          <div className="col-md-3 col-6 mb-3">
+          <div className="col-md-4 mb-3">
             <label className="form-label">{t('time-from')}</label>
             <input
               type="datetime-local"
               className="form-control"
+              name='from'
+              value={formik.values.from}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
           </div>
-          <div className="col-md-3 col-6 mb-3">
+          <div className="col-md-4 mb-3">
             <label className="form-label">{t('time-to')}</label>
             <input
               type="datetime-local"
               className="form-control"
+              name='to'
+              value={formik.values.to}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
           </div>
-          <div className="col-md-3 mb-3">
-            <label className="form-label" htmlFor="tour-position">
+          <div className="col-md-4 mb-3">
+            <label className="form-label" htmlFor="tour-airway-position">
               {t("position-in-the-list")}
             </label>
             <input
               type="number"
-              id="tour-position"
+              id="tour-airway-position"
               className="form-control"
               name="position"
               value={formik.values.position ? formik.values.position : ""}
@@ -129,7 +136,7 @@ console.log("airways", airways)
           <hr />
         </div>
         <div>
-          <button className="btn btn-success">добавлять</button>
+          <button className="btn btn-success">{t('add')}</button>
         </div>
       </div>
     </div>

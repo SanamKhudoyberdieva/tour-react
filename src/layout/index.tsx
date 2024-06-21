@@ -4,10 +4,13 @@ import Sidebar from "../components/Sidebar";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { logOut } from "../store/slices/loginSlice";
-import { getAdmin, getRoles } from "../api";
+import { getAdmin, getAirways, getCities, getHotels, getRoles } from "../api";
 import { setAdmin } from "../store/slices/adminSlice";
 import { AxiosErrorType } from "../api/api";
 import { setRoles } from "../store/slices/rolesSlice";
+import { setAirways } from "../store/slices/airwaySlice";
+import { setCities } from "../store/slices/citySlice";
+import { setHostels } from "../store/slices/hostelSlice";
 
 const Layout = () => {
   const [isShowAside, setIsShowAside] = useState(false);
@@ -15,6 +18,33 @@ const Layout = () => {
 
   const hendleLogOut = () => {
     dispatch(logOut());
+  };
+
+  const handleGetAirways = async () => {
+    try {
+      const res = await getAirways();
+      dispatch(setAirways(res.data));
+    } catch (error) {
+      console.log("error getAirways: ", error);
+    }
+  };
+
+  const handleGetCities = async () => {
+    try {
+      const res = await getCities();
+      dispatch(setCities(res.data));
+    } catch (error) {
+      console.log("error getCities: ", error);
+    }
+  };
+
+  const handleGetHostels = async () => {
+    try {
+      const res = await getHotels();
+      dispatch(setHostels(res.data));
+    } catch (error) {
+      console.log("error getHotels: ", error);
+    }
   };
 
   const handleGetRoles = async () => {
@@ -50,6 +80,9 @@ const Layout = () => {
   useEffect(() => {
     handleGetRoles();
     handleGetMe();
+    handleGetAirways();
+    handleGetCities();
+    handleGetHostels();
   }, []);
 
   return (
