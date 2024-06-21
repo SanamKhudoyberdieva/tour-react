@@ -50,6 +50,7 @@ export * from "./tour/get";
 export * from "./tour/getAll";
 export * from "./tour/create";
 export * from "./tour/delete";
+export * from "./tour/extrapackage";
 
 export * from "./news/get";
 export * from "./news/getAll";

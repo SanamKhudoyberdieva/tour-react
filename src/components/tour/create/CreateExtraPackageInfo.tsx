@@ -1,11 +1,8 @@
-import { faPen, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store';
 import SearchExtraPackage from './SearchExtraPackage';
 
 const CreateExtraPackageInfo = () => {
-  const { extraPackages } = useSelector((state: RootState) => state.extraPackagesReducer);
 
   return (
     <div className="card mb-4">
@@ -20,7 +17,7 @@ const CreateExtraPackageInfo = () => {
                 {/* <th>от</th> */}
                 {/* <th>до</th> */}
                 {/* <th>количество</th> */}
-                {/* <th>цена</th> */}
+                <th>цена</th>
                 <th></th>
               </tr>
             </thead>
@@ -31,7 +28,7 @@ const CreateExtraPackageInfo = () => {
                 {/* <td>04.06.2024</td> */}
                 {/* <td>04.06.2024</td> */}
                 {/* <td>2</td> */}
-                {/* <td>$50</td> */}
+                <td>$50</td>
                 <td>
                   <button className="btn btn-icon btn-success">
                     <FontAwesomeIcon icon={faPen} />
