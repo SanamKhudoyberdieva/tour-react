@@ -4,13 +4,14 @@ import Sidebar from "../components/Sidebar";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { logOut } from "../store/slices/loginSlice";
-import { getAdmin, getAirways, getCities, getHotels, getRoles } from "../api";
+import { getAdmin, getAirways, getCities, getExtraPackages, getHotels, getRoles } from "../api";
 import { setAdmin } from "../store/slices/adminSlice";
 import { AxiosErrorType } from "../api/api";
 import { setRoles } from "../store/slices/rolesSlice";
 import { setAirways } from "../store/slices/airwaySlice";
 import { setCities } from "../store/slices/citySlice";
 import { setHostels } from "../store/slices/hostelSlice";
+import { setExtraPackages } from "../store/slices/extraPackageSlice";
 
 const Layout = () => {
   const [isShowAside, setIsShowAside] = useState(false);
@@ -77,12 +78,22 @@ const Layout = () => {
     }
   };
 
+  const handleGetExtraPackages = async () => {
+    try {
+      const res = await getExtraPackages();
+      dispatch(setExtraPackages(res.data));
+    } catch (error) {
+      console.log("error getExtraPackages: ", error);
+    }
+  };
+
   useEffect(() => {
     handleGetRoles();
     handleGetMe();
     handleGetAirways();
     handleGetCities();
     handleGetHostels();
+    handleGetExtraPackages();
   }, []);
 
   return (

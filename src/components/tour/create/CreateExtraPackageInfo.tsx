@@ -1,21 +1,26 @@
 import { faPen, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react'
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+import SearchExtraPackage from './SearchExtraPackage';
 
 const CreateExtraPackageInfo = () => {
+  const { extraPackages } = useSelector((state: RootState) => state.extraPackagesReducer);
+
   return (
     <div className="card mb-4">
       <div className="card-body">
         <div className="table-responsive mb-4">
+        <SearchExtraPackage  />
           <table className="table table-striped table-hover">
             <thead>
               <tr>
                 <th>#</th>
                 <th>Дополнительные услуги</th>
-                <th>от</th>
-                <th>до</th>
-                <th>количество</th>
-                <th>цена</th>
+                {/* <th>от</th> */}
+                {/* <th>до</th> */}
+                {/* <th>количество</th> */}
+                {/* <th>цена</th> */}
                 <th></th>
               </tr>
             </thead>
@@ -23,56 +28,16 @@ const CreateExtraPackageInfo = () => {
               <tr>
                 <td>1</td>
                 <td>Страхование</td>
-                <td>04.06.2024</td>
-                <td>04.06.2024</td>
-                <td>2</td>
-                <td>$50</td>
+                {/* <td>04.06.2024</td> */}
+                {/* <td>04.06.2024</td> */}
+                {/* <td>2</td> */}
+                {/* <td>$50</td> */}
                 <td>
                   <button className="btn btn-icon btn-success">
                     <FontAwesomeIcon icon={faPen} />
                   </button>
                   <button className="btn btn-icon btn-danger">
                     <FontAwesomeIcon icon={faTrash} />
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>
-                  <input
-                    className="form-control"
-                    type="text"
-                    value="" />
-                </td>
-                <td>
-                  <input
-                    className="form-control"
-                    type="text"
-                    value="" />
-                </td>
-                <td>
-                  <input
-                    className="form-control"
-                    type="text"
-                    value="" />
-                </td>
-                <td>
-                  <input
-                    className="form-control"
-                    type="text"
-                    value="" />
-                </td>
-                <td>
-                  <input
-                    className="form-control"
-                    type="text"
-                    value="" />
-                </td>
-                <td>
-                  <button
-                    type="submit"
-                    className="btn btn-icon btn-success">
-                      <FontAwesomeIcon icon={faPlus} />
                   </button>
                 </td>
               </tr>
