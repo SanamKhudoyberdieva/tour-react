@@ -1,8 +1,17 @@
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SearchExtraPackage from './SearchExtraPackage';
+import { FormikProps } from 'formik';
+import { ExtraPackageType } from '../../../store/types';
+import { useTranslation } from 'react-i18next';
 
-const CreateExtraPackageInfo = () => {
+interface CreateExtraPackageInfoProps {
+  formik: FormikProps<any>;
+  extraPackages: ExtraPackageType[];
+}
+
+const CreateExtraPackageInfo: React.FC<CreateExtraPackageInfoProps> = ({ formik, extraPackages }) => {
+  const { t } = useTranslation();
 
   return (
     <div className="card mb-4">
@@ -14,9 +23,6 @@ const CreateExtraPackageInfo = () => {
               <tr>
                 <th>#</th>
                 <th>Дополнительные услуги</th>
-                {/* <th>от</th> */}
-                {/* <th>до</th> */}
-                {/* <th>количество</th> */}
                 <th>цена</th>
                 <th></th>
               </tr>
@@ -25,9 +31,6 @@ const CreateExtraPackageInfo = () => {
               <tr>
                 <td>1</td>
                 <td>Страхование</td>
-                {/* <td>04.06.2024</td> */}
-                {/* <td>04.06.2024</td> */}
-                {/* <td>2</td> */}
                 <td>$50</td>
                 <td>
                   <button className="btn btn-icon btn-success">

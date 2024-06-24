@@ -1,7 +1,14 @@
 import { faPen, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FormikProps } from 'formik';
+import { useTranslation } from 'react-i18next';
 
-const CreatePackageContentInfo = () => {
+interface CreatePackageContentInfoProps {
+  formik: FormikProps<any>;
+}
+
+const CreatePackageContentInfo: React.FC<CreatePackageContentInfoProps> = ({ formik }) => {
+  const { t } = useTranslation();
   
   return (
     <div className="card mb-4">

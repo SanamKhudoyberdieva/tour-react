@@ -4,7 +4,7 @@ import Sidebar from "../components/Sidebar";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { logOut } from "../store/slices/loginSlice";
-import { getAdmin, getAirways, getCities, getExtraPackages, getHotels, getOrganizations, getRoles } from "../api";
+import { getAdmin, getAirways, getCities, getExtraPackages, getHotels, getOrganizations, getRoles, getRooms } from "../api";
 import { setAdmin } from "../store/slices/adminSlice";
 import { AxiosErrorType } from "../api/api";
 import { setRoles } from "../store/slices/rolesSlice";
@@ -13,6 +13,7 @@ import { setCities } from "../store/slices/citySlice";
 import { setHostels } from "../store/slices/hostelSlice";
 import { setExtraPackages } from "../store/slices/extraPackageSlice";
 import { setOrganizations } from "../store/slices/organizationSlice";
+import { setRooms } from "../store/slices/roomSlice";
 
 const Layout = () => {
   const [isShowAside, setIsShowAside] = useState(false);
@@ -73,6 +74,15 @@ const Layout = () => {
     }
   };
 
+  const handleGetRoom = async () => {
+    try {
+      const res = await getRooms();
+      dispatch(setRooms(res.data));
+    } catch (error) {
+      console.log("error getRooms: ", error);
+    }
+  };
+
   const handleGetMe = async () => {
     try {
       const res = await getAdmin();
@@ -105,6 +115,7 @@ const Layout = () => {
     handleGetHostels();
     handleGetExtraPackages();
     handleGetOrganization();
+    handleGetRoom();
   }, []);
 
   return (

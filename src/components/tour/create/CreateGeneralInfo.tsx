@@ -113,10 +113,49 @@ const CreateGeneralInfo: React.FC<CreateAirwaysInfoProps> = ({ formik, cities })
               onBlur={formik.handleBlur}
             />
           </div>
+          <div className="col-md-3 mb-3">
+            <label className="form-label">{t('baby-price')}</label>
+            <input
+              type="number"
+              className="form-control"
+              name='baby_price'
+              value={formik.values.baby_price}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+          </div>
+          <div className="col-md-3 mb-3">
+            <label className="form-label" 
+              >{t("nutrition-type")}</label>
+            <div className="d-flex">
+              <input
+                type="text"
+                className="form-control"
+                name="nutrition_type"
+                value={formik.values.nutrition_type}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+            </div>
+          </div>
+          <div className="col-md-3 mb-3">
+            <label className="form-label" htmlFor="tour-airway-position">
+              {t("position-in-the-list")}
+            </label>
+            <input
+              type="number"
+              id="tour-airway-position"
+              className="form-control"
+              name="position"
+              value={formik.values.position ? formik.values.position : ""}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-export default CreateGeneralInfo
+export default CreateGeneralInfo;

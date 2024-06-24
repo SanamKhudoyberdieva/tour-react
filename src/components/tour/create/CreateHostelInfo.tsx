@@ -48,17 +48,9 @@ const CreateHostelInfo: React.FC<CreateHostelInfoProps> = ({ formik, hostels }) 
             <div className="d-flex">
               <input
                 type="text"
-                className="form-control me-2"
+                className="form-control"
                 name="nutrition_type"
                 value={formik.values.nutrition_type}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-              <input
-                type="number"
-                className="form-control"
-                name="price"
-                value={formik.values.price}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
@@ -96,6 +88,17 @@ const CreateHostelInfo: React.FC<CreateHostelInfoProps> = ({ formik, hostels }) 
               className="form-control"
               name="position"
               value={formik.values.position ? formik.values.position : ""}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+          </div>
+          <div className="col-md-4 mb-3">
+            <label className="form-label">{t('price')}</label>
+            <input
+              type="number"
+              className="form-control"
+              name='price'
+              value={formik.values.price}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />

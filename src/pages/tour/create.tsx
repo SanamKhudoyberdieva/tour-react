@@ -9,8 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CreateHostelInfo from "../../components/tour/create/CreateHostelInfo";
 import CreateGeneralInfo from "../../components/tour/create/CreateGeneralInfo";
 import CreateAirwaysInfo from "../../components/tour/create/CreateAirwaysInfo";
-import CreateExtraPackageInfo from "../../components/tour/create/CreateExtraPackageInfo";
-import CreatePackageContentInfo from "../../components/tour/create/CreatePackageContentInfo";
+import CreateRoomInfo from "../../components/tour/create/CreateRoomInfo";
 
 const Create = () => {
   const { t } = useTranslation();
@@ -18,9 +17,6 @@ const Create = () => {
 
   const { airways } = useSelector((state: RootState) => state.airwaysReducer);
   const { cities } = useSelector((state: RootState) => state.citiesReducer);
-  const { extraPackages } = useSelector(
-    (state: RootState) => state.extraPackagesReducer,
-  );
   const { hostels } = useSelector((state: RootState) => state.hostelsReducer);
   const { rooms } = useSelector((state: RootState) => state.roomsReducer);
 
@@ -114,53 +110,24 @@ const Create = () => {
         <CreateAirwaysInfo formik={formik} airways={airways} cities={cities} />
       )}
       <CreateHostelInfo formik={formik} hostels={hostels} />
-      <CreatePackageContentInfo />
-      <CreateExtraPackageInfo />
+      <CreateRoomInfo formik={formik} rooms={rooms}/>
+      {/* <CreatePackageContentInfo /> */}
+      {/* <CreateExtraPackageInfo /> */}
       <div className="card">
         <div className="card-body">
           <div className="row">
-            <div className="mb-3">
+            <div className="col-md-6 mb-3">
               <label className="form-label">ОПИСАНИЕ</label>
               <textarea className="form-control"></textarea>
             </div>
-            <div className="col-md-4 d-flex align-items-center mb-3">
-              <input className="form-check" type="checkbox" />
-              <label className="form-label mb-0 ms-2">
-                дети на отдельной кровати
-              </label>
-            </div>
-            <div className="col-md-4 d-flex align-items-center mb-3">
-              <input className="form-check" type="checkbox" />
-              <label className="form-label mb-0 ms-2">
-                нет остановки продажи
-              </label>
-            </div>
-            <div className="col-md-4 d-flex align-items-center mb-3">
-              <input className="form-check" type="checkbox" />
-              <label className="form-label mb-0 ms-2">
-                есть места на рейсы
-              </label>
-            </div>
-            <div className="col-md-4 d-flex align-items-center mb-3">
-              <input className="form-check" type="checkbox" />
-              <label className="form-label mb-0 ms-2">
-                мгновенное подтверждение
-              </label>
-            </div>
-            <div className="col-md-4 d-flex align-items-center mb-3">
-              <input className="form-check" type="checkbox" />
-              <label className="form-label mb-0 ms-2">
-                места повышенной комфортности
-              </label>
-            </div>
-            <div className="col-md-4 d-flex align-items-center mb-3">
-              <input className="form-check" type="checkbox" />
-              <label className="form-label mb-0 ms-2">инвалидная коляска</label>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Tasnifi</label>
+              <textarea className="form-control"></textarea>
             </div>
             <div>
-              <button type="submit" className="btn btn-success">
-                Saqlash
-              </button>
+              <Link to={'/tour/create-two'} type="submit" className="btn btn-success">
+                {t('next')}
+              </Link>
             </div>
           </div>
         </div>
