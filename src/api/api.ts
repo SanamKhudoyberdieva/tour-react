@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 
 const api = axios.create({
-    baseURL: 'http://80.90.188.12:8000',
+    baseURL: 'https://backend.poytaxt-team.uz',
 });
 
 api.interceptors.request.use(async (config) => {
