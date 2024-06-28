@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { object, string } from "yup";
+import { number, object, string } from "yup";
 import { createTour } from "../../api";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
@@ -32,6 +32,7 @@ const Create = () => {
       },
     ],
     baby_price: 0,
+    child_price: 0,
     city_from_id: 0,
     description_ru: "",
     description_uz: "",
@@ -61,12 +62,12 @@ const Create = () => {
       },
     ],
     night_count: 0,
-    nutrition_type: "",
     place_by_request: false,
     position: 0,
     rooms: [{ count: 0, gender: 0, price: 0, room_id: 0 }],
     tarif_type: "",
     to: "",
+    visa_price: 0,
   };
 
   const validationSchema = object({
@@ -94,10 +95,10 @@ const Create = () => {
       <div className="d-flex mb-4 align-items-center justify-content-between">
         <h4 className="py-3 mb-0">
           <span className="text-muted fw-light">
-            <Link to={"/"}>Asosiy</Link> / {' '}
+            <Link to={"/"}>Asosiy</Link> /{" "}
           </span>
           <span className="text-muted fw-light">
-            <Link to={"/tour"}>Tur Paketlar</Link> / {' '}
+            <Link to={"/tour"}>Tur Paketlar</Link> /{" "}
           </span>
           Yaratish
         </h4>
@@ -110,7 +111,7 @@ const Create = () => {
         <CreateAirwaysInfo formik={formik} airways={airways} cities={cities} />
       )}
       <CreateHostelInfo formik={formik} hostels={hostels} />
-      <CreateRoomInfo formik={formik} rooms={rooms}/>
+      <CreateRoomInfo formik={formik} rooms={rooms} />
       {/* <CreatePackageContentInfo /> */}
       {/* <CreateExtraPackageInfo /> */}
       <div className="card">
@@ -125,8 +126,12 @@ const Create = () => {
               <textarea className="form-control"></textarea>
             </div>
             <div>
-              <Link to={'/tour/create-two'} type="submit" className="btn btn-success">
-                {t('next')}
+              <Link
+                to={"/tour/create-two"}
+                type="submit"
+                className="btn btn-success"
+              >
+                {t("next")}
               </Link>
             </div>
           </div>

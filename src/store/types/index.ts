@@ -35,4 +35,4 @@ export * from "./module/module";
 export * from "./moduleItem/moduleItem";
 
 export * from "./tour/all";
-export * from "./tour/create";
+export * from "./tour/create/create";
