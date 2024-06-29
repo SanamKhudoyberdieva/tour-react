@@ -1,14 +1,40 @@
 import { faPen, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { createTourNavigate } from '../../../api/tour/navigate';
+import { useFormik } from 'formik';
+import { TourCreateNavigateType } from '../../../store/types/tour/create-two/navigate';
 
-interface CreatePackageContentInfoProps {
-  formik: FormikProps<any>;
-}
-
-const CreatePackageContentInfo: React.FC<CreatePackageContentInfoProps> = ({ formik }) => {
+const CreatePackageContentInfo = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const initialValues: TourCreateNavigateType = {
+    description_ru: '',
+    description_uz: '',
+    from: '',
+    name_ru: '',
+    name_uz: '',
+    position: 0,
+    to: '',
+    id: 0,
+    tour_id: 0
+  };
+
+  const onSubmit = async (values: TourCreateNavigateType) => {
+    try {
+      await createTourNavigate(values.tour_id, values);
+      navigate("/tour", { replace: true });
+    } catch (error) {
+      console.log("error createTourExtraPackage: ", error);
+    }
+  };
+
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+  });
   
   return (
     <div className="card mb-4">

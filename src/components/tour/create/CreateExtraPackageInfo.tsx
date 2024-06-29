@@ -1,23 +1,45 @@
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SearchExtraPackage from './SearchExtraPackage';
-import { FormikProps } from 'formik';
-import { ExtraPackageType } from '../../../store/types';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+import { TourCreateExtraPackageType } from '../../../store/types/tour/create-two/extraPackage';
+import { createTourExtraPackage } from '../../../api';
+import { useFormik } from 'formik';
 
-interface CreateExtraPackageInfoProps {
-  formik: FormikProps<any>;
-  extraPackages: ExtraPackageType[];
-}
-
-const CreateExtraPackageInfo: React.FC<CreateExtraPackageInfoProps> = ({ formik, extraPackages }) => {
+const CreateExtraPackageInfo = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { extraPackages } = useSelector((state: RootState) => state.extraPackagesReducer);
+
+  const initialValues: TourCreateExtraPackageType = {
+    extra_package_id: 0,
+    id: 0,
+    price: 0,
+    tour_id: 0
+  };
+
+  const onSubmit = async (values: TourCreateExtraPackageType) => {
+    try {
+      await createTourExtraPackage(values.tour_id, values);
+      navigate("/tour", { replace: true });
+    } catch (error) {
+      console.log("error createTourExtraPackage: ", error);
+    }
+  };
+
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+  });
 
   return (
     <div className="card mb-4">
       <div className="card-body">
         <div className="table-responsive mb-4">
-        <SearchExtraPackage  />
+          <SearchExtraPackage />
           <table className="table table-striped table-hover">
             <thead>
               <tr>
@@ -46,7 +68,7 @@ const CreateExtraPackageInfo: React.FC<CreateExtraPackageInfoProps> = ({ formik,
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default CreateExtraPackageInfo;

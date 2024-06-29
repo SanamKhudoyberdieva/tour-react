@@ -1,6 +1,6 @@
+import { TourCreateExtraPackageType } from '../../store/types/tour/create-two/extraPackage';
 import api from '../api';
-import { TourCreateExtraPackageType } from '../../store/types/tour/extraPackageTour';
 
-export const createTourExtraPackage = async (id: number, obj: TourCreateExtraPackageType[]) => {
+export const createTourExtraPackage = async (id: number, obj: TourCreateExtraPackageType) => {
     return await api.post(`/api/tour/extra-package/${id}`, obj);
 }
