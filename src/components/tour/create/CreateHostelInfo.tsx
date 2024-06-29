@@ -1,7 +1,7 @@
 import { FormikProps } from "formik";
 import { useTranslation } from "react-i18next";
 import { HostelType } from "../../../store/types";
-import { getName } from "../../../utils";
+import { formatDateToISOString, getName } from "../../../utils";
 import i18n from "../../../utils/i18n";
 interface CreateHostelInfoProps {
   formik: FormikProps<any>;
@@ -43,13 +43,14 @@ const CreateHostelInfo: React.FC<CreateHostelInfoProps> = ({ formik, hostels }) 
             </select>
           </div>
           <div className="col-md-4 mb-3">
-            <label className="form-label" 
+            <label className="form-label" htmlFor="tour-hostels-nutrition_type"
               >{t("nutrition-type")}</label>
             <div className="d-flex">
               <input
                 type="text"
                 className="form-control"
                 name="nutrition_type"
+                id="tour-hostels-nutrition_type"
                 value={formik.values.nutrition_type}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -57,34 +58,42 @@ const CreateHostelInfo: React.FC<CreateHostelInfoProps> = ({ formik, hostels }) 
             </div>
           </div>
           <div className="col-md-4 mb-3">
-            <label className="form-label">{t('time-from')}</label>
+            <label className="form-label" htmlFor="tour-hostels-time_from">{t('time-from')}</label>
             <input
               type="datetime-local"
               className="form-control"
               name='from'
+              id="tour-hostels-time_from"
               value={formik.values.from}
-              onChange={formik.handleChange}
+              onChange={(event) => {
+                const formattedValue = formatDateToISOString(event.target.value);
+                formik.setFieldValue('from', formattedValue);
+              }}
               onBlur={formik.handleBlur}
             />
           </div>
           <div className="col-md-4 mb-3">
-            <label className="form-label">{t('time-to')}</label>
+            <label className="form-label" htmlFor="tour-hostels-time_to">{t('time-to')}</label>
             <input
               type="datetime-local"
               className="form-control"
               name='to'
+              id="tour-hostels-time_to"
               value={formik.values.to}
-              onChange={formik.handleChange}
+              onChange={(event) => {
+                const formattedValue = formatDateToISOString(event.target.value);
+                formik.setFieldValue('to', formattedValue);
+              }}
               onBlur={formik.handleBlur}
             />
           </div>
           <div className="col-md-4 mb-3">
-            <label className="form-label" htmlFor="tour-airway-position">
+            <label className="form-label" htmlFor="tour-hostel-position">
               {t("position-in-the-list")}
             </label>
             <input
               type="number"
-              id="tour-airway-position"
+              id="tour-hostel-position"
               className="form-control"
               name="position"
               value={formik.values.position ? formik.values.position : ""}
@@ -93,64 +102,17 @@ const CreateHostelInfo: React.FC<CreateHostelInfoProps> = ({ formik, hostels }) 
             />
           </div>
           <div className="col-md-4 mb-3">
-            <label className="form-label">{t('price')}</label>
+            <label className="form-label" htmlFor="tour-hostel-price">{t('price')}</label>
             <input
               type="number"
               className="form-control"
               name='price'
+              id="tour-hostel-price"
               value={formik.values.price}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
           </div>
-          {/* <div className="col-md-3 col-6 mb-3">
-            <label className="form-label">2Adl Количество</label>
-            <input
-              type="number"
-              className="form-control"
-            />
-            <label className="form-label">2Adl цена</label>
-            <input
-              type="number"
-              className="form-control"
-            />
-          </div>
-          <div className="col-md-3 col-6 mb-3">
-            <label className="form-label">3Adl Количество</label>
-            <input
-              type="number"
-              className="form-control"
-            />
-            <label className="form-label">3Adl цена</label>
-            <input
-              type="number"
-              className="form-control"
-            />
-          </div>
-          <div className="col-md-3 col-6 mb-3">
-            <label className="form-label">4Adl (Мужчины) Количество</label>
-            <input
-              type="number"
-              className="form-control"
-            />
-            <label className="form-label">4Adl (Мужчины) цена</label>
-            <input
-              type="number"
-              className="form-control"
-            />
-          </div>
-          <div className="col-md-3 col-6 mb-3">
-            <label className="form-label">4Adl (женщины) Количество</label>
-            <input
-              type="number"
-              className="form-control"
-            />
-            <label className="form-label">4Adl (женщины) цена</label>
-            <input
-              type="number"
-              className="form-control"
-            />
-          </div> */}
           <hr />
         </div>
         <div>

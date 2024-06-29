@@ -178,7 +178,7 @@ const Airplane = () => {
                     {updateId == x.id ? (
                       <input
                         className="form-control"
-                        type="text"
+                        type="number"
                         value={position}
                         onChange={(e) =>
                           setPosition(parseInt(e.target.value))

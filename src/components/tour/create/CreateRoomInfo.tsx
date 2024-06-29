@@ -81,8 +81,8 @@ const CreateRoomInfo: React.FC<CreateRoomInfoProps> = ({ formik, rooms }) => {
               onBlur={formik.handleBlur}
             >
               <option value=''>{t('choose-gender')}</option>
-                <option value={0}>{t('man')}</option>
-                <option value={1}>{t('woman')}</option>
+                <option value={1}>{t('men')}</option>
+                <option value={2}>{t('women')}</option>
             </select>
           </div>
           <hr />

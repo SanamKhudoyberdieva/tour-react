@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { number, object, string } from "yup";
+import { object, string } from "yup";
 import { createTour } from "../../api";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
@@ -36,7 +36,7 @@ const Create = () => {
     city_from_id: 0,
     description_ru: "",
     description_uz: "",
-    extra_packages: [{ extra_package_id: 0, price: 0 }],
+    nutrition_type: "",
     from: "",
     hotels: [
       {
@@ -50,17 +50,6 @@ const Create = () => {
     ],
     name_ru: "",
     name_uz: "",
-    navigate: [
-      {
-        description_ru: "",
-        description_uz: "",
-        from: "",
-        name_ru: "",
-        name_uz: "",
-        position: 0,
-        to: "",
-      },
-    ],
     night_count: 0,
     place_by_request: false,
     position: 0,
@@ -77,8 +66,9 @@ const Create = () => {
 
   const onSubmit = async (values: TourCreateType) => {
     try {
+      console.log("Form Values:", values);  // Debugging line
       await createTour(values);
-      navigate("/tour", { replace: true });
+      navigate("/tour/create-two", { replace: true });
     } catch (error) {
       console.log("error createTour: ", error);
     }
@@ -106,37 +96,62 @@ const Create = () => {
           Orqaga
         </Link>
       </div>
-      <CreateGeneralInfo formik={formik} cities={cities} />
-      {airways && cities && (
-        <CreateAirwaysInfo formik={formik} airways={airways} cities={cities} />
-      )}
-      <CreateHostelInfo formik={formik} hostels={hostels} />
-      <CreateRoomInfo formik={formik} rooms={rooms} />
-      {/* <CreatePackageContentInfo /> */}
-      {/* <CreateExtraPackageInfo /> */}
-      <div className="card">
-        <div className="card-body">
-          <div className="row">
-            <div className="col-md-6 mb-3">
-              <label className="form-label">ОПИСАНИЕ</label>
-              <textarea className="form-control"></textarea>
-            </div>
-            <div className="col-md-6 mb-3">
-              <label className="form-label">Tasnifi</label>
-              <textarea className="form-control"></textarea>
-            </div>
-            <div>
-              <Link
-                to={"/tour/create-two"}
-                type="submit"
-                className="btn btn-success"
-              >
-                {t("next")}
-              </Link>
+      <form onSubmit={formik.handleSubmit}>
+        <CreateGeneralInfo formik={formik} cities={cities} />
+        {airways && cities && (
+          <CreateAirwaysInfo formik={formik} airways={airways} cities={cities} />
+        )}
+        <CreateHostelInfo formik={formik} hostels={hostels} />
+        <CreateRoomInfo formik={formik} rooms={rooms} />
+        <div className="card">
+          <div className="card-body">
+            <div className="row">
+              <div className="col-md-6 mb-3">
+                <label className="form-label">ОПИСАНИЕ</label>
+                <textarea
+                  className="form-control"
+                  name="description_ru"
+                  value={formik.values.description_ru}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                ></textarea>
+              </div>
+              <div className="col-md-6 mb-3">
+                <label className="form-label">Tasnifi</label>
+                <textarea
+                  className="form-control"
+                  name="description_uz"
+                  value={formik.values.description_uz}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                ></textarea>
+              </div>
+              <div className="d-flex align-items-center mb-3">
+                <input
+                  className="form-check"
+                  type="checkbox"
+                  id="tour-create-place_by_request"
+                  name="place_by_request"
+                  checked={!!formik.values.place_by_request}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                <label className="form-label mb-0 ms-2" htmlFor="tour-create-place_by_request">
+                  {t("place-by-request")}
+                </label>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  className="btn btn-success"
+                >
+                  {t("next")}
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </form>
     </>
   );
 };
