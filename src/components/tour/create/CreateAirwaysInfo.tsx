@@ -33,14 +33,14 @@ const CreateAirwaysInfo: React.FC<CreateAirwaysInfoProps> = ({ formik, airways, 
             >
               <option value={0}></option>
               {airways &&
-              airways.map((x, idx) => (
-                <option
-                  key={"tour-airways-create-airway-index-" + idx}
-                  value={x.id}
-                >
-                  {getName(x, i18n.language)}
-                </option>
-              ))}
+                airways.map((x, idx) => (
+                  <option
+                    key={"tour-airways-create-airway-index-" + idx}
+                    value={x.id}
+                  >
+                    {getName(x, i18n.language)}
+                  </option>
+                ))}
             </select>
           </div>
           <div className="col-md-4 mb-3">
@@ -50,24 +50,24 @@ const CreateAirwaysInfo: React.FC<CreateAirwaysInfoProps> = ({ formik, airways, 
             <select
               className="form-select"
               id="tour-airways-city_from"
-              name="city_from"
-              value={formik.values.city_from || 0}
+              name={`airways.city_from`}
+              value={formik.values.airways.city_from || 0}
               onChange={(event) => {
                 const selectedValue = parseInt(event.target.value);
-                formik.setFieldValue("city_from", selectedValue);
+                formik.setFieldValue("airways.city_from", selectedValue);
               }}
               onBlur={formik.handleBlur}
             >
               <option value={0}></option>
               {cities &&
-              cities.map((x, idx) => (
-                <option
-                  key={"tour-airways-create-cities-from-index-" + idx}
-                  value={x.id}
-                >
-                  {getName(x, i18n.language)}
-                </option>
-              ))}
+                cities.map((x, idx) => (
+                  <option
+                    key={"tour-airways-create-cities-from-index-" + idx}
+                    value={x.id}
+                  >
+                    {getName(x, i18n.language)}
+                  </option>
+                ))}
             </select>
           </div>
           <div className="col-md-4 mb-3">
@@ -77,52 +77,60 @@ const CreateAirwaysInfo: React.FC<CreateAirwaysInfoProps> = ({ formik, airways, 
             <select
               className="form-select"
               id="tour-airways-city_to"
-              name="city_to"
-              value={formik.values.city_to || 0}
+              name={`airways.city_to`}
+              value={formik.values.airways.city_to || 0}
               onChange={(event) => {
                 const selectedValue = parseInt(event.target.value);
-                formik.setFieldValue("city_to", selectedValue);
+                formik.setFieldValue("airways.city_to", selectedValue);
               }}
               onBlur={formik.handleBlur}
             >
               <option value={0}></option>
               {cities &&
-              cities.map((x, idx) => (
-                <option
-                  key={"tour-airways-create-cities-to-index-" + idx}
-                  value={x.id}
-                >
-                  {getName(x, i18n.language)}
-                </option>
-              ))}
+                cities.map((x, idx) => (
+                  <option
+                    key={"tour-airways-create-cities-to-index-" + idx}
+                    value={x.id}
+                  >
+                    {getName(x, i18n.language)}
+                  </option>
+                ))}
             </select>
           </div>
           <div className="col-md-4 mb-3">
-            <label className="form-label" htmlFor="tour-airways-time_from">{t('time-from')}</label>
+            <label className="form-label" htmlFor="tour-airways-time_from">
+              {t("time-from")}
+            </label>
             <input
               type="datetime-local"
               className="form-control"
-              name='from'
+              name="from"
               id="tour-airways-time_from"
               value={formik.values.from}
               onChange={(event) => {
-                const formattedValue = formatDateToISOString(event.target.value);
-                formik.setFieldValue('from', formattedValue);
+                const formattedValue = formatDateToISOString(
+                  event.target.value,
+                );
+                formik.setFieldValue("from", formattedValue);
               }}
               onBlur={formik.handleBlur}
             />
           </div>
           <div className="col-md-4 mb-3">
-            <label className="form-label" htmlFor="tour-airways-time_to">{t('time-to')}</label>
+            <label className="form-label" htmlFor="tour-airways-time_to">
+              {t("time-to")}
+            </label>
             <input
               type="datetime-local"
               className="form-control"
-              name='to'
+              name="to"
               id="tour-airways-time_to"
               value={formik.values.to}
               onChange={(event) => {
-                const formattedValue = formatDateToISOString(event.target.value);
-                formik.setFieldValue('to', formattedValue);
+                const formattedValue = formatDateToISOString(
+                  event.target.value,
+                );
+                formik.setFieldValue("to", formattedValue);
               }}
               onBlur={formik.handleBlur}
             />
@@ -144,11 +152,11 @@ const CreateAirwaysInfo: React.FC<CreateAirwaysInfoProps> = ({ formik, airways, 
           <hr />
         </div>
         <div>
-          <button className="btn btn-success">{t('add')}</button>
+          <button className="btn btn-success">{t("add")}</button>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default CreateAirwaysInfo;

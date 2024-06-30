@@ -66,7 +66,7 @@ const Create = () => {
 
   const onSubmit = async (values: TourCreateType) => {
     try {
-      console.log("Form Values:", values);  // Debugging line
+      console.log("Form Values:", values); // Debugging line
       await createTour(values);
       navigate("/tour/create-two", { replace: true });
     } catch (error) {
@@ -79,6 +79,8 @@ const Create = () => {
     validationSchema,
     onSubmit,
   });
+
+  console.log("time", formik.values.to);
 
   return (
     <>
@@ -99,7 +101,11 @@ const Create = () => {
       <form onSubmit={formik.handleSubmit}>
         <CreateGeneralInfo formik={formik} cities={cities} />
         {airways && cities && (
-          <CreateAirwaysInfo formik={formik} airways={airways} cities={cities} />
+          <CreateAirwaysInfo
+            formik={formik}
+            airways={airways}
+            cities={cities}
+          />
         )}
         <CreateHostelInfo formik={formik} hostels={hostels} />
         <CreateRoomInfo formik={formik} rooms={rooms} />
@@ -136,15 +142,15 @@ const Create = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                <label className="form-label mb-0 ms-2" htmlFor="tour-create-place_by_request">
+                <label
+                  className="form-label mb-0 ms-2"
+                  htmlFor="tour-create-place_by_request"
+                >
                   {t("place-by-request")}
                 </label>
               </div>
               <div>
-                <button
-                  type="submit"
-                  className="btn btn-success"
-                >
+                <button type="submit" className="btn btn-success">
                   {t("next")}
                 </button>
               </div>
