@@ -1,6 +1,6 @@
-import { FormikProps } from "formik";
+import { FormikProps, FormikValues } from "formik";
 import i18n from "../../../utils/i18n";
-import { formatDateToISOString, getName } from "../../../utils";
+import { formatDateToISOString, formatDateToInputValue, getName } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import { AirwayType, CityType } from "../../../store/types";
 interface CreateAirwaysInfoProps {
@@ -98,39 +98,29 @@ const CreateAirwaysInfo: React.FC<CreateAirwaysInfoProps> = ({ formik, airways, 
             </select>
           </div>
           <div className="col-md-4 mb-3">
-            <label className="form-label" htmlFor="tour-airways-time_from">
-              {t("time-from")}
-            </label>
+            <label className="form-label" htmlFor="tour-airways-time_from">{t('time-from')}</label>
             <input
               type="datetime-local"
               className="form-control"
-              name="from"
+              name='airways.from'
               id="tour-airways-time_from"
-              value={formik.values.from}
+              value={formik.values.airways.from ? formatDateToInputValue(formik.values.airways.from) : ""}
               onChange={(event) => {
-                const formattedValue = formatDateToISOString(
-                  event.target.value,
-                );
-                formik.setFieldValue("from", formattedValue);
+                formik.setFieldValue('airways.from', event.target.value);
               }}
               onBlur={formik.handleBlur}
             />
           </div>
           <div className="col-md-4 mb-3">
-            <label className="form-label" htmlFor="tour-airways-time_to">
-              {t("time-to")}
-            </label>
+            <label className="form-label" htmlFor="tour-airways-time_to">{t('time-to')}</label>
             <input
               type="datetime-local"
               className="form-control"
-              name="to"
+              name='airways.to'
               id="tour-airways-time_to"
-              value={formik.values.to}
+              value={formik.values.airways.to ? formatDateToInputValue(formik.values.airways.to) : ""}
               onChange={(event) => {
-                const formattedValue = formatDateToISOString(
-                  event.target.value,
-                );
-                formik.setFieldValue("to", formattedValue);
+                formik.setFieldValue('airways.to', event.target.value);
               }}
               onBlur={formik.handleBlur}
             />
@@ -143,8 +133,8 @@ const CreateAirwaysInfo: React.FC<CreateAirwaysInfoProps> = ({ formik, airways, 
               type="number"
               id="tour-airways-position"
               className="form-control"
-              name="position"
-              value={formik.values.position ? formik.values.position : ""}
+              name="airways.position"
+              value={formik.values.airways.position ? formik.values.airways.position : ""}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />

@@ -1,10 +1,23 @@
-import { FormikProps } from "formik";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import { Formik, FormikProps, Form } from "formik";
 import { HostelType } from "../../../store/types";
-import { formatDateToISOString, getName } from "../../../utils";
+import { formatDateToInputValue, getName } from "../../../utils";
 import i18n from "../../../utils/i18n";
+
+interface FormValues {
+  hotels: {
+    from: string;
+    hotel_id: number;
+    nutrition_type: string;
+    position: number;
+    price: number;
+    to: string;
+  }[];
+}
+
 interface CreateHostelInfoProps {
-  formik: FormikProps<any>;
+  formik: FormikProps<FormValues>;
   hostels: HostelType[];
 }
 
@@ -22,36 +35,37 @@ const CreateHostelInfo: React.FC<CreateHostelInfoProps> = ({ formik, hostels }) 
             <select
               className="form-select"
               id="tour-hostels"
-              name="hostel_id"
-              value={formik.values.hostel_id || 0}
+              name="hotels[0].hotel_id"
+              value={formik.values.hotels[0].hotel_id}
               onChange={(event) => {
                 const selectedValue = parseInt(event.target.value);
-                formik.setFieldValue("hostel_id", selectedValue);
+                formik.setFieldValue("hotels[0].hotel_id", selectedValue);
               }}
               onBlur={formik.handleBlur}
             >
               <option value={0}></option>
               {hostels &&
-              hostels.map((x, idx) => (
-                <option
-                  key={"tour-create-hostels-index-" + idx}
-                  value={x.id}
-                >
-                  {getName(x, i18n.language)}
-                </option>
-              ))}
+                hostels.map((x, idx) => (
+                  <option
+                    key={"tour-create-hostels-index-" + idx}
+                    value={x.id}
+                  >
+                    {getName(x, i18n.language)}
+                  </option>
+                ))}
             </select>
           </div>
           <div className="col-md-4 mb-3">
-            <label className="form-label" htmlFor="tour-hostels-nutrition_type"
-              >{t("nutrition-type")}</label>
+            <label className="form-label" htmlFor="tour-hostels-nutrition_type">
+              {t("nutrition-type")}
+            </label>
             <div className="d-flex">
               <input
                 type="text"
                 className="form-control"
-                name="nutrition_type"
+                name="hotels[0].nutrition_type"
                 id="tour-hostels-nutrition_type"
-                value={formik.values.nutrition_type}
+                value={formik.values.hotels[0].nutrition_type}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
@@ -62,12 +76,11 @@ const CreateHostelInfo: React.FC<CreateHostelInfoProps> = ({ formik, hostels }) 
             <input
               type="datetime-local"
               className="form-control"
-              name='from'
+              name='hotels[0].from'
               id="tour-hostels-time_from"
-              value={formik.values.from}
+              value={formik.values.hotels[0].from ? formatDateToInputValue(formik.values.hotels[0].from) : ""}
               onChange={(event) => {
-                const formattedValue = formatDateToISOString(event.target.value);
-                formik.setFieldValue('from', formattedValue);
+                formik.setFieldValue('hotels[0].from', event.target.value);
               }}
               onBlur={formik.handleBlur}
             />
@@ -77,12 +90,11 @@ const CreateHostelInfo: React.FC<CreateHostelInfoProps> = ({ formik, hostels }) 
             <input
               type="datetime-local"
               className="form-control"
-              name='to'
+              name='hotels[0].to'
               id="tour-hostels-time_to"
-              value={formik.values.to}
+              value={formik.values.hotels[0].to ? formatDateToInputValue(formik.values.hotels[0].to) : ""}
               onChange={(event) => {
-                const formattedValue = formatDateToISOString(event.target.value);
-                formik.setFieldValue('to', formattedValue);
+                formik.setFieldValue('hotels[0].to', event.target.value);
               }}
               onBlur={formik.handleBlur}
             />
@@ -95,8 +107,8 @@ const CreateHostelInfo: React.FC<CreateHostelInfoProps> = ({ formik, hostels }) 
               type="number"
               id="tour-hostel-position"
               className="form-control"
-              name="position"
-              value={formik.values.position ? formik.values.position : ""}
+              name="hotels[0].position"
+              value={formik.values.hotels[0].position}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
@@ -106,9 +118,9 @@ const CreateHostelInfo: React.FC<CreateHostelInfoProps> = ({ formik, hostels }) 
             <input
               type="number"
               className="form-control"
-              name='price'
+              name='hotels[0].price'
               id="tour-hostel-price"
-              value={formik.values.price}
+              value={formik.values.hotels[0].price}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
@@ -120,7 +132,37 @@ const CreateHostelInfo: React.FC<CreateHostelInfoProps> = ({ formik, hostels }) 
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CreateHostelInfo;
+const CreateHostelForm: React.FC<{ hostels: HostelType[] }> = ({ hostels }) => {
+  const initialValues: FormValues = {
+    hotels: [
+      {
+        from: "",
+        hotel_id: 0,
+        nutrition_type: "",
+        position: 0,
+        price: 0,
+        to: "",
+      },
+    ],
+  };
+
+  return (
+    <Formik<FormValues>
+      initialValues={initialValues}
+      onSubmit={(values) => {
+        console.log(values);
+      }}
+    >
+      {(formikProps) => (
+        <Form>
+          <CreateHostelInfo formik={formikProps} hostels={hostels} />
+        </Form>
+      )}
+    </Formik>
+  );
+};
+
+export default CreateHostelForm;

@@ -1,4 +1,4 @@
-import { FormikProps } from "formik";
+import { FormikProps, FormikValues } from "formik";
 import { useTranslation } from "react-i18next";
 import { RoomType } from "../../../store/types";
 import { getName } from "../../../utils";
@@ -50,8 +50,8 @@ const CreateRoomInfo: React.FC<CreateRoomInfoProps> = ({ formik, rooms }) => {
               type="number"
               id="tour-room-price"
               className="form-control"
-              name="price"
-              value={formik.values.price}
+              name="rooms.price"
+              value={formik.values.rooms.price}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
@@ -61,8 +61,8 @@ const CreateRoomInfo: React.FC<CreateRoomInfoProps> = ({ formik, rooms }) => {
             <input
               type="number"
               className="form-control"
-              name='count'
-              value={formik.values.count}
+              name='rooms.count'
+              value={formik.values.rooms.count}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />

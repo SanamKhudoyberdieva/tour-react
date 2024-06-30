@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { CityType } from '../../../store/types';
-import { FormikProps } from 'formik';
-import { formatDateToLocalDateTime, getName } from '../../../utils';
+import { FormikProps, FormikValues } from 'formik';
+import { formatDateToInputValue, getName } from '../../../utils';
 import i18n from '../../../utils/i18n';
 interface CreateAirwaysInfoProps {
   formik: FormikProps<any>;
@@ -121,27 +121,31 @@ const CreateGeneralInfo: React.FC<CreateAirwaysInfoProps> = ({ formik, cities })
               ))}
             </select>
           </div> */}
-          <div className="col-md-3 mb-3">
+          <div className="col-md-4 mb-3">
             <label className="form-label" htmlFor="tour-from">{t('time-from')}</label>
             <input
               type="datetime-local"
               className="form-control"
               name='from'
-              id='tour-from'
-              value={formatDateToLocalDateTime(formik.values.from)}
-              onChange={formik.handleChange}
+              id="tour-from"
+              value={formik.values.from ? formatDateToInputValue(formik.values.from) : ""}
+              onChange={(event) => {
+                formik.setFieldValue('from', event.target.value);
+              }}
               onBlur={formik.handleBlur}
             />
           </div>
-          <div className="col-md-3 mb-3">
+          <div className="col-md-4 mb-3">
             <label className="form-label" htmlFor="tour-to">{t('time-to')}</label>
             <input
               type="datetime-local"
               className="form-control"
               name='to'
-              id='tour-to'
-              value={formik.values.to}
-              onChange={formik.handleChange}
+              id="tour-to"
+              value={formik.values.to ? formatDateToInputValue(formik.values.to) : ""}
+              onChange={(event) => {
+                formik.setFieldValue('to', event.target.value);
+              }}
               onBlur={formik.handleBlur}
             />
           </div>
