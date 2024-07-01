@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { CityType } from '../../../store/types';
+import { CityType, TourCreateType } from '../../../store/types';
 import { FormikProps, FormikValues } from 'formik';
 import { formatDateToInputValue, getName } from '../../../utils';
 import i18n from '../../../utils/i18n';
 interface CreateAirwaysInfoProps {
-  formik: FormikProps<any>;
+  formik: FormikProps<TourCreateType>;
   cities: CityType[];
 }
 
@@ -63,7 +63,10 @@ const CreateGeneralInfo: React.FC<CreateAirwaysInfoProps> = ({ formik, cities })
               name="night_count"
               id='tour-night_count'
               value={formik.values.night_count}
-              onChange={formik.handleChange}
+              onChange={(event) => {
+                const selectedValue = parseInt(event.target.value, 10);
+                formik.setFieldValue(`night_count`, selectedValue);
+              }}
               onBlur={formik.handleBlur}
             />
           </div>
@@ -74,11 +77,11 @@ const CreateGeneralInfo: React.FC<CreateAirwaysInfoProps> = ({ formik, cities })
             <select
               className="form-select"
               id="tour-city_from"
-              name="city_from"
-              value={formik.values.city_from || 0}
+              name="city_from_id"
+              value={formik.values.city_from_id || 0}
               onChange={(event) => {
                 const selectedValue = parseInt(event.target.value);
-                formik.setFieldValue("city_from", selectedValue);
+                formik.setFieldValue("city_from_id", selectedValue);
               }}
               onBlur={formik.handleBlur}
             >
