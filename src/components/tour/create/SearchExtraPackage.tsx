@@ -7,7 +7,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createTourExtraPackage } from "../../../api";
 
-const SearchExtraPackage = () => {
+const SearchExtraPackage = ({ id }: { id: number }) => {
   const { t } = useTranslation();
   const { extraPackages } = useSelector((state: RootState) => state.extraPackagesReducer);
   const [searchPackage, setSearchPackage] = useState("");
@@ -20,13 +20,12 @@ const SearchExtraPackage = () => {
 
   const setExtraPackageList = async (id: number) => {
     if (!(selectedPackage.length > 0)) return;
-    const arr = selectedPackage.map(x => (
-      {
+    const arr = selectedPackage.map(x => {
+      return {
         extra_package_id: x,
         price: 0,
-        tour_id: id
       }
-    ))
+  })
     try {
       await createTourExtraPackage(id, arr);
       setSelectedPackage([]);

@@ -1,6 +1,4 @@
-export interface TourCreateExtraPackageType {
+export interface TourCreateExtraPackageCreateType {
   extra_package_id: number,
-  id: number,
   price: number,
-  tour_id: number
 }

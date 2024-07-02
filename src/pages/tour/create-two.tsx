@@ -1,20 +1,27 @@
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import CreatePackageContentInfo from "../../components/tour/create/CreatePackageContentInfo";
 import CreateExtraPackageInfo from "../../components/tour/create/CreateExtraPackageInfo";
 
-const CreateTwo = () => {
-    const { t } = useTranslation();
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
+const CreateTwo = () => {
+  const { t } = useTranslation();
+  const query = useQuery();
+  const quryId = query.get("id");
+  if (!quryId) return;
+  const id = parseInt(quryId);
   return (
     <>
       <div className="d-flex mb-4 align-items-center justify-content-between">
         <h4 className="py-3 mb-0">
           <span className="text-muted fw-light">
-            <Link to={"/"}>Asosiy</Link> / {' '}
+            <Link to={"/"}>Asosiy</Link> /{" "}
           </span>
           <span className="text-muted fw-light">
-            <Link to={"/tour"}>Tur Paketlar</Link> / {' '}
+            <Link to={"/tour"}>Tur Paketlar</Link> /{" "}
           </span>
           Yaratish
         </h4>
@@ -22,13 +29,13 @@ const CreateTwo = () => {
           Orqaga
         </Link>
       </div>
-      <CreatePackageContentInfo />
-      <CreateExtraPackageInfo />
-        <div>
-            <button type="submit" className="btn btn-success">
-            {t('submit')}
-            </button>
-        </div>
+      <CreatePackageContentInfo id={id} />
+      <CreateExtraPackageInfo id={id} />
+      <div>
+        <button type="submit" className="btn btn-success">
+          {t("submit")}
+        </button>
+      </div>
     </>
   );
 };

@@ -5,5 +5,4 @@ export interface TourCreateNavigateType extends NameDescType {
   id: number,
   position: number,
   to: string,
-  tour_id: number
 }

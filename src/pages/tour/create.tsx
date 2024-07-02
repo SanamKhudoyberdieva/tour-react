@@ -68,17 +68,17 @@ const Create = () => {
   const formatDates = (values: TourCreateType) => {
     return {
       ...values,
-      from: moment(values.from).format(), // format to ISO 8601
-      to: moment(values.to).format(), // format to ISO 8601
+      from: moment(values.from).format(),
+      to: moment(values.to).format(),
       airways: values.airways.map((airway) => ({
         ...airway,
-        from: moment(airway.from).format(), // format to ISO 8601
-        to: moment(airway.to).format(), // format to ISO 8601
+        from: moment(airway.from).format(),
+        to: moment(airway.to).format(),
       })),
       hotels: values.hotels.map((hotel) => ({
         ...hotel,
-        from: moment(hotel.from).format(), // format to ISO 8601
-        to: moment(hotel.to).format(), // format to ISO 8601
+        from: moment(hotel.from).format(),
+        to: moment(hotel.to).format(),
       })),
     };
   };
@@ -86,9 +86,9 @@ const Create = () => {
   const onSubmit = async (values: TourCreateType) => {
     try {
       const formattedValues = formatDates(values);
-      console.log("Form Values:", formattedValues); // Debugging line
-      await createTour(formattedValues);
-      navigate("/tour/create-two", { replace: true });
+      const res = await createTour(formattedValues);
+      if (!res.data.id) return;
+      navigate(`/tour/create-two?id=${res.data.id}`, { replace: true });
     } catch (error) {
       console.log("error createTour: ", error);
     }
