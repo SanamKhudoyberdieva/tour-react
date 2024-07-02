@@ -31,8 +31,10 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
   };
 
   const validationSchema = object({
-    name_uz: string().required("Необходимо заполнить «Название на узбекском»."),
-    name_ru: string().required("Необходимо заполнить «Название на русском»."),
+    navigations: object().shape({
+      name_uz: string().required(t("Необходимо заполнить «Название на узбекском».").toString()),
+      name_ru: string().required(t("Необходимо заполнить «Название на русском».").toString()),
+    }),
   });
 
   const formatDates = (values: NavigationsListType) => {
@@ -75,7 +77,7 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
                       className="form-label"
                       htmlFor={`tour-navigations-name_ru-${index}`}
                     >
-                      nazvaniya
+                      Наименование
                     </label>
                     <div className="d-flex">
                       <input
@@ -103,6 +105,44 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
                         name={`navigations[${index}].name_uz`}
                         id={`tour-navigations-name_uz-${index}`}
                         value={navigation.name_uz}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-4 mb-3">
+                    <label
+                      className="form-label"
+                      htmlFor={`tour-navigations-description_ru-${index}`}
+                    >
+                      Описание
+                    </label>
+                    <div className="d-flex">
+                      <input
+                        type="text"
+                        className="form-control"
+                        name={`navigations[${index}].description_ru`}
+                        id={`tour-navigations-description_ru-${index}`}
+                        value={navigation.description_ru}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-4 mb-3">
+                    <label
+                      className="form-label"
+                      htmlFor={`tour-navigations-description_uz-${index}`}
+                    >
+                      Tasnifi
+                    </label>
+                    <div className="d-flex">
+                      <input
+                        type="text"
+                        className="form-control"
+                        name={`navigations[${index}].description_uz`}
+                        id={`tour-navigations-description_uz-${index}`}
+                        value={navigation.description_uz}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                       />
@@ -153,13 +193,13 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
                   <div className="col-md-4 mb-3">
                     <label
                       className="form-label"
-                      htmlFor={`tour-hostel-position-${index}`}
+                      htmlFor={`tour-navigation-position-${index}`}
                     >
                       {t("position-in-the-list")}
                     </label>
                     <input
                       type="number"
-                      id={`tour-hostel-position-${index}`}
+                      id={`tour-navigation-position-${index}`}
                       className="form-control"
                       name={`navigations[${index}].position`}
                       value={navigation.position}
