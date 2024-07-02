@@ -1,26 +1,25 @@
-import React from "react";
-import { Formik, FormikProps } from "formik";
+import moment from "moment";
 import { object, string } from "yup";
 import { createTour } from "../../api";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
+import { Formik, FormikProps } from "formik";
 import { useTranslation } from "react-i18next";
 import { TourCreateType } from "../../store/types";
 import { Link, useNavigate } from "react-router-dom";
+import CreateRoomInfo from "../../components/tour/create/CreateRoomInfo";
 import CreateHostelInfo from "../../components/tour/create/CreateHostelInfo";
 import CreateGeneralInfo from "../../components/tour/create/CreateGeneralInfo";
 import CreateAirwaysInfo from "../../components/tour/create/CreateAirwaysInfo";
-import CreateRoomInfo from "../../components/tour/create/CreateRoomInfo";
-import moment from "moment";
 
 const Create = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const { airways } = useSelector((state: RootState) => state.airwaysReducer);
-  const { cities } = useSelector((state: RootState) => state.citiesReducer);
-  const { hostels } = useSelector((state: RootState) => state.hostelsReducer);
   const { rooms } = useSelector((state: RootState) => state.roomsReducer);
+  const { cities } = useSelector((state: RootState) => state.citiesReducer);
+  const { airways } = useSelector((state: RootState) => state.airwaysReducer);
+  const { hostels } = useSelector((state: RootState) => state.hostelsReducer);
 
   const initialValues: TourCreateType = {
     airways: [
