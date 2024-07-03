@@ -1,10 +1,11 @@
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { createTourNavigate } from "../../../api/tour/navigate";
-import { FieldArray, useFormik } from "formik";
+import { FieldArray, Formik, FormikProps } from "formik";
 import { TourCreateNavigateType } from "../../../store/types/tour/create-two/navigate";
 import { formatDateToInputValue } from "../../../utils";
-import { object, string } from "yup";
+import { object, string, array } from "yup";
 import moment from "moment";
 
 const CreatePackageContentInfo = ({ id }: { id: number }) => {
@@ -31,10 +32,12 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
   };
 
   const validationSchema = object({
-    navigations: object().shape({
-      name_uz: string().required(t("Необходимо заполнить «Название на узбекском».").toString()),
-      name_ru: string().required(t("Необходимо заполнить «Название на русском».").toString()),
-    }),
+    navigations: array().of(
+      object().shape({
+        name_uz: string().required(t("Необходимо заполнить «Название на узбекском».").toString()),
+        name_ru: string().required(t("Необходимо заполнить «Название на русском».").toString()),
+      })
+    ),
   });
 
   const formatDates = (values: NavigationsListType) => {
@@ -58,190 +61,168 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
     }
   };
 
-  const formik = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit,
-  });
-
   return (
-    <div className="card mb-4">
-      <div className="card-body">
-        <FieldArray name="navigations">
-          {({ push, remove }) => (
-            <>
-              {formik.values.navigations.map((navigation, index) => (
-                <div className="row" key={index}>
-                  <div className="col-md-4 mb-3">
-                    <label
-                      className="form-label"
-                      htmlFor={`tour-navigations-name_ru-${index}`}
-                    >
-                      Наименование
-                    </label>
-                    <div className="d-flex">
-                      <input
-                        type="text"
-                        className="form-control"
-                        name={`navigations[${index}].name_ru`}
-                        id={`tour-navigations-name_ru-${index}`}
-                        value={navigation.name_ru}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
+      {(formik: FormikProps<NavigationsListType>) => (
+        <form onSubmit={formik.handleSubmit}>
+          <div className="card mb-4">
+            <div className="card-body">
+              <FieldArray name="navigations">
+                {({ push, remove }) => (
+                  <>
+                    {formik.values.navigations.map((navigation, index) => (
+                      <div className="row" key={index}>
+                        <div className="col-md-4 mb-3">
+                          <label className="form-label" htmlFor={`tour-navigations-name_ru-${index}`}>
+                            Наименование
+                          </label>
+                          <div className="d-flex">
+                            <input
+                              type="text"
+                              className="form-control"
+                              name={`navigations[${index}].name_ru`}
+                              id={`tour-navigations-name_ru-${index}`}
+                              value={navigation.name_ru}
+                              onChange={formik.handleChange}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <label className="form-label" htmlFor={`tour-navigations-name_uz-${index}`}>
+                            Nomi
+                          </label>
+                          <div className="d-flex">
+                            <input
+                              type="text"
+                              className="form-control"
+                              name={`navigations[${index}].name_uz`}
+                              id={`tour-navigations-name_uz-${index}`}
+                              value={navigation.name_uz}
+                              onChange={formik.handleChange}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <label className="form-label" htmlFor={`tour-navigations-description_ru-${index}`}>
+                            Описание
+                          </label>
+                          <div className="d-flex">
+                            <input
+                              type="text"
+                              className="form-control"
+                              name={`navigations[${index}].description_ru`}
+                              id={`tour-navigations-description_ru-${index}`}
+                              value={navigation.description_ru}
+                              onChange={formik.handleChange}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <label className="form-label" htmlFor={`tour-navigations-description_uz-${index}`}>
+                            Tasnifi
+                          </label>
+                          <div className="d-flex">
+                            <input
+                              type="text"
+                              className="form-control"
+                              name={`navigations[${index}].description_uz`}
+                              id={`tour-navigations-description_uz-${index}`}
+                              value={navigation.description_uz}
+                              onChange={formik.handleChange}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <label className="form-label" htmlFor={`tour-navigations-time_from-${index}`}>
+                            {t("time-from")}
+                          </label>
+                          <input
+                            type="datetime-local"
+                            className="form-control"
+                            name={`navigations[${index}].from`}
+                            id={`tour-navigations-time_from-${index}`}
+                            value={
+                              navigation.from
+                                ? formatDateToInputValue(navigation.from)
+                                : ""
+                            }
+                            onChange={formik.handleChange}
+                          />
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <label className="form-label" htmlFor={`tour-navigations-time_to-${index}`}>
+                            {t("time-to")}
+                          </label>
+                          <input
+                            type="datetime-local"
+                            className="form-control"
+                            name={`navigations[${index}].to`}
+                            id={`tour-navigations-time_to-${index}`}
+                            value={
+                              navigation.to
+                                ? formatDateToInputValue(navigation.to)
+                                : ""
+                            }
+                            onChange={formik.handleChange}
+                          />
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <label className="form-label" htmlFor={`tour-navigation-position-${index}`}>
+                            {t("position-in-the-list")}
+                          </label>
+                          <input
+                            type="number"
+                            id={`tour-navigation-position-${index}`}
+                            className="form-control"
+                            name={`navigations[${index}].position`}
+                            value={navigation.position}
+                            onChange={formik.handleChange}
+                          />
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <button
+                            type="button"
+                            className="btn btn-danger"
+                            onClick={() => remove(index)}
+                          >
+                            {t("remove")}
+                          </button>
+                        </div>
+                        <hr />
+                      </div>
+                    ))}
+                    <div>
+                      <button
+                        type="button"
+                        className="btn btn-success"
+                        onClick={() =>
+                          push({
+                            description_ru: "",
+                            description_uz: "",
+                            from: "",
+                            name_ru: "",
+                            name_uz: "",
+                            position: 0,
+                            to: "",
+                            id: 0,
+                          })
+                        }
+                      >
+                        {t("add")}
+                      </button>
                     </div>
-                  </div>
-                  <div className="col-md-4 mb-3">
-                    <label
-                      className="form-label"
-                      htmlFor={`tour-navigations-name_uz-${index}`}
-                    >
-                      Nomi
-                    </label>
-                    <div className="d-flex">
-                      <input
-                        type="text"
-                        className="form-control"
-                        name={`navigations[${index}].name_uz`}
-                        id={`tour-navigations-name_uz-${index}`}
-                        value={navigation.name_uz}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-md-4 mb-3">
-                    <label
-                      className="form-label"
-                      htmlFor={`tour-navigations-description_ru-${index}`}
-                    >
-                      Описание
-                    </label>
-                    <div className="d-flex">
-                      <input
-                        type="text"
-                        className="form-control"
-                        name={`navigations[${index}].description_ru`}
-                        id={`tour-navigations-description_ru-${index}`}
-                        value={navigation.description_ru}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-md-4 mb-3">
-                    <label
-                      className="form-label"
-                      htmlFor={`tour-navigations-description_uz-${index}`}
-                    >
-                      Tasnifi
-                    </label>
-                    <div className="d-flex">
-                      <input
-                        type="text"
-                        className="form-control"
-                        name={`navigations[${index}].description_uz`}
-                        id={`tour-navigations-description_uz-${index}`}
-                        value={navigation.description_uz}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-md-4 mb-3">
-                    <label
-                      className="form-label"
-                      htmlFor={`tour-navigations-time_from-${index}`}
-                    >
-                      {t("time-from")}
-                    </label>
-                    <input
-                      type="datetime-local"
-                      className="form-control"
-                      name={`navigations[${index}].from`}
-                      id={`tour-navigations-time_from-${index}`}
-                      value={
-                        navigation.from
-                          ? formatDateToInputValue(navigation.from)
-                          : ""
-                      }
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                    />
-                  </div>
-                  <div className="col-md-4 mb-3">
-                    <label
-                      className="form-label"
-                      htmlFor={`tour-navigations-time_to-${index}`}
-                    >
-                      {t("time-to")}
-                    </label>
-                    <input
-                      type="datetime-local"
-                      className="form-control"
-                      name={`navigations[${index}].to`}
-                      id={`tour-navigations-time_to-${index}`}
-                      value={
-                        navigation.to
-                          ? formatDateToInputValue(navigation.to)
-                          : ""
-                      }
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                    />
-                  </div>
-                  <div className="col-md-4 mb-3">
-                    <label
-                      className="form-label"
-                      htmlFor={`tour-navigation-position-${index}`}
-                    >
-                      {t("position-in-the-list")}
-                    </label>
-                    <input
-                      type="number"
-                      id={`tour-navigation-position-${index}`}
-                      className="form-control"
-                      name={`navigations[${index}].position`}
-                      value={navigation.position}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                    />
-                  </div>
-                  <div className="col-md-4 mb-3">
-                    <button
-                      type="button"
-                      className="btn btn-danger"
-                      onClick={() => remove(index)}
-                    >
-                      {t("remove")}
-                    </button>
-                  </div>
-                  <hr />
-                </div>
-              ))}
-              <div>
-                <button
-                  type="button"
-                  className="btn btn-success"
-                  onClick={() =>
-                    push({
-                      from: "",
-                      navigation_id: 0,
-                      nutrition_type: "",
-                      position: 0,
-                      price: 0,
-                      to: "",
-                    })
-                  }
-                >
-                  {t("add")}
-                </button>
-              </div>
-            </>
-          )}
-        </FieldArray>
-      </div>
-    </div>
+                  </>
+                )}
+              </FieldArray>
+            </div>
+          </div>
+        </form>
+      )}
+    </Formik>
   );
 };
 

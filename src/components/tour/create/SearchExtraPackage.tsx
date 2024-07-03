@@ -7,35 +7,45 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createTourExtraPackage } from "../../../api";
 
-const SearchExtraPackage = ({ id }: { id: number }) => {
+const SearchExtraPackage = ({
+  id,
+  handleGetTour,
+}: {
+  id: number;
+  handleGetTour: (id: number) => Promise<void>;
+}) => {
   const { t } = useTranslation();
-  const { extraPackages } = useSelector((state: RootState) => state.extraPackagesReducer);
+  const { extraPackages } = useSelector(
+    (state: RootState) => state.extraPackagesReducer
+  );
   const [searchPackage, setSearchPackage] = useState("");
   const [selectedPackage, setSelectedPackage] = useState<number[]>([]);
 
   const filteredPackages =
-  extraPackages?.filter((extraPackage: { name_uz: string }) =>
-    extraPackage.name_uz.toLowerCase().includes(searchPackage.toLowerCase()),
-  ) || [];
+    extraPackages?.filter((extraPackage: { name_uz: string }) =>
+      extraPackage.name_uz.toLowerCase().includes(searchPackage.toLowerCase())
+    ) || [];
 
   const setExtraPackageList = async (id: number) => {
     if (!(selectedPackage.length > 0)) return;
-    const arr = selectedPackage.map(x => {
+    const arr = selectedPackage.map((x) => {
       return {
         extra_package_id: x,
         price: 0,
-      }
-  })
+        tour_id: id,
+      };
+    });
     try {
       await createTourExtraPackage(id, arr);
       setSelectedPackage([]);
+      handleGetTour(id);
     } catch (error) {
       console.log("error createTourExtraPackage", error);
     }
   };
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 col-md-6">
       <label htmlFor="add-extra-package" className="form-label">
         {t("add-extra-package")}
       </label>
@@ -60,7 +70,7 @@ const SearchExtraPackage = ({ id }: { id: number }) => {
               : "btn-outline-primary"
           }`}
           id="basic-addon2"
-          onClick={()=>setExtraPackageList(id)}
+          onClick={() => setExtraPackageList(id)}
         >
           <FontAwesomeIcon icon={faPlus} />
           {selectedPackage.length > 0 && (
