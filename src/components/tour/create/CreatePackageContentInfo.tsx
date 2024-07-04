@@ -34,8 +34,12 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
   const validationSchema = object({
     navigations: array().of(
       object().shape({
-        name_uz: string().required(t("Необходимо заполнить «Название на узбекском».").toString()),
-        name_ru: string().required(t("Необходимо заполнить «Название на русском».").toString()),
+        name_uz: string().required(
+          t("Необходимо заполнить «Название на узбекском».").toString()
+        ),
+        name_ru: string().required(
+          t("Необходимо заполнить «Название на русском».").toString()
+        ),
       })
     ),
   });
@@ -62,11 +66,7 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={onSubmit}
-    >
+    <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {(formik: FormikProps<NavigationsListType>) => (
         <form onSubmit={formik.handleSubmit}>
           <div className="card mb-4">
@@ -77,7 +77,10 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
                     {formik.values.navigations.map((navigation, index) => (
                       <div className="row" key={index}>
                         <div className="col-md-4 mb-3">
-                          <label className="form-label" htmlFor={`tour-navigations-name_ru-${index}`}>
+                          <label
+                            className="form-label"
+                            htmlFor={`tour-navigations-name_ru-${index}`}
+                          >
                             Наименование
                           </label>
                           <div className="d-flex">
@@ -92,7 +95,10 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
                           </div>
                         </div>
                         <div className="col-md-4 mb-3">
-                          <label className="form-label" htmlFor={`tour-navigations-name_uz-${index}`}>
+                          <label
+                            className="form-label"
+                            htmlFor={`tour-navigations-name_uz-${index}`}
+                          >
                             Nomi
                           </label>
                           <div className="d-flex">
@@ -107,7 +113,10 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
                           </div>
                         </div>
                         <div className="col-md-4 mb-3">
-                          <label className="form-label" htmlFor={`tour-navigations-description_ru-${index}`}>
+                          <label
+                            className="form-label"
+                            htmlFor={`tour-navigations-description_ru-${index}`}
+                          >
                             Описание
                           </label>
                           <div className="d-flex">
@@ -122,7 +131,10 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
                           </div>
                         </div>
                         <div className="col-md-4 mb-3">
-                          <label className="form-label" htmlFor={`tour-navigations-description_uz-${index}`}>
+                          <label
+                            className="form-label"
+                            htmlFor={`tour-navigations-description_uz-${index}`}
+                          >
                             Tasnifi
                           </label>
                           <div className="d-flex">
@@ -137,7 +149,10 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
                           </div>
                         </div>
                         <div className="col-md-4 mb-3">
-                          <label className="form-label" htmlFor={`tour-navigations-time_from-${index}`}>
+                          <label
+                            className="form-label"
+                            htmlFor={`tour-navigations-time_from-${index}`}
+                          >
                             {t("time-from")}
                           </label>
                           <input
@@ -154,7 +169,10 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
                           />
                         </div>
                         <div className="col-md-4 mb-3">
-                          <label className="form-label" htmlFor={`tour-navigations-time_to-${index}`}>
+                          <label
+                            className="form-label"
+                            htmlFor={`tour-navigations-time_to-${index}`}
+                          >
                             {t("time-to")}
                           </label>
                           <input
@@ -171,7 +189,10 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
                           />
                         </div>
                         <div className="col-md-4 mb-3">
-                          <label className="form-label" htmlFor={`tour-navigation-position-${index}`}>
+                          <label
+                            className="form-label"
+                            htmlFor={`tour-navigation-position-${index}`}
+                          >
                             {t("position-in-the-list")}
                           </label>
                           <input
@@ -219,6 +240,11 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
                 )}
               </FieldArray>
             </div>
+          </div>
+          <div>
+            <button type="submit" className="btn btn-success">
+              {t("submit")}
+            </button>
           </div>
         </form>
       )}

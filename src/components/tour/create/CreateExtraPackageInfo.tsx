@@ -16,6 +16,8 @@ import { useFormik } from "formik";
 import { TourCreateExtraPackageUpdateType } from "../../../store/types/tour/create-two/extraPackageUpdate";
 import { useEffect, useState } from "react";
 import { ExtraPackageGetType } from "../../../store/types/extraPackage/get";
+import { getName } from "../../../utils";
+import i18n from "../../../utils/i18n";
 
 const CreateExtraPackageInfo = ({ id }: { id: number }) => {
   const { t } = useTranslation();
@@ -130,7 +132,7 @@ const CreateExtraPackageInfo = ({ id }: { id: number }) => {
               {tourPackages.map((x, idx) => (
                 <tr key={"tour-create-two-extra-package-idx-" + idx}>
                   <td>{idx + 1}</td>
-                  <td>{x.extra_package_id}</td>
+                  <td>{getName(x.extra_package, i18n.language)}</td>
                   <td>
                     {updateId == x.id ? (
                       <input

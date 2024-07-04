@@ -29,13 +29,8 @@ const CreateTwo = () => {
           Orqaga
         </Link>
       </div>
-      <CreatePackageContentInfo id={id} />
       <CreateExtraPackageInfo id={id} />
-      <div>
-        <button type="submit" className="btn btn-success">
-          {t("submit")}
-        </button>
-      </div>
+      <CreatePackageContentInfo id={id} />
     </>
   );
 };

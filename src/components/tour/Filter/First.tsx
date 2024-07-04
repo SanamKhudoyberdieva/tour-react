@@ -1,26 +1,30 @@
+import { ChangeEvent } from "react";
+import { FiltersStateType } from "../../../pages/tour";
 
-const FilterOne = () => {
+const FilterOne = ({
+  handleFilterChange,
+  filters,
+}: {
+  handleFilterChange: (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  filters: FiltersStateType;
+}) => {
   return (
     <div className="card mb-4">
       <div className="card-body">
-        <div
-          className="d-flex flex-column-reverse flex-md-row  justify-content-between mb-3"
-        >
+        <div className="d-flex flex-column-reverse flex-md-row  justify-content-between mb-3">
           <div className="d-flex flex-column">
             <div>
-              <label className="form-label"
-                >город отправления
-              </label>
-              <select className="form-select">
+              <label className="form-label">город отправления</label>
+              <select className="form-select" onChange={handleFilterChange}>
                 <option value="0"></option>
                 <option value="1">Tashkent</option>
               </select>
             </div>
             <div>
-              <label  className="form-label">
-                страна
-              </label>
-              <select className="form-select">
+              <label className="form-label">страна</label>
+              <select className="form-select" onChange={handleFilterChange}>
                 <option value="0"></option>
                 <option value="1">Uzbekistan</option>
                 <option value="2">India</option>
@@ -30,7 +34,7 @@ const FilterOne = () => {
           <div className="d-flex">
             <div>
               <label className="form-label">тур</label>
-              <select className="form-select">
+              <select className="form-select" onChange={handleFilterChange}>
                 <option value="0"></option>
                 <option value="1">Tashkent - Azarbajon</option>
                 <option value="2">Dubai - Toshkent</option>
@@ -58,7 +62,7 @@ const FilterOne = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default FilterOne;

@@ -1,10 +1,18 @@
+import { ChangeEvent } from "react";
+import { FiltersStateType } from "../../../pages/tour";
 
-const FilterThree = () => {
+const FilterThree = ({
+  handleFilterChange,
+  filters,
+}: {
+  handleFilterChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
+  filters: FiltersStateType;
+}) => {
   return (
     <div className="card mb-4">
       <div className="card-body">
         <div className="d-flex flex-column-reverse flex-md-row align-items-lg-center justify-content-lg-between mb-3">
-          <div>
+          {/* <div>
             <div className="d-flex justify-content-between mb-2">
               <label className="form-label me-4">город</label>
               <div className="form-check">
@@ -82,26 +90,15 @@ const FilterThree = () => {
                 </label>
               </div>
             </div>
-          </div>
+          </div> */}
           <div>
-            <div className="d-flex justify-content-between mb-2">
-              <label className="form-label me-4"
-              >питание</label>
-              <div className="form-check">
-                <label className="form-check-label">
-                  любое
-                </label>
-                <input className="form-check-input" type="checkbox" />
-              </div>
-            </div>
-            <div className="dt-filter-wrp">
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label className="form-check-label">
-                  AI
-                </label>
-              </div>
-            </div>
+            <label className="form-label me-4">питание</label>
+            <input
+              className="form-control"
+              value={filters.nutrition_type}
+              onChange={handleFilterChange}
+              type="text"
+            />
           </div>
         </div>
         <div className="d-flex flex-column-reverse flex-md-row align-items-lg-center justify-content-lg-between mb-3">
@@ -114,17 +111,13 @@ const FilterThree = () => {
             </div>
             <div className="form-check">
               <input className="form-check-input" type="checkbox" />
-              <label className="form-check-label">
-                нет остановки продажи
-              </label>
+              <label className="form-check-label">нет остановки продажи</label>
             </div>
           </div>
           <div>
             <div className="form-check">
               <input className="form-check-input" type="checkbox" />
-              <label className="form-check-label">
-                есть места на рейсы
-              </label>
+              <label className="form-check-label">есть места на рейсы</label>
             </div>
             <div className="form-check">
               <input className="form-check-input" type="checkbox" />
@@ -153,7 +146,7 @@ const FilterThree = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default FilterThree;

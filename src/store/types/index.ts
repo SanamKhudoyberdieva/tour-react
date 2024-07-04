@@ -34,5 +34,5 @@ export * from "./news/create";
 export * from "./module/module";
 export * from "./moduleItem/moduleItem";
 
-export * from "./tour/all";
+export * from "./tour/tour";
 export * from "./tour/create/create";
