@@ -109,12 +109,12 @@ const FilterThree = ({
                 дети на отдельной кровати
               </label>
             </div>
-            <div className="form-check">
+            {/* <div className="form-check">
               <input className="form-check-input" type="checkbox" />
               <label className="form-check-label">нет остановки продажи</label>
-            </div>
+            </div> */}
           </div>
-          <div>
+          {/* <div>
             <div className="form-check">
               <input className="form-check-input" type="checkbox" />
               <label className="form-check-label">есть места на рейсы</label>
@@ -139,7 +139,7 @@ const FilterThree = ({
                 группировать по гостинице
               </label>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="d-flex justify-content-end">
           <button className="btn btn-primary">Search</button>

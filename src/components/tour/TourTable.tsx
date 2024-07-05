@@ -9,11 +9,7 @@ import { useTranslation } from "react-i18next";
 import TourNavigationModal from "../modals/TourNavigationModal";
 import { useState } from "react";
 
-const TourTable = ({
-  data,
-}: {
-  data: TourPaginationType;
-}) => {
+const TourTable = ({ data }: { data: TourPaginationType }) => {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -29,6 +25,7 @@ const TourTable = ({
     }
   };
 
+  console.log("data", data);
   return (
     <div className="table-responsive mb-4">
       <table className="table table-striped table-hover">
@@ -54,7 +51,7 @@ const TourTable = ({
               <td>
                 <Link to={`/tour/order/${2}`}>{getName(x, i18n.language)}</Link>
               </td>
-              <td>6.06.2024, 09:10 - 20.06.2024, 09:10</td>
+              <td>{x.from}</td>
               <td>
                 <button className="btn p-1" onClick={handleShow}>
                   <FontAwesomeIcon icon={faFile} />

@@ -113,8 +113,8 @@ const Index = () => {
       </div>
 
       <FilterOne handleFilterChange={handleFilterChange} filters={filters} />
-      <FilterTwo handleFilterChange={handleFilterChange} filters={filters} />
-      <FilterThree handleFilterChange={handleFilterChange} filters={filters} />
+      {/* <FilterTwo handleFilterChange={handleFilterChange} filters={filters} />
+      <FilterThree handleFilterChange={handleFilterChange} filters={filters} /> */}
       {data && (
         <div className="card">
           <div className="card-body">
