@@ -2,13 +2,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import TourTable from "../../components/tour/TourTable";
 import FilterOne from "../../components/tour/Filter/First";
-import FilterTwo from "../../components/tour/Filter/Second";
-import FilterThree from "../../components/tour/Filter/Third";
 import { useTranslation } from "react-i18next";
 import { ChangeEvent, useEffect, useState } from "react";
 import { TourPaginationType } from "../../store/types/tour/all";
 import { parseQuery, stringifyQuery } from "../../utils/queryUtils";
 import api from "../../api/api";
+
 export interface FiltersStateType {
   adults_count?: string;
   child_count?: string;
@@ -18,7 +17,9 @@ export interface FiltersStateType {
   nutrition_type?: string;
   page?: number;
   page_size?: number;
-  [key: string]: string | number | undefined;
+  tour_id?: string;
+  child_years: string[];
+  [key: string]: string | number | undefined | string[] | [];
 }
 
 const Index = () => {
@@ -37,6 +38,8 @@ const Index = () => {
     nutrition_type: "",
     page: 1,
     page_size: 10,
+    tour_id: "",
+    child_years: [],
   };
 
   const [filters, setFilters] = useState<FiltersStateType>(initialFilters);
@@ -47,11 +50,20 @@ const Index = () => {
     setFilters((prevFilters) => ({ ...prevFilters, ...queryFilters }));
   }, [location.search]);
 
-  const cleanFilters = (filters: FiltersStateType) => {
-    const cleanedFilters: FiltersStateType = {};
+  const cleanFilters = (
+    filters: FiltersStateType
+  ): Record<string, string | number | undefined> => {
+    const cleanedFilters: Record<string, string | number | undefined> = {};
     for (const key in filters) {
-      if (filters[key]) {
-        cleanedFilters[key] = filters[key];
+      if (filters[key] !== undefined && filters[key] !== "") {
+        if (Array.isArray(filters[key])) {
+          const filteredArray = (filters[key] as string[]).filter(
+            (item) => item !== ""
+          );
+          cleanedFilters[key] = filteredArray.join(",");
+        } else {
+          cleanedFilters[key] = filters[key] as string | number | undefined;
+        }
       }
     }
     return cleanedFilters;
@@ -62,10 +74,27 @@ const Index = () => {
   ) => {
     const { name, value } = e.target;
     const newFilters = { ...filters, [name]: value };
+
+    if (name === "child_count") {
+      // Update child_years array based on the new child_count value
+      const childCount = parseInt(value, 10);
+      newFilters.child_years = Array(childCount).fill("0");
+    }
+
     setFilters(newFilters);
     const queryString = stringifyQuery(cleanFilters(newFilters));
     navigate(`?${queryString}`);
   };
+
+  const handleChildYearChange =
+    (index: number) => (e: ChangeEvent<HTMLSelectElement>) => {
+      const newChildYears = [...filters.child_years];
+      newChildYears[index] = e.target.value;
+      const newFilters = { ...filters, child_years: newChildYears };
+      setFilters(newFilters);
+      const queryString = stringifyQuery(cleanFilters(newFilters));
+      navigate(`?${queryString}`);
+    };
 
   useEffect(() => {
     // Send request when filters change
@@ -85,18 +114,7 @@ const Index = () => {
     fetchData();
   }, [filters]);
 
-  // const handleGet = async () => {
-  //   try {
-  //     const res = await getTourRoom({});
-  //     setData(res.data);
-  //   } catch (error) {
-  //     console.log("error getTours: ", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   handleGet();
-  // }, []);
+  console.log("filters", filters);
 
   return (
     <>
@@ -112,9 +130,11 @@ const Index = () => {
         </Link>
       </div>
 
-      <FilterOne handleFilterChange={handleFilterChange} filters={filters} />
-      {/* <FilterTwo handleFilterChange={handleFilterChange} filters={filters} />
-      <FilterThree handleFilterChange={handleFilterChange} filters={filters} /> */}
+      <FilterOne
+        handleFilterChange={handleFilterChange}
+        handleChildYearChange={handleChildYearChange}
+        filters={filters}
+      />
       {data && (
         <div className="card">
           <div className="card-body">

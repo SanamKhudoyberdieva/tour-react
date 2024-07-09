@@ -1,37 +1,40 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { FiltersStateType } from "../../../pages/tour";
+import { getTours } from "../../../api";
+import { TourPaginationType } from "../../../store/types/tour/all";
+import { getName } from "../../../utils";
+import i18n from "../../../utils/i18n";
 
 const FilterOne = ({
   handleFilterChange,
   filters,
+  handleChildYearChange,
 }: {
   handleFilterChange: (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
   filters: FiltersStateType;
+  handleChildYearChange: (index: number) => (e: ChangeEvent<HTMLSelectElement>) => void;
 }) => {
+  const [toursData, setToursData] = useState<TourPaginationType | null>(null);
+
+  const handleGetTours = async () => {
+    try {
+      const res = await getTours();
+      setToursData(res.data);
+    } catch (error) {
+      console.log("error getTours: ", error);
+    }
+  };
+
+  useEffect(() => {
+    handleGetTours();
+  }, []);
+
   return (
     <div className="card mb-4">
       <div className="card-body">
         <div className="d-flex">
-          {/* <div className="d-flex flex-column">
-            <div>
-              <label className="form-label">город отправления</label>
-              <select className="form-select" onChange={handleFilterChange}>
-                <option value="0"></option>
-                <option value="1">Tashkent</option>
-              </select>
-            </div>
-            <div>
-              <label className="form-label">страна</label>
-              <select className="form-select" onChange={handleFilterChange}>
-                <option value="0"></option>
-                <option value="1">Uzbekistan</option>
-                <option value="2">India</option>
-              </select>
-            </div>
-          </div> */}
-
           <div>
             <h6 className="card-title">Tur ichida:</h6>
             <ul>
@@ -55,10 +58,20 @@ const FilterOne = ({
           <div className="col-3">
             <div className="mb-2">
               <label className="form-label">тур</label>
-              <select className="form-select" onChange={handleFilterChange}>
-                <option value="0"></option>
-                <option value="1">Tashkent - Azarbajon</option>
-                <option value="2">Dubai - Toshkent</option>
+              <select
+                className="form-select"
+                onChange={handleFilterChange}
+                name="tour_id"
+                value={filters.tour_id}
+              >
+                <option value=""></option>
+                {toursData &&
+                  toursData.tours.length > 0 &&
+                  toursData.tours.map((x) => (
+                    <option key={"tour-filter-name-" + x.id} value={x.id}>
+                      {getName(x, i18n.language)}
+                    </option>
+                  ))}
               </select>
             </div>
             <div>
@@ -100,7 +113,7 @@ const FilterOne = ({
               </select>
             </div>
           </div>
-          <div className="d-flex flex-column col-2">
+          <div className="d-flex flex-column col-3">
             <div className="mb-2">
               <label className="form-label">детей/возраст</label>
               <select
@@ -112,33 +125,52 @@ const FilterOne = ({
                 <option value="0"></option>
                 <option value="1">1</option>
                 <option value="2">2</option>
+                <option value="3">3</option>
               </select>
             </div>
             <div className="d-flex">
-              <div className="ms-2">
-                <label className="form-label">1</label>
-                <select className="form-select">
-                  <option value="0"></option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                </select>
-              </div>
-              <div className="ms-2">
-                <label className="form-label">2</label>
-                <select className="form-select">
-                  <option value="0"></option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                </select>
-              </div>
-              <div className="ms-2">
-                <label className="form-label">3</label>
-                <select className="form-select">
-                  <option value="0"></option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                </select>
-              </div>
+              {parseInt(filters.child_count || "0") >= 1 && (
+                <div className="ms-2">
+                  <label className="form-label">1</label>
+                  <select
+                    className="form-select"
+                    onChange={handleChildYearChange(0)}
+                    value={filters.child_years[0] || ""}
+                  >
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                  </select>
+                </div>
+              )}
+              {parseInt(filters.child_count || "0") >= 2 && (
+                <div className="ms-2">
+                  <label className="form-label">2</label>
+                  <select
+                    className="form-select"
+                    onChange={handleChildYearChange(1)}
+                    value={filters.child_years[1] || ""}
+                  >
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                  </select>
+                </div>
+              )}
+              {parseInt(filters.child_count || "0") >= 3 && (
+                <div className="ms-2">
+                  <label className="form-label">3</label>
+                  <select
+                    className="form-select"
+                    onChange={handleChildYearChange(2)}
+                    value={filters.child_years[2] || ""}
+                  >
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                  </select>
+                </div>
+              )}
             </div>
           </div>
           <div className="col-2 d-flex flex-column justify-content-between">
@@ -158,7 +190,7 @@ const FilterOne = ({
               </label>
             </div>
           </div>
-          <div className="d-flex align-items-end justify-content-end col-3">
+          <div className="d-flex align-items-end justify-content-end col-2">
             <button className="btn btn-primary">Search</button>
           </div>
         </div>
