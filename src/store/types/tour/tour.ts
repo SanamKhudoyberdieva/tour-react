@@ -48,5 +48,5 @@ export interface TourType extends NameDescType, ActionsType {
   rooms: null;
   extra_packages: null;
   application: null;
-  navigation: null | NavigationType[]
+  navigate: null | NavigationType[];
 }

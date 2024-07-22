@@ -7,6 +7,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { TourPaginationType } from "../../store/types/tour/all";
 import { parseQuery, stringifyQuery } from "../../utils/queryUtils";
 import api from "../../api/api";
+import { TourRoomType } from "../../store/types/tour/tourRoom";
 
 export interface FiltersStateType {
   adults_count?: string;
@@ -24,7 +25,7 @@ export interface FiltersStateType {
 
 const Index = () => {
   const { t } = useTranslation();
-  const [data, setData] = useState<TourPaginationType | null>(null);
+  const [data, setData] = useState<TourRoomType | null>(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -164,7 +165,12 @@ const Index = () => {
               </div>
             </div>
             <TourTable data={data} />
-            <Pagination />
+            <Pagination
+              currPage={data.page}
+              recordsFiltered={data.page_size}
+              recordsTotal={data.count}
+              handleFilterChange={handleFilterChange}
+            />
           </div>
         </div>
       )}
