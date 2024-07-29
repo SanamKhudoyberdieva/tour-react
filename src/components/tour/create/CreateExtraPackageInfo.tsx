@@ -27,6 +27,7 @@ const CreateExtraPackageInfo = ({ id }: { id: number }) => {
   );
   const [updateId, setUpdateId] = useState<number | null>(null);
   const [price, setPrice] = useState(0);
+  const [selectedPackage, setSelectedPackage] = useState<number[]>([]);
   const [tourPackages, setTourPackages] = useState<ExtraPackageGetType[] | []>(
     []
   );
@@ -112,13 +113,37 @@ const CreateExtraPackageInfo = ({ id }: { id: number }) => {
     handleGetTour(id);
   }, [id]);
 
-  console.log("tour extra", tourPackages);
+  const deleteExtraPackage = async (tourId: number, id: number) => {
+    if (!(tourPackages.length > 0)) return;
+
+    const arr = tourPackages.filter((x) => x.extra_package_id !== id);
+    const arr1 = arr.map((x) => {
+      return {
+        extra_package_id: x.extra_package_id,
+        price: 0,
+        tour_id: tourId,
+      };
+    });
+    try {
+      await createTourExtraPackage(tourId, arr1);
+      setSelectedPackage([]);
+      handleGetTour(tourId);
+    } catch (error) {
+      console.log("error createTourExtraPackage", error);
+    }
+  };
 
   return (
     <div className="card mb-4">
       <div className="card-body">
-        <div className="table-responsive mb-4">
-          <SearchExtraPackage id={id} handleGetTour={handleGetTour} />
+        <div className="mb-4">
+          <SearchExtraPackage
+            id={id}
+            handleGetTour={handleGetTour}
+            selectedPackage={selectedPackage}
+            setSelectedPackage={setSelectedPackage}
+            tourPackages={tourPackages}
+          />
           <table className="table table-striped table-hover">
             <thead>
               <tr>
@@ -173,7 +198,12 @@ const CreateExtraPackageInfo = ({ id }: { id: number }) => {
                       </button>
                     )}
                     <button className="btn btn-icon btn-danger">
-                      <FontAwesomeIcon icon={faTrash} />
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        onClick={() =>
+                          deleteExtraPackage(id, x.extra_package_id)
+                        }
+                      />
                     </button>
                   </td>
                 </tr>

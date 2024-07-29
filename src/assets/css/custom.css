@@ -477,6 +477,22 @@ thead tr:nth-child(1) th {
   width: 115px;
 }
 
+.custom-day.lightcoral {
+  background-color: #ffb2a5;
+}
+
+.custom-day.yellow {
+  background-color: #ffab00;
+}
+
+.custom-day.red {
+  background-color: #ff3e1d;
+}
+
+.custom-day.lightgreen {
+  background-color: cadetblue;
+}
+
 @media screen and (max-width: 767px) {
   .card-body {
     padding: 1rem 1rem;

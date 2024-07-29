@@ -20,7 +20,7 @@ export interface FiltersStateType {
   page_size?: number;
   tour_id?: string;
   child_years: string[];
-  [key: string]: string | number | undefined | string[] | [];
+  [key: string]: string | number | undefined | string[] | [] | Date;
 }
 
 const Index = () => {
@@ -71,17 +71,25 @@ const Index = () => {
   };
 
   const handleFilterChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e:
+      | ChangeEvent<HTMLInputElement | HTMLSelectElement>
+      | { target: { name: string; value: string | Date } }
   ) => {
     const { name, value } = e.target;
     const newFilters = { ...filters, [name]: value };
-
-    if (name === "child_count") {
+    if (name === "child_count" && typeof value == "string") {
       // Update child_years array based on the new child_count value
       const childCount = parseInt(value, 10);
       newFilters.child_years = Array(childCount).fill("0");
     }
 
+    setFilters(newFilters);
+    const queryString = stringifyQuery(cleanFilters(newFilters));
+    navigate(`?${queryString}`);
+  };
+
+  const handlePageChange = (selectedItem: { selected: number }) => {
+    const newFilters = { ...filters, page: selectedItem.selected };
     setFilters(newFilters);
     const queryString = stringifyQuery(cleanFilters(newFilters));
     navigate(`?${queryString}`);
@@ -97,21 +105,24 @@ const Index = () => {
       navigate(`?${queryString}`);
     };
 
-  useEffect(() => {
-    // Send request when filters change
-    const fetchData = async () => {
+  // Send request when filters change
+  const fetchData = async () => {
+    try {
       const queryString = stringifyQuery(cleanFilters(filters));
-      if (!filters.adults_count || !filters.date || !filters.night_count)
-        return;
-      try {
-        const response = await api.get(`/api/tour/room?${queryString}`);
+      if (!filters.adults_count || !filters.date || !filters.night_count) {
+        const response = await api.get(`/api/tour/room`);
         const data = await response.data;
         setData(data);
-      } catch (error) {
-        console.log("error getting Tours: ", error);
+        return;
       }
-    };
-
+      const response = await api.get(`/api/tour/room?${queryString}`);
+      const data = await response.data;
+      setData(data);
+    } catch (error) {
+      console.log("error getting Tours: ", error);
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, [filters]);
 
@@ -135,6 +146,7 @@ const Index = () => {
         handleFilterChange={handleFilterChange}
         handleChildYearChange={handleChildYearChange}
         filters={filters}
+        fetchData={fetchData}
       />
       {data && (
         <div className="card">
@@ -169,7 +181,7 @@ const Index = () => {
               currPage={data.page}
               recordsFiltered={data.page_size}
               recordsTotal={data.count}
-              handleFilterChange={handleFilterChange}
+              handlePageChange={handlePageChange}
             />
           </div>
         </div>

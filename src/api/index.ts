@@ -51,6 +51,7 @@ export * from "./tour/getAll";
 export * from "./tour/create";
 export * from "./tour/delete";
 export * from "./tour/extrapackage";
+export * from "./tour/calendar";
 
 export * from "./news/get";
 export * from "./news/getAll";

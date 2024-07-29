@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import { useTranslation } from "react-i18next";
@@ -6,20 +6,26 @@ import ExtraPackagesResult from "./ExtraPackagesResult";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createTourExtraPackage } from "../../../api";
+import { ExtraPackageGetType } from "../../../store/types/extraPackage/get";
 
 const SearchExtraPackage = ({
   id,
   handleGetTour,
+  selectedPackage,
+  setSelectedPackage,
+  tourPackages,
 }: {
   id: number;
   handleGetTour: (id: number) => Promise<void>;
+  selectedPackage: number[];
+  setSelectedPackage: Dispatch<SetStateAction<number[]>>;
+  tourPackages: [] | ExtraPackageGetType[];
 }) => {
   const { t } = useTranslation();
   const { extraPackages } = useSelector(
     (state: RootState) => state.extraPackagesReducer
   );
   const [searchPackage, setSearchPackage] = useState("");
-  const [selectedPackage, setSelectedPackage] = useState<number[]>([]);
 
   const filteredPackages =
     extraPackages?.filter((extraPackage: { name_uz: string }) =>
@@ -28,7 +34,8 @@ const SearchExtraPackage = ({
 
   const setExtraPackageList = async (id: number) => {
     if (!(selectedPackage.length > 0)) return;
-    const arr = selectedPackage.map((x) => {
+    let idList = [...tourPackages.map((x) => x.extra_package_id), ...selectedPackage];
+    const arr = idList.map((x) => {
       return {
         extra_package_id: x,
         price: 0,
@@ -62,6 +69,7 @@ const SearchExtraPackage = ({
           extraPackages={filteredPackages}
           selectedPackage={selectedPackage}
           setSelectedPackage={setSelectedPackage}
+          tourPackages={tourPackages}
         />
         <button
           className={`btn d-flex align-items-center ${

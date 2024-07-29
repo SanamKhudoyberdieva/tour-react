@@ -1,22 +1,42 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { FiltersStateType } from "../../../pages/tour";
-import { getTours } from "../../../api";
+import { getTourCalendar, getTours } from "../../../api";
 import { TourPaginationType } from "../../../store/types/tour/all";
 import { getName } from "../../../utils";
 import i18n from "../../../utils/i18n";
+import DateSelector from "./Calendar";
+import { TourCalendarType } from "../../../store/types/tour/calendar";
 
 const FilterOne = ({
   handleFilterChange,
   filters,
   handleChildYearChange,
+  fetchData,
 }: {
   handleFilterChange: (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e:
+      | ChangeEvent<HTMLInputElement | HTMLSelectElement>
+      | { target: { name: string; value: string | Date } }
   ) => void;
   filters: FiltersStateType;
-  handleChildYearChange: (index: number) => (e: ChangeEvent<HTMLSelectElement>) => void;
+  handleChildYearChange: (
+    index: number
+  ) => (e: ChangeEvent<HTMLSelectElement>) => void;
+  fetchData: () => Promise<void>;
 }) => {
   const [toursData, setToursData] = useState<TourPaginationType | null>(null);
+  const [calendar, setCalendar] = useState<TourCalendarType[] | []>([]);
+
+  const uniqueSortedArray = (arr: number[] | undefined): number[] => {
+    if (!arr) return [];
+    const uniqueArray = Array.from(new Set(arr));
+    uniqueArray.sort((a, b) => a - b);
+    return uniqueArray;
+  };
+
+  const night_count = uniqueSortedArray(
+    toursData?.tours.map((x) => x.night_count)
+  );
 
   const handleGetTours = async () => {
     try {
@@ -27,8 +47,18 @@ const FilterOne = ({
     }
   };
 
+  const handleGetCalendar = async () => {
+    try {
+      const res = await getTourCalendar();
+      setCalendar(res.data);
+    } catch (error) {
+      console.log("error getTourCalendar: ", error);
+    }
+  };
+
   useEffect(() => {
     handleGetTours();
+    handleGetCalendar();
   }, []);
 
   return (
@@ -83,6 +113,10 @@ const FilterOne = ({
                 name="date"
                 onChange={handleFilterChange}
               />
+              <DateSelector
+                handleFilterChange={handleFilterChange}
+                calendar={calendar}
+              />
             </div>
           </div>
           <div className="col-2">
@@ -95,8 +129,11 @@ const FilterOne = ({
                 name="night_count"
               >
                 <option value="0"></option>
-                <option value="1">1</option>
-                <option value="2">2</option>
+                {night_count.map((x, idx) => (
+                  <option key={"night-count-" + idx} value={x}>
+                    {x}
+                  </option>
+                ))}
               </select>
             </div>
             <div>
@@ -110,6 +147,8 @@ const FilterOne = ({
                 <option value="0"></option>
                 <option value="1">1</option>
                 <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
               </select>
             </div>
           </div>
@@ -191,7 +230,9 @@ const FilterOne = ({
             </div>
           </div>
           <div className="d-flex align-items-end justify-content-end col-2">
-            <button className="btn btn-primary">Search</button>
+            <button className="btn btn-primary" onClick={fetchData}>
+              Search
+            </button>
           </div>
         </div>
       </div>
