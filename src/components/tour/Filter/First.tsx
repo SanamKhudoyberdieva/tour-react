@@ -16,7 +16,7 @@ const FilterOne = ({
   handleFilterChange: (
     e:
       | ChangeEvent<HTMLInputElement | HTMLSelectElement>
-      | { target: { name: string; value: string | Date } }
+      | { target: { name: string; value: string | Date | null } }
   ) => void;
   filters: FiltersStateType;
   handleChildYearChange: (

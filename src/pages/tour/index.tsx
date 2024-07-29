@@ -20,7 +20,7 @@ export interface FiltersStateType {
   page_size?: number;
   tour_id?: string;
   child_years: string[];
-  [key: string]: string | number | undefined | string[] | [] | Date;
+  [key: string]: string | number | undefined | string[] | [] | Date | null;
 }
 
 const Index = () => {
@@ -73,8 +73,9 @@ const Index = () => {
   const handleFilterChange = (
     e:
       | ChangeEvent<HTMLInputElement | HTMLSelectElement>
-      | { target: { name: string; value: string | Date } }
+      | { target: { name: string; value: string | Date | null } }
   ) => {
+    if (!e) return;
     const { name, value } = e.target;
     const newFilters = { ...filters, [name]: value };
     if (name === "child_count" && typeof value == "string") {
