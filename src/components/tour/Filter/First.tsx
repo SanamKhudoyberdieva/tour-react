@@ -64,7 +64,7 @@ const FilterOne = ({
   return (
     <div className="card mb-4">
       <div className="card-body">
-        <div className="d-flex">
+        {/* <div className="d-flex">
           <div>
             <h6 className="card-title">Tur ichida:</h6>
             <ul>
@@ -83,7 +83,7 @@ const FilterOne = ({
               <li>Transfer from airport to hotel</li>
             </ul>
           </div>
-        </div>
+        </div> */}
         <div className="row">
           <div className="col-3">
             <div className="mb-2">

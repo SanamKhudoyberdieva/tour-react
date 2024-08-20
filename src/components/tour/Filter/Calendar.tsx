@@ -69,6 +69,7 @@ const DateSelector = ({
       placeholderText="Select a flying date"
       dateFormat="yyyy-MM-dd"
       dayClassName={customDayClass}
+      className="form-control"
     />
   );
 };
