@@ -2,12 +2,9 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFile,
-  faPen,
   faPlaneArrival,
   faPlaneDeparture,
-  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { deleteTour } from "../../api";
 import { formatDateToInputValue, getName } from "../../utils";
 import i18n from "../../utils/i18n";
 import { useTranslation } from "react-i18next";
@@ -15,7 +12,13 @@ import TourNavigationModal from "../modals/TourNavigationModal";
 import { useState } from "react";
 import { TourRoomType } from "../../store/types/tour/tourRoom";
 
-const TourTable = ({ data }: { data: TourRoomType }) => {
+const TourTable = ({
+  data,
+  adults_count,
+}: {
+  data: TourRoomType;
+  adults_count: number;
+}) => {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -45,7 +48,9 @@ const TourTable = ({ data }: { data: TourRoomType }) => {
             <tr className="table-danger">
               <td>{idx + 1}</td>
               <td>
-                <Link to={`/tour/order/${x.tour.id}`}>
+                <Link
+                  to={`/tour/order/${x.tour.id}?adults_count=${adults_count}`}
+                >
                   {getName(x.tour, i18n.language)}
                 </Link>
               </td>

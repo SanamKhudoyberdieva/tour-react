@@ -177,7 +177,7 @@ const Index = () => {
                 </select>
               </div>
             </div>
-            <TourTable data={data} />
+            <TourTable data={data} adults_count={filters.adults_count}/>
             <Pagination
               currPage={data.page}
               recordsFiltered={data.page_size}

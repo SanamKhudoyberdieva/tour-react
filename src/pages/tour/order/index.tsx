@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ApplicationTurTable from "../../../components/tour/order/ApplicationTurTable";
 import ApplicationHotelTable from "../../../components/tour/order/ApplicationHotelTable";
 import ApplicationTransportTable from "../../../components/tour/order/ApplicationTransportTable";
@@ -23,7 +23,7 @@ const TourOrderSchema = Yup.object().shape({
       need_visa: Yup.boolean(),
       passport: Yup.string().required("Passport is required"),
       visa_file: Yup.string().required("Visa file is required"),
-    })
+    }),
   ),
   comment: Yup.string().optional(),
   extra_packages: Yup.array().of(
@@ -31,7 +31,7 @@ const TourOrderSchema = Yup.object().shape({
       count: Yup.number().required("Count is required"),
       extra_package_id: Yup.number().required("Extra package ID is required"),
       total: Yup.number().required("Total is required"),
-    })
+    }),
   ),
   phone: Yup.string().required("Phone is required"),
   place_count: Yup.number().required("Place count is required"),
@@ -43,6 +43,10 @@ const TourOrderSchema = Yup.object().shape({
 });
 
 const TourOrder: React.FC = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const adults_count = queryParams.get("adults_count") || "1";
+
   const initialValues: ApplicantsCreateType = {
     applicants: [
       {
@@ -105,10 +109,12 @@ const TourOrder: React.FC = () => {
       >
         {({ values }) => (
           <Form>
-            <div>
-              <h6>Информация о туристе 1</h6>
-              <ApplicantInformation index={2} />
-            </div>
+            {Array.from({ length: parseInt(adults_count, 10) }, (_, index) => (
+              <div key={index}>
+                <h6>Информация о туристе {index + 1}</h6>
+                <ApplicantInformation index={index + 1} />
+              </div>
+            ))}
             <div className="form-check mb-4">
               <Field
                 className="form-check-input"
