@@ -11,6 +11,12 @@ export function getName(item: any, lang: string = "ru") {
   return item["name_" + lang] || item.name_ru;
 }
 
+export function getDescription(item: any, lang: string = "ru") {
+  if (!item) return "";
+  if (lang == "ru") return item.description_ru;
+  return item["description_" + lang] || item.description_ru;
+}
+
 export const formatDateToISOString = (dateString: string): string => {
   const date = new Date(dateString);
   return date.toISOString();

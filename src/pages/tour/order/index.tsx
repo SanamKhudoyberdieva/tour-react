@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import ApplicationTurTable from "../../../components/tour/order/ApplicationTurTable";
 import ApplicationHotelTable from "../../../components/tour/order/ApplicationHotelTable";
 import ApplicationTransportTable from "../../../components/tour/order/ApplicationTransportTable";
@@ -9,6 +9,8 @@ import ApplicantInformation from "../../../components/tour/order/ApplicantInform
 import ApplicationNotes from "../../../components/tour/order/ApplicationNotes";
 import ApplicationExtraPackages from "../../../components/tour/order/ApplicationExtraPackages";
 import { ApplicantsCreateType } from "../../../store/types/tour/order/applicantsCreate";
+import { getTour } from "../../../api";
+import { TourType } from "../../../store/types";
 
 // Validation schema using Yup
 const TourOrderSchema = Yup.object().shape({
@@ -43,7 +45,9 @@ const TourOrderSchema = Yup.object().shape({
 });
 
 const TourOrder: React.FC = () => {
+  const param = useParams();
   const location = useLocation();
+  const [data, setData] = useState<TourType | null>(null);
   const queryParams = new URLSearchParams(location.search);
   const adults_count = queryParams.get("adults_count") || "1";
 
@@ -78,10 +82,29 @@ const TourOrder: React.FC = () => {
     tour_room_id: 0,
   };
 
+  const handleGetById = async (id: number) => {
+    try {
+      const res = await getTour(id);
+      setData(res.data);
+    } catch (error) {
+      console.log("error getTour: ", error);
+    }
+  };
+
   const handleSubmit = (values: ApplicantsCreateType) => {
     console.log("Form data submitted:", values);
     // Here, you can make your API call to post the form data
   };
+
+  useEffect(() => {
+    if (!param || !param.id) return;
+    handleGetById(+param.id);
+  }, [param]);
+
+  console.log("data", data)
+
+
+  if (!data) return <></>;
 
   return (
     <div>
@@ -99,9 +122,9 @@ const TourOrder: React.FC = () => {
           Orqaga
         </Link>
       </div>
-      <ApplicationTurTable />
-      <ApplicationHotelTable />
-      <ApplicationTransportTable />
+      <ApplicationTurTable data={data} />
+      <ApplicationHotelTable data={data} />
+      <ApplicationTransportTable data={data} />
       <Formik
         initialValues={initialValues}
         validationSchema={TourOrderSchema}

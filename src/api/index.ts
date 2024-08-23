@@ -16,6 +16,7 @@ export * from "./airway/delete";
 
 export * from "./application/get";
 export * from "./application/getAll";
+export * from "./application/create";
 export * from "./application/delete";
 
 export * from "./city/get";

@@ -1,5 +1,10 @@
 import React from "react";
-import { Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import InputMask from "react-input-mask";
+import { Field, ErrorMessage, useFormik } from "formik";
+import { useTranslation } from "react-i18next";
+import { ApplicantsCreateType } from "../../../store/types/tour/order/applicantsCreate";
+import { createApplicant } from "../../../api";
 
 interface ApplicantInformationProps {
   index: number;
@@ -8,9 +13,45 @@ interface ApplicantInformationProps {
 const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
   index,
 }) => {
+  const { t } = useTranslation();
+
+  const initialValues: ApplicantsCreateType = {
+    applicants: [
+      {
+        applicant_type: 0,
+        full_name: "",
+        birthday: "",
+        expire_date: "",
+        phone: "",
+        second_phone: ""
+      },
+    ],
+  };
+
+  const onSubmit = async (values: ApplicantsCreateType) => {
+    try {
+      await createApplicant(values);
+    } catch (error) {
+      console.log("Error createApplicant: ", error);
+    }
+  };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema: Yup.object({
+      applicant_type: Yup.string().required(t('you-must-fill-in-applicant_type')),
+      full_name: Yup.string().required(t('you-must-fill-in-fullname')),
+      birthday: Yup.string().required(t('you-must-fill-in-birthday')),
+      expire_date: Yup.string().required(t('you-must-fill-in-expire_date')),
+      phone: Yup.string().required(t('you-must-fill-in-phone')),
+      second_phone: Yup.string().required(t('you-must-fill-in-second_phone')),
+    }),
+    onSubmit,
+  });
+
   return (
     <div className="card mb-3">
-      <div className="card-body">
+      <form onSubmit={formik.handleSubmit} className="card-body">
         <div className="row">
           <div className="col-md-4 mb-3">
             <label className="form-label">MR/MRS/CHD/INF</label>
@@ -19,9 +60,10 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
               name={`applicants[${index}].applicant_type`}
               className="form-select"
             >
-              <option value="1">MR</option>
-              <option value="2">MRS</option>
-              <option value="3">CHD</option>
+              <option value="0">INF</option>
+              <option value="1">CHD</option>
+              <option value="2">MR</option>
+              <option value="3">MRS</option>
             </Field>
             <ErrorMessage
               name={`applicants[${index}].applicant_type`}
@@ -31,7 +73,7 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
           </div>
 
           <div className="col-md-4 col-6 mb-3">
-            <label className="form-label">Фамилия по-латински</label>
+            <label className="form-label">{t('fullname')}</label>
             <Field
               type="text"
               name={`applicants[${index}].full_name`}
@@ -39,34 +81,6 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
             />
             <ErrorMessage
               name={`applicants[${index}].full_name`}
-              component="div"
-              className="text-danger"
-            />
-          </div>
-
-          <div className="col-md-4 col-6 mb-3">
-            <label className="form-label">Имя по-латински</label>
-            <Field
-              type="text"
-              name={`applicants[${index}].first_name`}
-              className="form-control"
-            />
-            <ErrorMessage
-              name={`applicants[${index}].first_name`}
-              component="div"
-              className="text-danger"
-            />
-          </div>
-
-          <div className="col-md-4 col-6 mb-3">
-            <label className="form-label">Отчество по-латински</label>
-            <Field
-              type="text"
-              name={`applicants[${index}].middle_name`}
-              className="form-control"
-            />
-            <ErrorMessage
-              name={`applicants[${index}].middle_name`}
               component="div"
               className="text-danger"
             />
@@ -196,7 +210,47 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
             />
           </div>
 
-          <div className="col-md-4 mb-3">
+          <div className="col-md-4 col-6 mb-3">
+            <label className="form-label" htmlFor="user-phone">
+              {t("phone-number")}
+            </label>
+            <InputMask
+              name='phone'
+              className="form-control"
+              placeholder={`+998 00 000 00 00`}
+              mask="+998 (99) 999 99 99"
+              maskChar={null}
+              value={formik.values.phone}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              id="user-phone"
+            />
+            {formik.errors.phone && formik.touched.phone && (
+              <div className="text-danger">{formik.errors.phone}</div>
+            )}
+          </div>
+
+          <div className="col-md-4 col-6 mb-3">
+            <label className="form-label" htmlFor="user-second_phone">
+              {t("second-phone-number")}
+            </label>
+            <InputMask
+              name='second_phone'
+              className="form-control"
+              placeholder={`+998 00 000 00 00`}
+              mask="+998 (99) 999 99 99"
+              maskChar={null}
+              value={formik.values.second_phone}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              id="user-second_phone"
+            />
+            {formik.errors.second_phone && formik.touched.second_phone && (
+              <div className="text-danger">{formik.errors.second_phone}</div>
+            )}
+          </div>
+
+          {/* <div className="col-md-4 mb-3">
             <div className="d-flex">
               <div className="form-check">
                 <Field
@@ -222,9 +276,9 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
               component="div"
               className="text-danger"
             />
-          </div>
+          </div> */}
 
-          <div className="col-md-4">
+          {/* <div className="col-md-4">
             <div className="form-check">
               <Field
                 className="form-check-input"
@@ -238,9 +292,9 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
                 className="text-danger"
               />
             </div>
-          </div>
+          </div> */}
         </div>
-      </div>
+      </form>
     </div>
   );
 };

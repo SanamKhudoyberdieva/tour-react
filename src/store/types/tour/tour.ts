@@ -1,4 +1,4 @@
-import { AirwayType, CityType, NameDescType, RoomType } from "..";
+import { AirwayType, CityType, HostelType, NameDescType, RoomType } from "..";
 import { ActionsType } from "../general/actions";
 import { NavigationType } from "./navigation";
 
@@ -21,7 +21,7 @@ export interface TourType extends NameDescType, ActionsType {
       price: number;
       from: string;
       to: string;
-      hotel: null;
+      hotel: null | HostelType;
     }
   ];
   airways: [

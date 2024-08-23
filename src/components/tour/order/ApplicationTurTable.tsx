@@ -1,4 +1,7 @@
-const ApplicationTurTable = () => {
+import { TourType } from "../../../store/types"
+import { formatDateToInputValue, getDescription, getName } from "../../../utils"
+
+const ApplicationTurTable = ({data}: {data: TourType}) => {
   return (
     <div className="card mb-3">
         <div className="card-body">
@@ -17,11 +20,17 @@ const ApplicationTurTable = () => {
               </thead>
               <tbody>
                 <tr>
-                  <td>Вьетнам: Нячанг из Ташкента</td>
-                  <td>TAS-38529-CXR</td>
-                  <td>Вьетнам</td>
-                  <td>05.06.2024—12.06.2024</td>
-                  <td>7</td>
+                  <td>{getDescription(data)}</td>
+                  <td>{data.airways.map((airway, index) => (
+                      <div key={index}>{getName(airway.airway)}</div>
+                    ))}</td>
+                  <td>
+                    {data.airways.map((airway, index) => (
+                      <div key={index}>{getName(airway.city_to)}</div>
+                    ))}
+                  </td>
+                  <td>{formatDateToInputValue(data.from)}—{formatDateToInputValue(data.to)}</td>
+                  <td>{data.night_count}</td>
                   <td>CROWN HOTEL NHA TRANG - Special offer</td>
                 </tr>
               </tbody>

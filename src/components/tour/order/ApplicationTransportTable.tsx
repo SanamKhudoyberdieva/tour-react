@@ -1,4 +1,8 @@
-const ApplicationTransportTable = () => {
+import { Link } from "react-router-dom";
+import { TourType } from "../../../store/types";
+import { formatDateToInputValue, getName } from "../../../utils";
+
+const ApplicationTransportTable = ({data}: {data: TourType}) => {
   return (
     <div className="card mb-3">
       <div className="card-body">
@@ -13,14 +17,18 @@ const ApplicationTransportTable = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Reys nomi</td>
-                <td>05.06.2024</td>
-                <td>2</td>
-              </tr>
+              {data.airways.map((x, index) => (
+                <tr key={`application-create-airways-`+index}>
+                  <td>
+                    <Link to={"/airplane"}>{getName(x.airway)}</Link>
+                  </td>
+                  <td>{formatDateToInputValue(x.from)}</td>
+                  <td>2</td>
+                </tr>
+              ))}
             </tbody>
           </table>
-          <div>
+          {/* <div>
             <div>
               Багаж: <span>20 КГ</span>
             </div>
@@ -30,28 +38,7 @@ const ApplicationTransportTable = () => {
             <div>
               Bagaj: <span>20kg</span>
             </div>
-          </div>
-          <hr />
-          <table className="table table-striped table-hover">
-            <tbody>
-              <tr>
-                <td>Reys nomi</td>
-                <td>05.06.2024</td>
-                <td>2</td>
-              </tr>
-            </tbody>
-          </table>
-          <div>
-            <div>
-              Багаж: <span>20 КГ</span>
-            </div>
-            <div>
-              Ручная кладь: <span>8 КГ</span>
-            </div>
-            <div>
-              Bagaj: <span>20kg</span>
-            </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

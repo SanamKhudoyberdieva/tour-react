@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { TourType } from "../../../store/types";
+import { formatDateToInputValue, getDescription, getName } from "../../../utils";
 
-const ApplicationHotelTable = () => {
+const ApplicationHotelTable = ({data}: {data: TourType}) => {
   return (
     <div className="card mb-3">
       <div className="card-body">
@@ -18,16 +20,18 @@ const ApplicationHotelTable = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <Link to={"/"}>CROWN HOTEL NHA TRANG 3*</Link>
-                </td>
-                <td>Нячанг</td>
-                <td>Superior City View With Balcony</td>
-                <td>2Adl</td>
-                <td>BB</td>
-                <td>05.06.2024—12.06.2024</td>
-              </tr>
+              {data.hotels.map((x, index) => (
+                <tr key={`application-create-hotel-`+index}>
+                  <td>
+                    <Link to={"/hostel"}>{getName(x.hotel)}</Link>
+                  </td>
+                  <td>{getName(x.hotel?.city)}</td>
+                  <td>{getDescription(x.hotel)}</td>
+                  <td>2Adl</td>
+                  <td>BB</td>
+                  <td>{formatDateToInputValue(x.from)}—{formatDateToInputValue(x.to)}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
