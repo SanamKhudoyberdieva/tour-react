@@ -18,9 +18,6 @@ const SearchDirectorInput = () => {
       admin.full_name.toLowerCase().includes(searchAdmin.toLowerCase()),
     ) || [];
     
-  console.log("searchAdmin", searchAdmin);
-  console.log("filteredAdmins", admins);
-
   return (
     <div>
       <label htmlFor="add-staff" className="form-label">

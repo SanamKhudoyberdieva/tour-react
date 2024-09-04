@@ -158,22 +158,6 @@ const InfantInformation: React.FC<InfantInformationProps> = ({
               </label>
             </div>
           </div>
-          <div className="col-md-4">
-            <div className="form-check">
-              <Field
-                className="form-check-input"
-                type="checkbox"
-                name={`applicants[${index}].need_disabled_carriage`}
-                id="need_disabled_carriage"
-              />
-              <label
-                className="form-check-label"
-                htmlFor="need_disabled_carriage"
-              >
-                need_disabled_carriage
-              </label>
-            </div>
-          </div>
         </div>
       </div>
     </div>

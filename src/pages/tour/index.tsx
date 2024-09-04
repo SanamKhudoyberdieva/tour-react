@@ -116,7 +116,6 @@ const Index = () => {
       ...x,
       child_years: newFilters,
     }));
-    console.log("filters.child_years after", filters.child_years);
   };
 
   // Send request when filters change

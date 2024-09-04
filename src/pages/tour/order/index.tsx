@@ -79,7 +79,6 @@ const TourOrder: React.FC = () => {
   };
 
   const handleSubmit = async (data: ApplicantsCreateType) => {
-    console.log("submit data", data);
     try {
       await createApplicant(data);
     } catch (error) {
@@ -106,7 +105,7 @@ const TourOrder: React.FC = () => {
       function onlyUnique(
         value: { index: number; has: boolean },
         index: number,
-        array: { index: number; has: boolean }[],
+        array: { index: number; has: boolean }[]
       ) {
         return array.findIndex((v) => v.index === value.index) === index;
       }
@@ -199,9 +198,8 @@ const TourOrder: React.FC = () => {
                           has: true,
                         };
                       return y;
-                    }),
+                    })
                   );
-                  console.log("adultsHasInfant", adultsHasInfant);
                 };
                 const handleRemoveInfant = (index: number) => {
                   setAdultsHasInfant((x) =>
@@ -212,7 +210,7 @@ const TourOrder: React.FC = () => {
                           has: false,
                         };
                       return y;
-                    }),
+                    })
                   );
                 };
                 return (

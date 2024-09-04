@@ -45,7 +45,6 @@ const ApplicationExtraPackages: React.FC<ApplicationExtraPackagesProps> = ({
     price: number,
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    console.log("first", id, price, e.target.value);
     const index = selectedPackages.findIndex((p) => p.id === id);
     setSelectedPackeges((x) =>
       x.map((y, idx) => {
