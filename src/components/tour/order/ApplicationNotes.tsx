@@ -1,53 +1,52 @@
-const ApplicationNotes = () => {
+import { FormikErrors, FormikTouched } from "formik";
+import { ApplicantsCreateType } from "../../../store/types/tour/order/applicantsCreate";
+import { useTranslation } from "react-i18next";
+
+interface ApplicationNotesProps {
+  handleChange: {
+    (e: React.ChangeEvent<unknown>): void;
+    <T = string | React.ChangeEvent<unknown>>(
+      field: T,
+    ): T extends React.ChangeEvent<unknown>
+      ? void
+      : (e: string | React.ChangeEvent<unknown>) => void;
+  };
+  setFieldValue: (
+    field: string,
+    value: unknown,
+    shouldValidate?: boolean,
+  ) => Promise<void | FormikErrors<ApplicantsCreateType>>;
+  values: ApplicantsCreateType;
+  handleBlur: {
+    (e: React.FocusEvent<unknown>): void;
+    <T = unknown>(fieldOrEvent: T): T extends string
+      ? (e: unknown) => void
+      : void;
+  };
+  errors: FormikErrors<ApplicantsCreateType>;
+  touched: FormikTouched<ApplicantsCreateType>;
+}
+const ApplicationNotes: React.FC<ApplicationNotesProps> = ({
+  handleChange,
+  values,
+}) => {
+  const { t } = useTranslation();
   return (
     <div>
-      <h6>Примечание к заявке</h6>
+      <h6>{t("order-notes")}</h6>
       <div className="card mb-3">
         <div className="card-body">
-          <div className="row">
-            <div className="col-md-3 mb-3">
-              <div className="form-check">
-                <label className="form-check-label">вместе с заявкой №</label>
-                <input className="form-check-input" type="checkbox" />
-              </div>
-            </div>
-            <div className="col-md-3 mb-3">
-              <div className="form-check">
-                <label className="form-check-label">молодожены</label>
-                <input className="form-check-input" type="checkbox" />
-              </div>
-            </div>
-            <div className="col-md-3 mb-3">
-              <div className="form-check">
-                <label className="form-check-label">вид на море</label>
-                <input className="form-check-input" type="checkbox" />
-              </div>
-            </div>
-            <div className="col-md-3 mb-3">
-              <div className="form-check">
-                <label className="form-check-label">тихое место</label>
-                <input className="form-check-input" type="checkbox" />
-              </div>
-            </div>
-            <div className="col-md-3 mb-3">
-              <div className="form-check">
-                <label className="form-check-label">
-                  постоянный гость отеля
-                </label>
-                <input className="form-check-input" type="checkbox" />
-              </div>
-            </div>
-            <div className="col-md-3 mb-3">
-              <div className="form-check">
-                <label className="form-check-label">
-                  люлька для младенца в номер
-                </label>
-                <input className="form-check-input" type="checkbox" />
-              </div>
-            </div>
-            <div className="mb-3">
-              <textarea className="form-control"></textarea>
-            </div>
+          <div className="mb-3">
+            <label className="form-label" htmlFor="order-comment">
+              {t("comment")}
+            </label>
+            <textarea
+              name="comment"
+              onChange={handleChange}
+              className="form-control"
+              value={values.comment}
+              id="order-comment"
+            ></textarea>
           </div>
         </div>
       </div>

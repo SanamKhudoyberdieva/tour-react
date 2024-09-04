@@ -29,7 +29,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setIsShowAside }) => {
       <div className="app-brand demo justify-content-start">
         <Link to={"/"} className="app-brand-link">
           <span className="app-brand-text demo menu-text fw-bolder text-uppercase text-gray">
-            DIMAX
+            POYTAXT
           </span>
         </Link>
         <button

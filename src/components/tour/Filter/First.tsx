@@ -1,4 +1,10 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { FiltersStateType } from "../../../pages/tour";
 import { getTourCalendar, getTours } from "../../../api";
 import { TourPaginationType } from "../../../store/types/tour/all";
@@ -10,22 +16,25 @@ import { TourCalendarType } from "../../../store/types/tour/calendar";
 const FilterOne = ({
   handleFilterChange,
   filters,
-  handleChildYearChange,
   fetchData,
+  setFilters,
 }: {
   handleFilterChange: (
     e:
       | ChangeEvent<HTMLInputElement | HTMLSelectElement>
-      | { target: { name: string; value: string | Date | null } }
+      | { target: { name: string; value: string | Date | null | boolean } },
   ) => void;
   filters: FiltersStateType;
   handleChildYearChange: (
-    index: number
-  ) => (e: ChangeEvent<HTMLSelectElement>) => void;
+    e: ChangeEvent<HTMLSelectElement>,
+    index: number,
+  ) => void;
   fetchData: () => Promise<void>;
+  setFilters: Dispatch<SetStateAction<FiltersStateType>>;
 }) => {
   const [toursData, setToursData] = useState<TourPaginationType | null>(null);
   const [calendar, setCalendar] = useState<TourCalendarType[] | []>([]);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const uniqueSortedArray = (arr: number[] | undefined): number[] => {
     if (!arr) return [];
@@ -35,7 +44,7 @@ const FilterOne = ({
   };
 
   const night_count = uniqueSortedArray(
-    toursData?.tours.map((x) => x.night_count)
+    toursData?.tours.map((x) => x.night_count),
   );
 
   const handleGetTours = async () => {
@@ -47,9 +56,9 @@ const FilterOne = ({
     }
   };
 
-  const handleGetCalendar = async () => {
+  const handleGetCalendar = async (date: Date) => {
     try {
-      const res = await getTourCalendar();
+      const res = await getTourCalendar(date);
       setCalendar(res.data);
     } catch (error) {
       console.log("error getTourCalendar: ", error);
@@ -58,34 +67,13 @@ const FilterOne = ({
 
   useEffect(() => {
     handleGetTours();
-    handleGetCalendar();
   }, []);
 
   return (
     <div className="card mb-4">
       <div className="card-body">
-        {/* <div className="d-flex">
-          <div>
-            <h6 className="card-title">Tur ichida:</h6>
-            <ul>
-              <li>Aviabilet (Toshkent-Dubai)</li>
-              <li>Aviabilet (Toshkent-Dubai)</li>
-              <li>Hotel</li>
-              <li>Transfer from airport to hotel</li>
-            </ul>
-          </div>
-          <div>
-            <h6 className="card-title">Qo'shimcha to'lov:</h6>
-            <ul>
-              <li>Aviabilet (Toshkent-Dubai)</li>
-              <li>Aviabilet (Toshkent-Dubai)</li>
-              <li>Hotel</li>
-              <li>Transfer from airport to hotel</li>
-            </ul>
-          </div>
-        </div> */}
         <div className="row">
-          <div className="col-3">
+          <div className="col-md-4">
             <div className="mb-2">
               <label className="form-label">тур</label>
               <select
@@ -104,22 +92,21 @@ const FilterOne = ({
                   ))}
               </select>
             </div>
-            <div>
-              <label className="form-label">вылет от</label>
-              <input
-                type="date"
-                className="form-control"
-                value={filters.date}
-                name="date"
-                onChange={handleFilterChange}
-              />
+            <div className="d-flex flex-column">
+              <label htmlFor="date-picker" className="form-label">
+                вылет от
+              </label>
               <DateSelector
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+                setCalendar={setCalendar}
+                handleGetCalendar={handleGetCalendar}
                 handleFilterChange={handleFilterChange}
                 calendar={calendar}
               />
             </div>
           </div>
-          <div className="col-2">
+          <div className="col-md-4">
             <div className="mb-2">
               <label className="form-label">ночей</label>
               <select
@@ -152,7 +139,7 @@ const FilterOne = ({
               </select>
             </div>
           </div>
-          <div className="d-flex flex-column col-3">
+          {/* <div className="d-flex flex-column col-3">
             <div className="mb-2">
               <label className="form-label">детей/возраст</label>
               <select
@@ -168,51 +155,38 @@ const FilterOne = ({
               </select>
             </div>
             <div className="d-flex">
-              {parseInt(filters.child_count || "0") >= 1 && (
-                <div className="ms-2">
-                  <label className="form-label">1</label>
-                  <select
-                    className="form-select"
-                    onChange={handleChildYearChange(0)}
-                    value={filters.child_years[0] || ""}
-                  >
-                    <option value=""></option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                  </select>
-                </div>
-              )}
-              {parseInt(filters.child_count || "0") >= 2 && (
-                <div className="ms-2">
-                  <label className="form-label">2</label>
-                  <select
-                    className="form-select"
-                    onChange={handleChildYearChange(1)}
-                    value={filters.child_years[1] || ""}
-                  >
-                    <option value=""></option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                  </select>
-                </div>
-              )}
-              {parseInt(filters.child_count || "0") >= 3 && (
-                <div className="ms-2">
-                  <label className="form-label">3</label>
-                  <select
-                    className="form-select"
-                    onChange={handleChildYearChange(2)}
-                    value={filters.child_years[2] || ""}
-                  >
-                    <option value=""></option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                  </select>
-                </div>
+              {Array.from(
+                { length: parseInt(filters.child_count || "0", 10) },
+                (_, index) => {
+                  const childYears = filters.child_years || [];
+                  if (
+                    childYears.length < parseInt(filters.child_count || "0", 10)
+                  ) {
+                    const newApplicants = [...filters.child_years, "0"];
+                    setFilters((x) => ({
+                      ...x,
+                      child_years: newApplicants,
+                    }));
+                  }
+                  return (
+                    <div className="ms-2" key={index}>
+                      <label className="form-label">{index + 1}</label>
+                      <select
+                        className="form-select"
+                        onChange={(e) => handleChildYearChange(e, index)}
+                        value={filters.child_years[index] || ""}
+                      >
+                        <option value=""></option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                      </select>
+                    </div>
+                  );
+                },
               )}
             </div>
-          </div>
-          <div className="col-2 d-flex flex-column justify-content-between">
+          </div> */}
+          <div className="col-md-4 d-flex flex-column justify-content-between">
             <div>
               <label className="form-label me-4">питание</label>
               <input
@@ -222,17 +196,57 @@ const FilterOne = ({
                 type="text"
               />
             </div>
-            <div className="form-check me-2">
-              <input className="form-check-input" type="checkbox" />
-              <label className="form-check-label small">
+            {/* <div className="form-check me-2">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                name="child_with_parent"
+                checked={filters.child_with_parent}
+                onChange={(e) => {
+                  console.log(e.target.checked);
+                  handleFilterChange({
+                    target: {
+                      name: "child_with_parent",
+                      value: e.target.checked,
+                    },
+                  });
+                }}
+                id="child-seperate-bad"
+              />
+              <label
+                className="form-check-label small"
+                htmlFor="child-seperate-bad"
+              >
                 дети на отдельной кровати
               </label>
+            </div> */}
+            <div className="d-flex align-items-end justify-content-between">
+              <button
+                className="btn btn-secondary"
+                type="button"
+                onClick={() => {
+                  setCalendar([]);
+                  setSelectedDate(null);
+                  setFilters({
+                    adults_count: "",
+                    child_count: "",
+                    child_with_parent: false,
+                    date: "",
+                    night_count: "",
+                    nutrition_type: "",
+                    page: 1,
+                    page_size: 10,
+                    tour_id: "",
+                    child_years: [],
+                  });
+                }}
+              >
+                Clear
+              </button>
+              <button className="btn btn-primary" onClick={fetchData}>
+                Search
+              </button>
             </div>
-          </div>
-          <div className="d-flex align-items-end justify-content-end col-2">
-            <button className="btn btn-primary" onClick={fetchData}>
-              Search
-            </button>
           </div>
         </div>
       </div>

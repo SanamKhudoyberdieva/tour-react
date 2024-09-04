@@ -34,7 +34,7 @@ const SearchExtraPackage = ({
 
   const setExtraPackageList = async (id: number) => {
     if (!(selectedPackage.length > 0)) return;
-    let idList = [...tourPackages.map((x) => x.extra_package_id), ...selectedPackage];
+    const idList = [...tourPackages.map((x) => x.extra_package_id), ...selectedPackage];
     const arr = idList.map((x) => {
       return {
         extra_package_id: x,

@@ -7,7 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { formatDateToInputValue, getName } from "../../utils";
 import i18n from "../../utils/i18n";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 import TourNavigationModal from "../modals/TourNavigationModal";
 import { useState } from "react";
 import { TourRoomType } from "../../store/types/tour/tourRoom";
@@ -17,13 +17,12 @@ const TourTable = ({
   adults_count,
 }: {
   data: TourRoomType;
-  adults_count: number;
+  adults_count: string;
 }) => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const handleShow = () => setShowModal(true);
-  console.log("object data", data);
 
   return (
     <div className="table-responsive mb-4">
@@ -45,11 +44,11 @@ const TourTable = ({
         </thead>
         <tbody>
           {data.tours.map((x, idx) => (
-            <tr className="table-danger">
+            <tr className="table-danger" key={"tour-table-application-" + idx}>
               <td>{idx + 1}</td>
               <td>
                 <Link
-                  to={`/tour/order/${x.tour.id}?adults_count=${adults_count}`}
+                  to={`/tour/order/${x.tour_id}?adults_count=${adults_count}&tour_room_id=${x.id}`}
                 >
                   {getName(x.tour, i18n.language)}
                 </Link>

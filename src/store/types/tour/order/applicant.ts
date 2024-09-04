@@ -8,4 +8,5 @@ export interface AplicantCreateType {
   need_visa: boolean;
   passport: string;
   visa_file: string;
+  phone: string;
 }

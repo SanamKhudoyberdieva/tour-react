@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
+import { Formik, Form } from "formik";
 import { Link, useLocation, useParams } from "react-router-dom";
 import ApplicationTurTable from "../../../components/tour/order/ApplicationTurTable";
 import ApplicationHotelTable from "../../../components/tour/order/ApplicationHotelTable";
@@ -9,62 +8,51 @@ import ApplicantInformation from "../../../components/tour/order/ApplicantInform
 import ApplicationNotes from "../../../components/tour/order/ApplicationNotes";
 import ApplicationExtraPackages from "../../../components/tour/order/ApplicationExtraPackages";
 import { ApplicantsCreateType } from "../../../store/types/tour/order/applicantsCreate";
-import { getTour } from "../../../api";
 import { TourType } from "../../../store/types";
-
-// Validation schema using Yup
-const TourOrderSchema = Yup.object().shape({
-  applicants: Yup.array().of(
-    Yup.object().shape({
-      applicant_type: Yup.number().required("Applicant type is required"),
-      birthday: Yup.string().required("Birthday is required"),
-      commission: Yup.number().required("Commission is required"),
-      expire_date: Yup.string().required("Expire date is required"),
-      full_name: Yup.string().required("Full name is required"),
-      need_disabled_carriage: Yup.boolean(),
-      need_visa: Yup.boolean(),
-      passport: Yup.string().required("Passport is required"),
-      visa_file: Yup.string().required("Visa file is required"),
-    }),
-  ),
-  comment: Yup.string().optional(),
-  extra_packages: Yup.array().of(
-    Yup.object().shape({
-      count: Yup.number().required("Count is required"),
-      extra_package_id: Yup.number().required("Extra package ID is required"),
-      total: Yup.number().required("Total is required"),
-    }),
-  ),
-  phone: Yup.string().required("Phone is required"),
-  place_count: Yup.number().required("Place count is required"),
-  second_phone: Yup.string().optional(),
-  total: Yup.number().required("Total is required"),
-  total_commission: Yup.number().required("Total commission is required"),
-  tour_id: Yup.number().required("Tour ID is required"),
-  tour_room_id: Yup.number().required("Tour room ID is required"),
-});
+import { createApplicant, getTour } from "../../../api";
+import { useTranslation } from "react-i18next";
+import { uploadApplicaitonFile } from "../../../api/application/file";
+import InfantInformation from "../../../components/tour/order/InfantInformation";
 
 const TourOrder: React.FC = () => {
-  const param = useParams();
+  const { t } = useTranslation();
+  const [selectedPackages, setSelectedPackeges] = useState<
+    { id: number; price: number; q: number }[]
+  >([]);
+  const [isLoaded, setIsloaded] = useState<boolean>(false);
   const location = useLocation();
-  const [data, setData] = useState<TourType | null>(null);
   const queryParams = new URLSearchParams(location.search);
   const adults_count = queryParams.get("adults_count") || "1";
+  const tour_room_id = queryParams.get("tour_room_id");
+  const [adultsHasInfant, setAdultsHasInfant] = useState<
+    { index: number; has: boolean }[]
+  >([]);
+  const param = useParams();
+  const [tourData, setTourData] = useState<TourType | null>(null);
+
+  const [total, setTotal] = useState<number>(0);
+
+  const calculateSum = (values: ApplicantsCreateType) => {
+    if (!tourData) return;
+    let sum = 0;
+    const roomPrice = tourData.room_prices[0].price;
+    const visaPrice = tourData.visa_price;
+    const babyPrice = tourData.baby_price;
+
+    values.applicants.forEach((x) => {
+      sum = x.need_visa ? sum + visaPrice : sum;
+      sum = x.applicant_type === 1 ? sum - babyPrice : sum + roomPrice;
+    });
+
+    selectedPackages.forEach((x) => {
+      sum = x.price + sum;
+    });
+
+    setTotal(sum);
+  };
 
   const initialValues: ApplicantsCreateType = {
-    applicants: [
-      {
-        applicant_type: 0,
-        birthday: "",
-        commission: 0,
-        expire_date: "",
-        full_name: "",
-        need_disabled_carriage: false,
-        need_visa: false,
-        passport: "",
-        visa_file: "",
-      },
-    ],
+    applicants: [],
     comment: "",
     extra_packages: [
       {
@@ -73,38 +61,60 @@ const TourOrder: React.FC = () => {
         total: 0,
       },
     ],
-    phone: "",
     place_count: 0,
-    second_phone: "",
     total: 0,
     total_commission: 0,
     tour_id: 0,
     tour_room_id: 0,
   };
 
-  const handleGetById = async (id: number) => {
+  const handleGetTour = async (id: number) => {
     try {
       const res = await getTour(id);
-      setData(res.data);
+      setTourData(res.data);
+      setIsloaded(true);
     } catch (error) {
-      console.log("error getTour: ", error);
+      console.log("getting tour: ", error);
     }
   };
 
-  const handleSubmit = (values: ApplicantsCreateType) => {
-    console.log("Form data submitted:", values);
-    // Here, you can make your API call to post the form data
+  const handleSubmit = async (data: ApplicantsCreateType) => {
+    console.log("submit data", data);
+    try {
+      await createApplicant(data);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   useEffect(() => {
-    if (!param || !param.id) return;
-    handleGetById(+param.id);
-  }, [param]);
+    if (!param.id) return;
+    handleGetTour(parseInt(param.id, 10));
+  }, [param.id]);
 
-  console.log("data", data)
+  useEffect(() => {
+    Array.from({ length: parseInt(adults_count) }, (_, index) => {
+      if (!adultsHasInfant.find((x) => x.index === index)) {
+        setAdultsHasInfant((x) => [
+          ...x,
+          {
+            index,
+            has: false,
+          },
+        ]);
+      }
+      function onlyUnique(
+        value: { index: number; has: boolean },
+        index: number,
+        array: { index: number; has: boolean }[],
+      ) {
+        return array.findIndex((v) => v.index === value.index) === index;
+      }
+      setAdultsHasInfant((x) => x.filter(onlyUnique));
+    });
+  }, [adults_count]);
 
-
-  if (!data) return <></>;
+  if (!tourData || !tour_room_id) return;
 
   return (
     <div>
@@ -122,57 +132,177 @@ const TourOrder: React.FC = () => {
           Orqaga
         </Link>
       </div>
-      <ApplicationTurTable data={data} />
-      <ApplicationHotelTable data={data} />
-      <ApplicationTransportTable data={data} />
-      <Formik
-        initialValues={initialValues}
-        validationSchema={TourOrderSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ values }) => (
-          <Form>
-            {Array.from({ length: parseInt(adults_count, 10) }, (_, index) => (
-              <div key={index}>
-                <h6>Информация о туристе {index + 1}</h6>
-                <ApplicantInformation index={index + 1} />
-              </div>
-            ))}
-            <div className="form-check mb-4">
-              <Field
-                className="form-check-input"
-                type="checkbox"
-                name="applicants[0].need_disabled_carriage"
+      <ApplicationTurTable data={tourData} />
+      <ApplicationHotelTable data={tourData} />
+      <ApplicationTransportTable data={tourData} />
+      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        {({
+          values,
+          handleChange,
+          setFieldValue,
+          handleBlur,
+          errors,
+          touched,
+        }) => {
+          if (isLoaded) {
+            setFieldValue("tour_id", tourData.id);
+            setFieldValue("tour_room_id", parseInt(tour_room_id));
+            setIsloaded(false);
+          }
+          return (
+            <Form>
+              {Array.from({ length: parseInt(adults_count) }, (_, index) => {
+                const applicants = values.applicants || [];
+                const adults = parseInt(adults_count);
+
+                if (applicants.length < parseInt(adults_count)) {
+                  const newApplicants = [
+                    ...applicants,
+                    {
+                      applicant_type: 0,
+                      birthday: "",
+                      commission: 0,
+                      expire_date: "",
+                      full_name: "",
+                      need_disabled_carriage: false,
+                      need_visa: false,
+                      passport: null,
+                      visa_file: null,
+                      with_parent: false,
+                      phone: "",
+                    },
+                  ];
+                  setFieldValue("applicants", newApplicants);
+                }
+
+                const handleAddInfant = async () => {
+                  const newApplicants = [
+                    ...applicants,
+                    {
+                      applicant_type: 1,
+                      birthday: "",
+                      commission: 0,
+                      expire_date: "",
+                      full_name: "",
+                      need_visa: false,
+                      passport: null,
+                      visa_file: null,
+                      with_parent: false,
+                    },
+                  ];
+                  await setFieldValue("applicants", newApplicants);
+                  setAdultsHasInfant((x) =>
+                    x.map((y) => {
+                      if (y.index === index)
+                        return {
+                          index: y.index,
+                          has: true,
+                        };
+                      return y;
+                    }),
+                  );
+                  console.log("adultsHasInfant", adultsHasInfant);
+                };
+                const handleRemoveInfant = (index: number) => {
+                  setAdultsHasInfant((x) =>
+                    x.map((y) => {
+                      if (y.index === index)
+                        return {
+                          index: y.index,
+                          has: false,
+                        };
+                      return y;
+                    }),
+                  );
+                };
+                return (
+                  <div key={index} className="mb-3">
+                    <h6>Информация о туристе {index + 1}</h6>
+                    <ApplicantInformation
+                      values={values}
+                      handleChange={handleChange}
+                      setFieldValue={setFieldValue}
+                      index={index}
+                      handleBlur={handleBlur}
+                      errors={errors}
+                      touched={touched}
+                    />
+                    {index > 0 && adultsHasInfant[0].has == false ? (
+                      <></>
+                    ) : (
+                      <>
+                        {!adultsHasInfant.find((x) => x.index === index)
+                          ?.has ? (
+                          <button
+                            className="btn btn-secondary btn-sm"
+                            onClick={handleAddInfant}
+                            type="button"
+                          >
+                            {t("add-infant")}
+                          </button>
+                        ) : (
+                          <button
+                            className="btn btn-secondary btn-sm"
+                            onClick={() => handleRemoveInfant(index)}
+                            type="button"
+                          >
+                            {t("remove-infant")}
+                          </button>
+                        )}
+                        {adultsHasInfant.find((x) => x.index === index)
+                          ?.has && (
+                          <InfantInformation
+                            values={values}
+                            handleChange={handleChange}
+                            setFieldValue={setFieldValue}
+                            index={index}
+                            adults={adults}
+                            uploadApplicaitonFile={uploadApplicaitonFile}
+                          />
+                        )}
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+              <ApplicationNotes
+                values={values}
+                handleChange={handleChange}
+                setFieldValue={setFieldValue}
+                handleBlur={handleBlur}
+                errors={errors}
+                touched={touched}
               />
-              <label className="form-check-label">младенец</label>
-            </div>
+              <ApplicationExtraPackages
+                data={tourData}
+                selectedPackages={selectedPackages}
+                setSelectedPackeges={setSelectedPackeges}
+              />
 
-            <ApplicationNotes />
-            <ApplicationExtraPackages />
-
-            <div className="row">
-              <div className="col-md-5">
-                <div className="card">
-                  <div className="card-body">
-                    <div className="dt-total-price">{values.total} USD</div>
-                    <div className="d-flex justify-content-around">
-                      <button type="submit" className="btn btn-primary">
-                        Пересчитать
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        disabled
-                      >
-                        Бронировать
-                      </button>
+              <div className="row">
+                <div className="col-md-5">
+                  <div className="card">
+                    <div className="card-body">
+                      <div className="dt-total-price">{total} USD</div>
+                      <div className="d-flex justify-content-around">
+                        <button
+                          type="button"
+                          onClick={() => calculateSum(values)}
+                          className="btn btn-primary"
+                        >
+                          Пересчитать
+                        </button>
+                        <button type="submit" className="btn btn-primary">
+                          Бронировать
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </Form>
-        )}
+            </Form>
+          );
+        }}
       </Formik>
     </div>
   );

@@ -143,7 +143,6 @@ body {
 }
 
 .dt-total-price {
-  text-decoration: line-through;
   line-height: 20px;
   font-size: 20px;
   margin-bottom: 20px;
@@ -491,6 +490,15 @@ thead tr:nth-child(1) th {
 
 .custom-day.lightgreen {
   background-color: cadetblue;
+}
+
+.react-datepicker {
+  position: relative;
+  z-index: 10 !important;
+}
+
+.layout-navbar {
+  z-index: unset !important;
 }
 
 @media screen and (max-width: 767px) {

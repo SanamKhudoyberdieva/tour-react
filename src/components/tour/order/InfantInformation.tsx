@@ -1,12 +1,14 @@
 import React from "react";
-import InputMask from "react-input-mask";
-import { Field, ErrorMessage, FormikErrors, FormikTouched } from "formik";
+import { Field, ErrorMessage, FormikErrors } from "formik";
 import { useTranslation } from "react-i18next";
 import { ApplicantsCreateType } from "../../../store/types/tour/order/applicantsCreate";
-import { uploadApplicaitonFile } from "../../../api/application/file";
+import { AxiosResponse } from "axios";
 
-interface ApplicantInformationProps {
+interface InfantInformationProps {
   index: number;
+  adults: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  uploadApplicaitonFile: (file: FormData) => Promise<AxiosResponse<any, any>>;
   handleChange: {
     (e: React.ChangeEvent<unknown>): void;
     <T = string | React.ChangeEvent<unknown>>(
@@ -21,69 +23,56 @@ interface ApplicantInformationProps {
     shouldValidate?: boolean,
   ) => Promise<void | FormikErrors<ApplicantsCreateType>>;
   values: ApplicantsCreateType;
-  handleBlur: {
-    (e: React.FocusEvent<unknown>): void;
-    <T = unknown>(fieldOrEvent: T): T extends string
-      ? (e: unknown) => void
-      : void;
-  };
-  errors: FormikErrors<ApplicantsCreateType>;
-  touched: FormikTouched<ApplicantsCreateType>;
 }
 
-const formatPhoneNumber = (phone: string): string => {
-  return phone.replace(/\D/g, ""); // Remove all non-digit characters
-};
-
-const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
+const InfantInformation: React.FC<InfantInformationProps> = ({
   index,
   handleChange,
   setFieldValue,
-  handleBlur,
   values,
-  // errors,
-  // touched,
+  adults,
+  uploadApplicaitonFile,
 }) => {
   const { t } = useTranslation();
 
-  const handlePhoneBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const formattedPhone = formatPhoneNumber(e.target.value);
-    console.log(formattedPhone);
-  };
   return (
-    <div className="card mb-2">
-      <form className="card-body">
+    <div className="card">
+      <div className="card-body">
         <div className="row">
           <div className="col-md-4 mb-3">
-            <label className="form-label">MR/MRS</label>
+            <label className="form-label">INF</label>
             <select
               onChange={(e) =>
                 setFieldValue(
-                  `applicants[${index}].applicant_type`,
+                  `applicants[${adults + index}].applicant_type`,
                   parseInt(e.target.value),
                 )
               }
-              name={`applicants[${index}].applicant_type`}
-              value={values.applicants[index].applicant_type.toString()}
+              value={values.applicants[adults + index].applicant_type}
+              name={`applicants[${adults + index}].applicant_type`}
               className="form-select"
             >
-              <option value=""></option>
-              <option value="2">MR</option>
-              <option value="3">MRS</option>
+              <option value="0"></option>
+              <option value="1">INF</option>
             </select>
+            <ErrorMessage
+              name={`applicants[${adults + index}].applicant_type`}
+              component="div"
+              className="text-danger"
+            />
           </div>
 
           <div className="col-md-4 col-6 mb-3">
             <label className="form-label">{t("fullname")}</label>
             <Field
               type="text"
-              name={`applicants[${index}].full_name`}
+              name={`applicants[${adults + index}].full_name`}
               onChange={handleChange}
               className="form-control"
-              value={values.applicants[index].full_name}
+              value={values.applicants[adults + index].full_name}
             />
             <ErrorMessage
-              name={`applicants[${index}].full_name`}
+              name={`applicants[${adults + index}].full_name`}
               component="div"
               className="text-danger"
             />
@@ -93,8 +82,8 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
             <label className="form-label">Дата рождения</label>
             <Field
               type="date"
-              name={`applicants[${index}].birthday`}
-              value={values.applicants[index].birthday}
+              name={`applicants[${adults + index}].birthday`}
+              value={values.applicants[adults + index].birthday}
               className="form-control"
             />
           </div>
@@ -102,7 +91,7 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
             <label className="form-label">Passport</label>
             <input
               type="file"
-              name={`applicants[${index}].passport`}
+              name={`applicants[${adults + index}].passport`}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 const formData = new FormData();
                 (async () => {
@@ -110,9 +99,8 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
                   formData.append("file", e.target.files[0]);
                   try {
                     const res = await uploadApplicaitonFile(formData);
-
                     setFieldValue(
-                      `applicants[${index}].passport`,
+                      `applicants[${adults + index}].passport`,
                       res.data.file,
                     );
                   } catch (error) {
@@ -127,7 +115,7 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
             <label className="form-label">Visa</label>
             <input
               type="file"
-              name={`applicants[${index}].visa_file`}
+              name={`applicants[${adults + index}].visa_file`}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 const formData = new FormData();
                 (async () => {
@@ -135,9 +123,8 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
                   formData.append("file", e.target.files[0]);
                   try {
                     const res = await uploadApplicaitonFile(formData);
-
                     setFieldValue(
-                      `applicants[${index}].visa_file`,
+                      `applicants[${adults + index}].visa_file`,
                       res.data.file,
                     );
                   } catch (error) {
@@ -153,34 +140,9 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
             <label className="form-label">Действителен до</label>
             <Field
               type="date"
-              name={`applicants[${index}].expire_date`}
-              value={values.applicants[index].expire_date}
+              name={`applicants[${adults + index}].expire_date`}
+              value={values.applicants[adults + index].expire_date}
               className="form-control"
-            />
-          </div>
-
-          <div className="col-md-4 col-6 mb-3">
-            <label className="form-label" htmlFor="user-phone">
-              {t("phone-number")}
-            </label>
-            <InputMask
-              name={`applicants[${index}].phone`}
-              className="form-control"
-              placeholder={`+998 00 000 00 00`}
-              mask="+998 (99) 999 99 99"
-              maskChar={null}
-              value={values.applicants[index].phone}
-              onChange={(e) =>
-                setFieldValue(
-                  `applicants[${index}].phone`,
-                  formatPhoneNumber(e.target.value),
-                )
-              }
-              onBlur={(e) => {
-                handleBlur(e);
-                handlePhoneBlur(e); // Call the phone formatting on blur
-              }}
-              id="user-phone"
             />
           </div>
           <div className="col-md-4">
@@ -188,7 +150,7 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
               <Field
                 className="form-check-input"
                 type="checkbox"
-                name={`applicants[${index}].need_visa`}
+                name={`applicants[${adults + index}].need_visa`}
                 id="need-visa"
               />
               <label className="form-check-label" htmlFor="need-visa">
@@ -213,9 +175,9 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
             </div>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 };
 
-export default ApplicantInformation;
+export default InfantInformation;

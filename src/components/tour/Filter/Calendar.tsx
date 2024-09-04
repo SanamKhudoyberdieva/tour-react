@@ -1,4 +1,9 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
@@ -7,16 +12,21 @@ import { TourCalendarType } from "../../../store/types/tour/calendar";
 const DateSelector = ({
   calendar,
   handleFilterChange,
+  handleGetCalendar,
+  selectedDate,
+  setSelectedDate,
 }: {
+  selectedDate: Date | null;
+  setSelectedDate: Dispatch<SetStateAction<Date | null>>;
+  setCalendar: Dispatch<SetStateAction<TourCalendarType[] | []>>;
+  handleGetCalendar: (date: Date) => Promise<void>;
   handleFilterChange: (
     e:
       | ChangeEvent<HTMLInputElement | HTMLSelectElement>
-      | { target: { name: string; value: string | Date | null } }
+      | { target: { name: string; value: string | Date | null } },
   ) => void;
   calendar: TourCalendarType[];
 }) => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
   const calendarMoments = calendar.map((date) => moment(date.date));
 
   const isDateSelectable = (date: moment.MomentInput) => {
@@ -29,10 +39,9 @@ const DateSelector = ({
 
   const getBackgroundColor = (date: Date): string => {
     const tourDate = calendar.find((flyingDate) =>
-      moment(flyingDate.date).isSame(date, "day")
+      moment(flyingDate.date).isSame(date, "day"),
     );
 
-    console.log("tourDate", tourDate);
     if (tourDate) {
       if (tourDate.total_place === 0) {
         return "red";
@@ -61,6 +70,16 @@ const DateSelector = ({
     });
   };
 
+  const handleMonthchange = (date: Date) => {
+    if (!date) return;
+    handleGetCalendar(date);
+  };
+
+  useEffect(() => {
+    const date = new Date();
+    handleGetCalendar(date);
+  }, []);
+
   return (
     <DatePicker
       selected={selectedDate}
@@ -69,7 +88,9 @@ const DateSelector = ({
       placeholderText="Select a flying date"
       dateFormat="yyyy-MM-dd"
       dayClassName={customDayClass}
-      className="form-control"
+      className="form-control w-100"
+      id="date-picker"
+      onMonthChange={handleMonthchange}
     />
   );
 };

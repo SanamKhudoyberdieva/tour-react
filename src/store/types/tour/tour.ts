@@ -11,6 +11,7 @@ export interface TourType extends NameDescType, ActionsType {
   to: string;
   night_count: number;
   baby_price: number;
+  child_price: number;
   position: number;
   is_closed: boolean;
   is_deleted: boolean;
@@ -46,7 +47,25 @@ export interface TourType extends NameDescType, ActionsType {
     }
   ];
   rooms: null;
-  extra_packages: null;
+  extra_packages: {
+    id: number,
+    tour_id: number,
+    extra_package: {
+      id: number,
+      name_uz: string
+      name_ru: string
+      description_uz: string
+      description_ru: string
+      position: number,
+      created: null,
+      created_at: string
+      updated: null,
+      updated_at: string|string
+    },
+    extra_package_id: number,
+    price: number
+  }[];
   application: null;
   navigate: null | NavigationType[];
+  visa_price: number;
 }

@@ -2,17 +2,16 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import TourTable from "../../components/tour/TourTable";
 import FilterOne from "../../components/tour/Filter/First";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 import { ChangeEvent, useEffect, useState } from "react";
-import { TourPaginationType } from "../../store/types/tour/all";
 import { parseQuery, stringifyQuery } from "../../utils/queryUtils";
 import api from "../../api/api";
 import { TourRoomType } from "../../store/types/tour/tourRoom";
 
 export interface FiltersStateType {
-  adults_count?: string;
+  adults_count: string;
   child_count?: string;
-  child_with_parent?: string;
+  child_with_parent?: false;
   date?: string;
   night_count?: string;
   nutrition_type?: string;
@@ -20,11 +19,19 @@ export interface FiltersStateType {
   page_size?: number;
   tour_id?: string;
   child_years: string[];
-  [key: string]: string | number | undefined | string[] | [] | Date | null;
+  [key: string]:
+    | string
+    | number
+    | undefined
+    | string[]
+    | []
+    | Date
+    | null
+    | boolean;
 }
 
 const Index = () => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const [data, setData] = useState<TourRoomType | null>(null);
 
   const navigate = useNavigate();
@@ -33,7 +40,7 @@ const Index = () => {
   const initialFilters: FiltersStateType = {
     adults_count: "",
     child_count: "",
-    child_with_parent: "",
+    child_with_parent: false,
     date: "",
     night_count: "",
     nutrition_type: "",
@@ -52,14 +59,15 @@ const Index = () => {
   }, [location.search]);
 
   const cleanFilters = (
-    filters: FiltersStateType
+    filters: FiltersStateType,
   ): Record<string, string | number | undefined> => {
     const cleanedFilters: Record<string, string | number | undefined> = {};
     for (const key in filters) {
+      if (key === "child_years") continue;
       if (filters[key] !== undefined && filters[key] !== "") {
         if (Array.isArray(filters[key])) {
           const filteredArray = (filters[key] as string[]).filter(
-            (item) => item !== ""
+            (item) => item !== "",
           );
           cleanedFilters[key] = filteredArray.join(",");
         } else {
@@ -73,7 +81,7 @@ const Index = () => {
   const handleFilterChange = (
     e:
       | ChangeEvent<HTMLInputElement | HTMLSelectElement>
-      | { target: { name: string; value: string | Date | null } }
+      | { target: { name: string; value: string | Date | null | boolean } },
   ) => {
     if (!e) return;
     const { name, value } = e.target;
@@ -96,38 +104,44 @@ const Index = () => {
     navigate(`?${queryString}`);
   };
 
-  const handleChildYearChange =
-    (index: number) => (e: ChangeEvent<HTMLSelectElement>) => {
-      const newChildYears = [...filters.child_years];
-      newChildYears[index] = e.target.value;
-      const newFilters = { ...filters, child_years: newChildYears };
-      setFilters(newFilters);
-      const queryString = stringifyQuery(cleanFilters(newFilters));
-      navigate(`?${queryString}`);
-    };
+  const handleChildYearChange = (
+    e: ChangeEvent<HTMLSelectElement>,
+    index: number,
+  ) => {
+    const newFilters = filters.child_years.map((x, idx) => {
+      if (index == idx) return e.target.value;
+      return x;
+    });
+    setFilters((x) => ({
+      ...x,
+      child_years: newFilters,
+    }));
+    console.log("filters.child_years after", filters.child_years);
+  };
 
   // Send request when filters change
   const fetchData = async () => {
     try {
       const queryString = stringifyQuery(cleanFilters(filters));
-      if (!filters.adults_count || !filters.date || !filters.night_count) {
-        const response = await api.get(`/api/tour/room`);
-        const data = await response.data;
-        setData(data);
+      if (!filters.adults_count || !filters.night_count) {
+        setData(null);
+
         return;
+        // const response = await api.get(`/api/tour/room`);
+        // const data = await response.data;
+        // setData(data);
       }
       const response = await api.get(`/api/tour/room?${queryString}`);
       const data = await response.data;
       setData(data);
     } catch (error) {
+      setData(null);
       console.log("error getting Tours: ", error);
     }
   };
   useEffect(() => {
     fetchData();
   }, [filters]);
-
-  console.log("filters", filters);
 
   return (
     <>
@@ -148,6 +162,7 @@ const Index = () => {
         handleChildYearChange={handleChildYearChange}
         filters={filters}
         fetchData={fetchData}
+        setFilters={setFilters}
       />
       {data && (
         <div className="card">
@@ -177,7 +192,11 @@ const Index = () => {
                 </select>
               </div>
             </div>
-            <TourTable data={data} adults_count={filters.adults_count}/>
+            <TourTable
+              data={data}
+              // child_count={filters.child_count}
+              adults_count={filters.adults_count}
+            />
             <Pagination
               currPage={data.page}
               recordsFiltered={data.page_size}
