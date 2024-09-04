@@ -17,7 +17,7 @@ import InfantInformation from "../../../components/tour/order/InfantInformation"
 const TourOrder: React.FC = () => {
   const { t } = useTranslation();
   const [selectedPackages, setSelectedPackeges] = useState<
-    { id: number; price: number; q: number }[]
+    { extra_package_id: number; total: number; count: number }[]
   >([]);
   const [isLoaded, setIsloaded] = useState<boolean>(false);
   const location = useLocation();
@@ -45,7 +45,7 @@ const TourOrder: React.FC = () => {
     });
 
     selectedPackages.forEach((x) => {
-      sum = x.price + sum;
+      sum = x.total * x.count + sum;
     });
 
     setTotal(sum);
@@ -275,6 +275,7 @@ const TourOrder: React.FC = () => {
                 data={tourData}
                 selectedPackages={selectedPackages}
                 setSelectedPackeges={setSelectedPackeges}
+                setFieldValue={setFieldValue}
               />
 
               <div className="row">

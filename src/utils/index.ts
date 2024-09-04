@@ -23,6 +23,7 @@ export const formatDateToISOString = (dateString: string): string => {
 };
 
 export function formatDateToInputValue(date: string) {
+  if (!date) return "";
   const d = new Date(date);
   const year = d.getFullYear();
   const month = String(d.getMonth() + 1).padStart(2, "0");

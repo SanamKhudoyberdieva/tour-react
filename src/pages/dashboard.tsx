@@ -9,7 +9,13 @@ import { Link } from "react-router-dom";
 import { formatDateToInputValue, getName } from "../utils";
 import i18n from "../utils/i18n";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFile, faPen, faPlaneArrival, faPlaneDeparture, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFile,
+  faPen,
+  faPlaneArrival,
+  faPlaneDeparture,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Dashboard = () => {
   const { t } = useTranslation();
@@ -27,9 +33,9 @@ const Dashboard = () => {
   };
 
   const handleDelete = async (id: number) => {
-    const confirmed = window.confirm(t('are-you-sure-you-want-to-delete'));
+    const confirmed = window.confirm(t("are-you-sure-you-want-to-delete"));
     if (!confirmed) return;
-    
+
     try {
       await deleteTour(id);
       handleGet();
@@ -42,7 +48,7 @@ const Dashboard = () => {
     handleGet();
   }, []);
 
-  console.log("data", data)
+  console.log("data", data);
 
   if (!data) return;
 
@@ -67,88 +73,110 @@ const Dashboard = () => {
             <img className="d-block w-100" src={Banner} alt="Banner" />
           </div>
         </div>
-        <a className="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+        <a
+          className="carousel-control-prev"
+          href="#carouselExample"
+          role="button"
+          data-bs-slide="prev"
+        >
+          <span
+            className="carousel-control-prev-icon"
+            aria-hidden="true"
+          ></span>
           <span className="visually-hidden">Previous</span>
         </a>
-        <a className="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
+        <a
+          className="carousel-control-next"
+          href="#carouselExample"
+          role="button"
+          data-bs-slide="next"
+        >
+          <span
+            className="carousel-control-next-icon"
+            aria-hidden="true"
+          ></span>
           <span className="visually-hidden">Next</span>
         </a>
       </Carousel>
 
       {data && (
-      <div className="card">
-        <div className="card-body">
-          <div className="table-responsive mb-4">
-            <table className="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Tur</th>
-                  <th>Vaqtlar</th>
-                  <th>&nbsp;</th>
-                  <th>Kecha</th>
-                  <th>Ovqat</th>
-                  <th>Xonalar</th>
-                  <th>Narxi</th>
-                  <th>Biletlar</th>
-                  <th>Ketish joyi</th>
-                  <th>&nbsp;</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data?.tours?.map((x, idx) => (
-                  <tr className="table-danger" key={"tour-table-tour-list-" + idx}>
-                    <td>{idx + 1}</td>
-                    <td>
-                      <Link
-                        to={`/tour/`}
-                      >
-                        {getName(x.tour, i18n.language)}
-                      </Link>
-                    </td>
-                    {/* <td>
-                      <div>
-                        {formatDateToInputValue(x.tour.from)}
-                        <FontAwesomeIcon icon={faPlaneDeparture} />
-                      </div>
-                      <div>
-                        {formatDateToInputValue(x.tour.to)}
-                        <FontAwesomeIcon icon={faPlaneArrival} />
-                      </div>
-                    </td>
-                    <td>
-                      <button className="btn p-1" onClick={handleShow}>
-                        <FontAwesomeIcon icon={faFile} />
-                      </button>
-                    </td>
-                    <td>{x.tour.night_count}</td>
-                    <td>{x.tour.nutrition_type}</td>
-                    <td>{x.room}</td>
-                    <td>{x.price}</td>
-                    <td>
-                      {x.ordered_place} / {x.place_count}
-                    </td> */}
-                    <td>Toshkent</td>
-                    <td>
-                      <Link className="btn p-1" to={"/"}>
-                        <FontAwesomeIcon icon={faPen} />
-                      </Link>
-                      <button className="btn p-1" onClick={() => handleDelete(x.id)}>
-                        <FontAwesomeIcon icon={faTrash} />
-                      </button>
-                    </td>
+        <div className="card">
+          <div className="card-body">
+            <div className="table-responsive mb-4">
+              <table className="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Tur</th>
+                    <th>Vaqtlar</th>
+                    <th>&nbsp;</th>
+                    <th>Kecha</th>
+                    <th>Ovqat</th>
+                    <th>Xonalar</th>
+                    <th>Narxi</th>
+                    <th>Biletlar</th>
+                    <th>Ketish joyi</th>
+                    <th>&nbsp;</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {data &&
+                    data.tours &&
+                    data.tours.map((x, idx) => (
+                      <tr
+                        className="table-danger"
+                        key={"tour-table-tour-list-" + idx}
+                      >
+                        <td>{idx + 1}</td>
+                        <td>
+                          <Link to={`/tour/view/${x.id}`}>
+                            {getName(x, i18n.language)}
+                          </Link>
+                        </td>
+                        <td>
+                          <div>
+                            {formatDateToInputValue(x.from || "")}
+                            <FontAwesomeIcon icon={faPlaneDeparture} />
+                          </div>
+                          <div>
+                            {formatDateToInputValue(x.to || "")}
+                            <FontAwesomeIcon icon={faPlaneArrival} />
+                          </div>
+                        </td>
+                        <td>
+                          <button className="btn p-1" onClick={handleShow}>
+                            <FontAwesomeIcon icon={faFile} />
+                          </button>
+                        </td>
+                        <td>{x.night_count}</td>
+                        <td>{x.nutrition_type}</td>
+                        <td>{x.room}</td>
+                        <td>{x.price}</td>
+                        <td>
+                          {x.ordered_place} / {x.place_count}
+                        </td>
+                        <td>Toshkent</td>
+                        <td>
+                          <Link className="btn p-1" to={"/"}>
+                            <FontAwesomeIcon icon={faPen} />
+                          </Link>
+                          <button
+                            className="btn p-1"
+                            onClick={() => handleDelete(x.id)}
+                          >
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default Dashboard;

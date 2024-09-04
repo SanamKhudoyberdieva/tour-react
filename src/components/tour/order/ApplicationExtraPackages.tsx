@@ -3,22 +3,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TourType } from "../../../store/types";
 import { getDescription, getName } from "../../../utils";
 import { useTranslation } from "react-i18next";
+import { ApplicantsCreateType } from "../../../store/types/tour/order/applicantsCreate";
+import { FormikErrors } from "formik";
+import { useEffect } from "react";
 
 interface ApplicationExtraPackagesProps {
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean
+  ) => Promise<void | FormikErrors<ApplicantsCreateType>>;
   data: TourType;
   setSelectedPackeges: React.Dispatch<
     React.SetStateAction<
       {
-        id: number;
-        price: number;
-        q: number;
+        extra_package_id: number;
+        total: number;
+        count: number;
       }[]
     >
   >;
   selectedPackages: {
-    id: number;
-    price: number;
-    q: number;
+    extra_package_id: number;
+    total: number;
+    count: number;
   }[];
 }
 
@@ -26,38 +34,43 @@ const ApplicationExtraPackages: React.FC<ApplicationExtraPackagesProps> = ({
   data,
   setSelectedPackeges,
   selectedPackages,
+  setFieldValue,
 }) => {
   const { t } = useTranslation();
 
-  const handleAdd = (id: number, price: number) => {
-    const has = selectedPackages.find((p) => p.id === id);
+  const handleAdd = (id: number, total: number) => {
+    const has = selectedPackages.find((p) => p.extra_package_id === id);
     setSelectedPackeges((x) =>
-      has ? [...x] : [...x, { id: id, price: price, q: 1 }],
+      has ? [...x] : [...x, { extra_package_id: id, total: total, count: 1 }]
     );
   };
 
   const handleDelete = (id: number) => {
-    setSelectedPackeges((x) => x.filter((p) => p.id === id));
+    setSelectedPackeges((x) => x.filter((p) => !(p.extra_package_id === id)));
   };
 
   const handleSetQuantity = (
     id: number,
-    price: number,
-    e: React.ChangeEvent<HTMLInputElement>,
+    total: number,
+    e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const index = selectedPackages.findIndex((p) => p.id === id);
+    const index = selectedPackages.findIndex((p) => p.extra_package_id === id);
     setSelectedPackeges((x) =>
       x.map((y, idx) => {
         if (idx === index) {
           return {
             ...y,
-            q: parseInt(e.target.value),
+            count: parseInt(e.target.value),
           };
         }
         return y;
-      }),
+      })
     );
   };
+
+  useEffect(() => {
+    setFieldValue("extra_packages", selectedPackages);
+  }, [selectedPackages]);
 
   return (
     <div>
@@ -84,13 +97,17 @@ const ApplicationExtraPackages: React.FC<ApplicationExtraPackagesProps> = ({
                       <td>{getName(x.extra_package)}</td>
                       <td>{getDescription(x.extra_package)}</td>
                       <td>
-                        {selectedPackages.find((p) => p.id === x.id) && (
+                        {selectedPackages.find(
+                          (p) => p.extra_package_id === x.id
+                        ) && (
                           <input
                             min={1}
                             type="number"
                             className="form-control"
                             value={
-                              selectedPackages.find((p) => p.id === x.id)?.q
+                              selectedPackages.find(
+                                (p) => p.extra_package_id === x.id
+                              )?.count
                             }
                             onChange={(e) =>
                               handleSetQuantity(x.id, x.price, e)
@@ -99,11 +116,14 @@ const ApplicationExtraPackages: React.FC<ApplicationExtraPackagesProps> = ({
                         )}
                       </td>
                       <td>
-                        {(selectedPackages.find((p) => p.id === x.id)?.q || 1) *
-                          x.price}
+                        {(selectedPackages.find(
+                          (p) => p.extra_package_id === x.id
+                        )?.count || 1) * x.price}
                       </td>
                       <td>
-                        {!selectedPackages.find((p) => p.id === x.id) && (
+                        {!selectedPackages.find(
+                          (p) => p.extra_package_id === x.id
+                        ) && (
                           <button
                             className="btn btn-icon btn-success"
                             onClick={() => handleAdd(x.id, x.price)}
@@ -111,12 +131,15 @@ const ApplicationExtraPackages: React.FC<ApplicationExtraPackagesProps> = ({
                             <FontAwesomeIcon icon={faPlus} />
                           </button>
                         )}
-                        {selectedPackages.find((p) => p.id === x.id) && (
-                          <button className="btn btn-icon btn-danger">
-                            <FontAwesomeIcon
-                              icon={faTrash}
-                              onClick={() => handleDelete(x.id)}
-                            />
+                        {selectedPackages.find(
+                          (p) => p.extra_package_id === x.id
+                        ) && (
+                          <button
+                            className="btn btn-icon btn-danger"
+                            type="button"
+                            onClick={() => handleDelete(x.id)}
+                          >
+                            <FontAwesomeIcon icon={faTrash} />
                           </button>
                         )}
                       </td>
