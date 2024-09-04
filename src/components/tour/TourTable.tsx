@@ -13,7 +13,7 @@ import { useState } from "react";
 import { TourRoomType } from "../../store/types/tour/tourRoom";
 
 const TourTable = ({
-  data,
+  data, 
   adults_count,
 }: {
   data: TourRoomType;

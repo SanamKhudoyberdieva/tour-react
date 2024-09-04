@@ -3,6 +3,7 @@ import MainLayout from "./layout";
 import Dashboard from "./pages/dashboard";
 import Tour from "./pages/tour";
 import TourCreate from "./pages/tour/create";
+import TourView from "./pages/tour/view/index";
 import TourCreateTwo from "./pages/tour/create-two";
 import TourOrderCreate from "./pages/tour/order/index";
 import Airplane from "./pages/airplane";
@@ -43,6 +44,7 @@ function App() {
 
           <Route path="/tour" element={<Tour />} />
           <Route path="/tour/create" element={<TourCreate />} />
+          <Route path="/tour/view/:id" element={<TourView />} />
           <Route path="/tour/create-two" element={<TourCreateTwo />} />
           <Route path="/tour/order/:id" element={<TourOrderCreate />} />
 
