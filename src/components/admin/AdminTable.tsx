@@ -1,4 +1,4 @@
-import { getAdmins } from "../../api";
+import { deleteAdmin, getAdmins } from "../../api";
 import { Link } from "react-router-dom";
 import { formateDate } from "../../utils";
 import { useEffect, useState } from "react";
@@ -17,6 +17,18 @@ const AdminTable = () => {
       setData(res.data);
     } catch (error) {
       console.log("error getAdmins: ", error);
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    const confirmed = window.confirm(t("are-you-sure-you-want-to-delete"));
+    if (!confirmed) return;
+
+    try {
+      await deleteAdmin(id);
+      handleGet();
+    } catch (error) {
+      console.log("error deleteAdmin: ", error);
     }
   };
 
@@ -68,7 +80,7 @@ const AdminTable = () => {
                 <FontAwesomeIcon icon={faPen}/>
               </Link>
               <button className="btn p-1">
-                <FontAwesomeIcon icon={faTrash}/>
+                <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(x.id)}/>
               </button>
             </td>
           </tr>

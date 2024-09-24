@@ -6,17 +6,18 @@ import { RootState } from '../../../store';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { AdminType, AdminUpdateType } from '../../../store/types';
+import { AdminCreateType, AdminType, AdminUpdateType } from '../../../store/types';
 import { activateAdmin, deactivateAdmin, getAdminById, updateAdmin } from '../../../api';
 
 const Index = () => {
-  const param = useParams();
+  const { id } = useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [data, setData] = useState<AdminType | null>(null);
-  const admin = useSelector((state: RootState) => state.adminReducer);
   const { roles } = useSelector((state: RootState) => state.rolesReducer);
   const { organizations } = useSelector((state: RootState) => state.organizationsReducer);
+
+  console.log("data", data)
 
   const initialValues: AdminUpdateType = {
     full_name: "",
@@ -57,30 +58,25 @@ const Index = () => {
   };
 
   useEffect(() => {
-    if (!param || !param.id) return;
-    handleGetById(+param.id);
-  }, [param]);
-
-  useEffect(() => {
     if (!data) return;
-    formik.setFormikState((state) => ({
-      ...state,
-      values: {
-        ...data,
-        password: formik.values.password,
-        full_name: formik.values.full_name,
-        role_id: formik.values.role_id,
-        phone: formik.values.phone,
-        is_active: formik.values.is_active,
-        username: formik.values.username,
-        organization_id: formik.values.organization_id,
-      },
-    }));
+    formik.setValues({
+      ...data,
+      password: formik.values.password,  // Retain the password (optional)
+      full_name: formik.values.full_name,
+      role_id: formik.values.role_id,
+      phone: formik.values.phone,
+      is_active: formik.values.is_active,
+      username: formik.values.username,
+      organization_id: formik.values.organization_id,
+    });
   }, [data]);
 
-  const onSubmit = async () => {
+  const onSubmit = async (values: AdminCreateType) => {
+    if (!id) return;
+    const intId = parseInt(id, 10);
+    if (isNaN(intId)) return;
     try {
-      await updateAdmin(formik.values);
+      await updateAdmin(intId, values);
       navigate("/admin", { replace: true });
     } catch (error) {
       console.log("error updateAdmin: ", error);
@@ -98,7 +94,27 @@ const Index = () => {
     onSubmit,
   });
 
+  useEffect(() => {
+    if (!id) return;  
+    handleGetById(+id);  
+  }, [id]);
+
+  useEffect(() => {
+    if (!data) return;
+    formik.setValues({
+      full_name: data.full_name || "",
+      role_id: data.role_id || 0,
+      password: "", 
+      phone: data.phone || "",
+      is_active: data.is_active || false,
+      username: data.username || "",
+      id: data.id,
+      organization_id: data.organization_id || 0
+    });
+  }, [data]);
+  
   if (!data) return <></>;
+
   return (
     <>
       <div
@@ -115,7 +131,7 @@ const Index = () => {
         <Link className="btn btn-info" to={'/admin'}
           >{t('back')}</Link>
       </div>
-      {admin.id !== data.id && (
+      {data.id !== data.id && (
         <div className="mb-2 mb-md-4">
           {!formik.values.is_active ? (
             <button

@@ -3,6 +3,7 @@ export * from "./admin/auth";
 export * from "./admin/getAll";
 export * from "./admin/create";
 export * from "./admin/update";
+export * from "./admin/update2";
 export * from "./admin/delete";
 export * from "./admin/getById";
 export * from "./admin/activate";

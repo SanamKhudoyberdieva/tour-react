@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 const AdminViewTable = ({ data }: { data: AdminType }) => {
   const { t } = useTranslation();
 
+  console.log("data", data)
+
   return (
     <table
       className="table table-striped table-bordered detail-view"
@@ -31,12 +33,12 @@ const AdminViewTable = ({ data }: { data: AdminType }) => {
           <td>{data.role?.title}</td>
         </tr>
         <tr>
-          <th>{t("role")}</th>
-          <td>{data?.organization?.name_ru}</td>
+          <th>{t("organization")}</th>
+          <td>{data.organization?.name}</td>
         </tr>
         <tr>
           <th>Buyurtmalar soni</th>
-          <td>static</td>
+          <td>STATIC</td>
         </tr>
         <tr>
           <th>{t("active")}</th>

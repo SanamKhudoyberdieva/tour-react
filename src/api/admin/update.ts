@@ -1,7 +1,7 @@
 import api from '../api';
 import { AdminUpdateType } from '../../store/types';
 
-export const updateAdmin = async (body: AdminUpdateType) => {
+export const updateAdmins = async (body: AdminUpdateType) => {
     const params = new URLSearchParams();
 
     if (body.full_name) params.append('full_name', body.full_name);
