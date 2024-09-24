@@ -3,14 +3,15 @@ import { useEffect, useState } from "react";
 import { object, string, number } from "yup";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getOrganization, updateOrganization } from "../../../api";
-import { OrganizationCreateType, OrganizationType } from "../../../store/types";
+import { getAdmins, getOrganization, updateOrganization } from "../../../api";
+import { AdminListType, OrganizationCreateType, OrganizationType } from "../../../store/types";
 
 const Edit = () => {
   const { id } = useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [data, setData] = useState<OrganizationType | null>(null);
+  const [admin, setAdmin] = useState<AdminListType | null>(null);
 
   const initialValues: OrganizationCreateType = {
     name: "",
@@ -26,6 +27,15 @@ const Edit = () => {
       setData(res.data);
     } catch (error) {
       console.log("Error getOrganization: ", error);
+    }
+  };
+
+  const handleGetAdmin = async () => {
+    try {
+      const res = await getAdmins();
+      setAdmin(res.data);
+    } catch (error) {
+      console.log("error getAdmins: ", error);
     }
   };
 
@@ -49,6 +59,10 @@ const Edit = () => {
     }),
     onSubmit,
   });
+
+  useEffect(() => {
+    handleGetAdmin();
+  }, []);
 
   useEffect(() => {
     if (!id) return;
@@ -149,18 +163,31 @@ const Edit = () => {
               />
             </div>
             <div className="col-md-6 mb-3">
-              <label className="form-label" htmlFor="organization-director">
+            <label className="form-label" htmlFor="organization-director">
                 {t('director')}
               </label>
-              <input
-                type="number"
+              <select
+                className="form-select"
                 id="organization-director"
-                className="form-control"
                 name="director_id"
-                value={formik.values.director_id}
-                onChange={formik.handleChange}
+                value={formik.values.director_id || 0}
+                onChange={(event) => {
+                  const selectedValue = parseInt(event.target.value);
+                  formik.setFieldValue("director_id", selectedValue);
+                }}
                 onBlur={formik.handleBlur}
-              />
+              >
+                <option value={0}></option>
+                {admin &&
+                admin.admins.map((x, idx) => (
+                  <option
+                    key={"staff-update-director-index-" + idx}
+                    value={x.id}
+                  >
+                    {x.full_name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
           <div>

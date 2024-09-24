@@ -16,5 +16,6 @@ export interface AdminType {
     is_active: boolean,
     deleted_at: string | null,
     is_deleted: boolean,
-    application_count: number
+    application_count: number,
+    commission: number
 }

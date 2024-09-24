@@ -1,14 +1,15 @@
 import { useFormik } from "formik";
 import { object, string } from "yup";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { createOrganization } from "../../api";
 import { Link, useNavigate } from "react-router-dom";
-import { OrganizationCreateType } from "../../store/types";
-import SearchDirectorInput from "../../components/organization/SearchDirectorInput";
+import { createOrganization, getAdmins } from "../../api";
+import { AdminListType, OrganizationCreateType } from "../../store/types";
 
 const Create = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [admin, setAdmin] = useState<AdminListType | null>(null);
 
   const initialValues: OrganizationCreateType = {
     name: "",
@@ -16,6 +17,15 @@ const Create = () => {
     city: "",
     description: "",
     director_id: 0
+  };
+
+  const handleGet = async () => {
+    try {
+      const res = await getAdmins();
+      setAdmin(res.data);
+    } catch (error) {
+      console.log("error getAdmins: ", error);
+    }
   };
 
   const onSubmit = async (values: OrganizationCreateType) => {
@@ -34,6 +44,10 @@ const Create = () => {
     }),
     onSubmit,
   });
+
+  useEffect(() => {
+    handleGet();
+  }, []);
 
   return (
     <>
@@ -114,20 +128,32 @@ const Create = () => {
               />
             </div>
             <div className="col-md-6 mb-3">
-              {/* <label className="form-label" htmlFor="organization-director">
+              {/* <SearchDirectorInput/> */}
+              <label className="form-label" htmlFor="organization-director">
                 {t('director')}
               </label>
-              <input
-                type="text"
+              <select
+                className="form-select"
                 id="organization-director"
-                className="form-control"
-                name="director"
-                maxLength={50}
-                value={formik.values.director_id}
-                onChange={formik.handleChange}
+                name="director_id"
+                value={formik.values.director_id || 0}
+                onChange={(event) => {
+                  const selectedValue = parseInt(event.target.value);
+                  formik.setFieldValue("director_id", selectedValue);
+                }}
                 onBlur={formik.handleBlur}
-              /> */}
-              <SearchDirectorInput/>
+              >
+                <option value={0}></option>
+                {admin &&
+                admin.admins.map((x, idx) => (
+                  <option
+                    key={"staff-create-director-index-" + idx}
+                    value={x.id}
+                  >
+                    {x.full_name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
           <div>

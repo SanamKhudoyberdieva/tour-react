@@ -19,7 +19,7 @@ const OrganizationViewTable = ({data}: {data: OrganizationType}) => {
         </tr>
         <tr>
           <th>{t('director')}</th>
-          <td>{data.director}</td>
+          <td>{data.director?.full_name}</td>
         </tr>
         <tr>
           <th>{t('city')}</th>

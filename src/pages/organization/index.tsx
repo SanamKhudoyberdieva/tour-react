@@ -16,7 +16,7 @@ const Index = () => {
           {t('organizations')}
         </h4>
         <Link className="btn btn-success" to={'/organization/create'}
-          >{t('add-organizatin')}</Link>
+          >{t('add-organization')}</Link>
       </div>
       <div className="card">
         <div className="card-body">
