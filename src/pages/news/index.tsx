@@ -21,22 +21,7 @@ const Index = () => {
       </div>
       <div className="card">
         <div className="card-body">
-          <div
-            className="d-flex flex-column-reverse flex-md-row align-items-center justify-content-between mb-3"
-          >
-            <div className="d-flex align-items-center">
-              <label
-                className="form-label text-nowrap mb-0 me-2"
-                >Размер стр:</label>
-              <select id="page-size-label" className="form-select">
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-              </select>
-            </div>
-          </div>
           <NewsTable />
-          <Pagination />
         </div>
       </div>
     </>

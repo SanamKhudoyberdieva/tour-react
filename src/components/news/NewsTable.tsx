@@ -40,7 +40,7 @@ const NewsTable = () => {
   if (!data) return;
 
   return (
-    <div className="table-responsive mb-4">
+    <div className="table-responsive">
       <table className="table table-striped table-hover">
         <thead>
           <tr>
@@ -64,7 +64,7 @@ const NewsTable = () => {
             <td>
               <img
                 className="img-fluid pr-img-200"
-                src={`http://80.90.188.12:8000/public/news/${x.image}`}
+                src={`https://backend.poytaxt-team.uz/public/news/${x.image}`}
                 alt="news"
               />
             </td>

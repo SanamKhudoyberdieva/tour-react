@@ -18,7 +18,7 @@ const NewsViewTable = ({data}: {data: NewsType}) => {
           <td>
             <img
               className="img-fluid pr-img-200"
-              src={`http://80.90.188.12:8000/public/news/${data.image}`}
+              src={`https://backend.poytaxt-team.uz/public/news/${data.image}`}
               alt="news"
             />
           </td>
