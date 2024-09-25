@@ -54,8 +54,8 @@ const Edit = () => {
   const formik = useFormik({
     initialValues,
     validationSchema: object({
-      name: string().required(t('you-must-fill-in-name')),
-      director_id: number().required(),
+      name: string().required(t('required')),
+      director_id: number().min(1, t('required')),
     }),
     onSubmit,
   });
@@ -188,6 +188,9 @@ const Edit = () => {
                   </option>
                 ))}
               </select>
+              {formik.errors.director_id && formik.touched.director_id && (
+                <div className="text-danger">{formik.errors.director_id}</div>
+              )}
             </div>
           </div>
           <div>

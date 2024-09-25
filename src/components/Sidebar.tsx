@@ -16,6 +16,7 @@ import {
   faTicket,
   faUserTie,
 } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "react-i18next";
 
 interface SidebarProps {
   setIsShowAside: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,6 +24,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ setIsShowAside }) => {
   const location = useLocation();
+  const { t } = useTranslation();
 
   return (
     <aside className="layout-menu menu-vertical menu bg-menu-theme">
@@ -50,7 +52,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setIsShowAside }) => {
         >
           <Link to={"/"} className="menu-link">
             <FontAwesomeIcon className="menu-icon tf-icons" icon={faChartPie} />
-            <div>Dashboard</div>
+            <div>{t("dashboard")}</div>
           </Link>
         </li>
         <li
@@ -62,7 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setIsShowAside }) => {
         >
           <Link to={"/tour"} className="menu-link">
             <FontAwesomeIcon className="menu-icon tf-icons" icon={faTicket} />
-            <div>Tur paket</div>
+            <div>{t("tour-package")}</div>
           </Link>
         </li>
         <li
@@ -75,7 +77,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setIsShowAside }) => {
               className="menu-icon tf-icons"
               icon={faRectangleList}
             />
-            <div>Buyurtmalar</div>
+            <div>{t('orders')}</div>
           </Link>
         </li>
         <li
@@ -85,7 +87,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setIsShowAside }) => {
         >
           <Link to={"/airplane"} className="menu-link">
             <FontAwesomeIcon className="menu-icon tf-icons" icon={faPlane} />
-            <div>Havo yo'llari</div>
+            <div>{t('airways')}</div>
           </Link>
         </li>
         <li
@@ -95,7 +97,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setIsShowAside }) => {
         >
           <Link to={"/hostel"} className="menu-link">
             <FontAwesomeIcon className="menu-icon tf-icons" icon={faHotel} />
-            <div>Mehmonxonalar</div>
+            <div>{t('hostels')}</div>
           </Link>
         </li>
         <li
@@ -105,7 +107,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setIsShowAside }) => {
         >
           <Link to={"/room"} className="menu-link">
             <FontAwesomeIcon className="menu-icon tf-icons" icon={faBed} />
-            <div>Xonalar</div>
+            <div>{t('rooms')}</div>
           </Link>
         </li>
         <li
@@ -115,7 +117,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setIsShowAside }) => {
         >
           <Link to={"/admin"} className="menu-link">
             <FontAwesomeIcon className="menu-icon tf-icons" icon={faUserTie} />
-            <div>Adminstrator</div>
+            <div>{t('admins')}</div>
           </Link>
         </li>
         <li
@@ -128,7 +130,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setIsShowAside }) => {
               className="menu-icon tf-icons"
               icon={faCircleCheck}
             />
-            <div>Role</div>
+            <div>{t('role')}</div>
           </Link>
         </li>
         <li
@@ -141,7 +143,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setIsShowAside }) => {
               className="menu-icon tf-icons"
               icon={faNewspaper}
             />
-            <div>Yangiliklar</div>
+            <div>{t('news')}</div>
           </Link>
         </li>
         <li
@@ -154,7 +156,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setIsShowAside }) => {
               className="menu-icon tf-icons"
               icon={faCodeBranch}
             />
-            <div>Organizatsiya</div>
+            <div>{t('organizations')}</div>
           </Link>
         </li>
         <li
@@ -164,7 +166,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setIsShowAside }) => {
         >
           <Link to={"/city"} className="menu-link">
             <FontAwesomeIcon className="menu-icon tf-icons" icon={faCity} />
-            <div>Davlatlar</div>
+            <div>{t('cities')}</div>
           </Link>
         </li>
         <li
@@ -174,15 +176,15 @@ const Sidebar: React.FC<SidebarProps> = ({ setIsShowAside }) => {
         >
           <Link to={"/extra-packages"} className="menu-link">
             <FontAwesomeIcon className="menu-icon tf-icons" icon={faBox} />
-            <div>extra packages</div>
+            <div>{t('extra-packages')}</div>
           </Link>
         </li>
-        <li className="menu-item">
+        {/* <li className="menu-item">
           <Link to={"/"} className="menu-link">
             <FontAwesomeIcon className="menu-icon tf-icons" icon={faGear} />
-            <div>Sozlamalar</div>
+            <div>{t('settings')}</div>
           </Link>
-        </li>
+        </li> */}
       </ul>
     </aside>
   );

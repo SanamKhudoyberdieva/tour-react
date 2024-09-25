@@ -43,7 +43,7 @@ const Login = () => {
   return (
     <main>
       <h5 className="card-header">
-        Dimax
+        Poytaxt
       </h5>
       <div className="card-body">
         <div className="d-flex align-items-center justify-content-center h-px-500">

@@ -7,7 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { formatDateToInputValue, getName } from "../../utils";
 import i18n from "../../utils/i18n";
-// import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import TourNavigationModal from "../modals/TourNavigationModal";
 import { useState } from "react";
 import { TourRoomType } from "../../store/types/tour/tourRoom";
@@ -19,7 +19,7 @@ const TourTable = ({
   data: TourRoomType;
   adults_count: string;
 }) => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const handleShow = () => setShowModal(true);
@@ -30,15 +30,15 @@ const TourTable = ({
         <thead>
           <tr>
             <th>#</th>
-            <th>Tur</th>
-            <th>Vaqtlar</th>
+            <th>{t('tour-pack-name')}</th>
+            <th>{t('time')}</th>
             <th>&nbsp;</th>
-            <th>Kecha</th>
-            <th>Ovqat</th>
-            <th>Xonalar</th>
-            <th>Narxi</th>
-            <th>Biletlar</th>
-            <th>Ketish joyi</th>
+            <th>{t('night')}</th>
+            <th>{t('food')}</th>
+            <th>{t('rooms')}</th>
+            <th>{t('price')}</th>
+            <th>{t('tickets')}</th>
+            <th>{t('flight-location')}</th>
             {/* <th>&nbsp;</th> */}
           </tr>
         </thead>
@@ -75,7 +75,7 @@ const TourTable = ({
               <td>
                 {x.ordered_place} / {x.place_count}
               </td>
-              <td>Toshkent</td>
+              <td>TOSHKENT STATIC</td>
               {/* <td>
                 <Link className="btn p-1" to={"/"}>
                   <FontAwesomeIcon icon={faPen} />

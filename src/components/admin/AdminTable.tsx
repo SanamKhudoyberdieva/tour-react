@@ -1,9 +1,9 @@
-import { deleteAdmin, getAdmins } from "../../api";
 import { Link } from "react-router-dom";
 import { formateDate } from "../../utils";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AdminListType } from "../../store/types";
+import { deleteAdmin, getAdmins } from "../../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 
@@ -45,9 +45,9 @@ const AdminTable = () => {
             <th>{t('fullname')}</th>
             <th>{t('phone-number')}</th>
             <th>{t('organization')}</th>
-            <th>{t('order-number')}</th>
+            <th>{t('orders-number')}</th>
             <th>{t('last-visit')}</th>
-            <th>{t('status')}</th>
+            <th>{t('active')}</th>
             <th>&nbsp;</th>
           </tr>
         </thead>

@@ -51,7 +51,7 @@ const Edit = () => {
   const formik = useFormik({
     initialValues,
     validationSchema: object({
-      image_file: string().required(t("you-must-fill-in-file")),
+      image_file: string().required(t("required")),
     }),
     onSubmit,
   });
@@ -174,7 +174,7 @@ const Edit = () => {
             <div className="col-md-6 mb-3">
               <div className="d-flex flex-column mb-3">
                 <label className="form-label" htmlFor="news-image_file">
-                  {t("image")} (1296X260)
+                  {t("image")} 
                 </label>
                 <input
                   type="file"

@@ -1,7 +1,8 @@
-import React, { Dispatch, SetStateAction } from "react";
-import { NavigationType } from "../../store/types/tour/navigation";
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
+import { Dispatch, SetStateAction } from "react";
 import { formatDateToInputValue } from "../../utils";
+import { NavigationType } from "../../store/types/tour/navigation";
+import { useTranslation } from "react-i18next";
 
 const TourNavigationModal = ({
   navigations,
@@ -12,13 +13,13 @@ const TourNavigationModal = ({
   showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
 }) => {
-  console.log("navigations", navigations);
   if (!navigations) return <div></div>;
+  const { t } = useTranslation();
   const handleClose = () => setShowModal(false);
   return (
     <Modal show={showModal} onHide={handleClose} centered size="lg">
       <Modal.Header closeButton>
-        <Modal.Title>Состав пакета</Modal.Title>
+        <Modal.Title>{t('package-contents')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <ul className="nav flex-column">

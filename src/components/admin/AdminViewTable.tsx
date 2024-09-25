@@ -37,15 +37,11 @@ const AdminViewTable = ({ data }: { data: AdminType }) => {
           <td>{data.organization?.name}</td>
         </tr>
         <tr>
-          <th>Buyurtmalar soni</th>
-          <td>STATIC</td>
-        </tr>
-        <tr>
           <th>{t("active")}</th>
           <td>{data.is_active ? t("yes") : t("no")}</td>
         </tr>
         <tr>
-          <th>{t("registration-date")}</th>
+          <th>{t("created-at")}</th>
           <td>{formateDate(data.created_at)}</td>
         </tr>
         <tr>

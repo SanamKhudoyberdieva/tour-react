@@ -49,7 +49,7 @@ const City = () => {
       handleClearData();
       handleGetAll();
     } catch (error) {
-      console.log("errr updateCity: ", error);
+      console.log("error updateCity: ", error);
     }
   };
 
@@ -61,7 +61,7 @@ const City = () => {
       await deleteCity(id);
       handleGetAll();
     } catch (error) {
-      console.log("errr deleteCity: ", error);
+      console.log("error deleteCity: ", error);
     }
   };
 

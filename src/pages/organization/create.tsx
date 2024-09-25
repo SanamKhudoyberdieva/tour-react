@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { object, string } from "yup";
+import { number, object, string } from "yup";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
@@ -40,7 +40,8 @@ const Create = () => {
   const formik = useFormik({
     initialValues,
     validationSchema: object({
-      name: string().required(t('you-must-fill-in-name')),
+      name: string().required(t('required')),
+      director_id: number().min(1, t('required')),
     }),
     onSubmit,
   });
@@ -154,6 +155,9 @@ const Create = () => {
                   </option>
                 ))}
               </select>
+              {formik.errors.director_id && formik.touched.director_id && (
+                <div className="text-danger">{formik.errors.director_id}</div>
+              )}
             </div>
           </div>
           <div>

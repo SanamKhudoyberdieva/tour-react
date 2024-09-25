@@ -13,6 +13,8 @@ import { createApplicant, getTour } from "../../../api";
 import { useTranslation } from "react-i18next";
 import { uploadApplicaitonFile } from "../../../api/application/file";
 import InfantInformation from "../../../components/tour/order/InfantInformation";
+import { getName } from "../../../utils";
+import i18n from "../../../utils/i18n";
 
 const TourOrder: React.FC = () => {
   const { t } = useTranslation();
@@ -120,15 +122,15 @@ const TourOrder: React.FC = () => {
       <div className="d-flex mb-4 align-items-center justify-content-between">
         <h4 className="py-3 mb-0">
           <span className="text-muted fw-light">
-            <Link to={"/"}>Asosiy</Link> /
+            <Link to={"/"}>{t('home')}</Link> /{' '}
           </span>
           <span className="text-muted fw-light">
-            <Link to={"/tour"}>Turlar</Link> /
+            <Link to={"/tour"}>{t('tour-packages')}</Link> /
           </span>
-          Tur 1
+          {' '} {getName(tourData, i18n.language)}
         </h4>
         <Link className="btn btn-info" to={"/tour"}>
-          Orqaga
+          {t('back')}
         </Link>
       </div>
       <ApplicationTurTable data={tourData} />

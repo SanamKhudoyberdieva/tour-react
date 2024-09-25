@@ -1,9 +1,30 @@
 import { Link } from "react-router-dom";
-import Pagination from "../../components/Pagination";
+import { useEffect, useState } from "react";
+import { getApplications } from "../../api";
+import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { ApplicantionPaginationType } from "../../store/types/tour/order/applicationPaginationList";
 
 const Index = () => {
+  const { t } = useTranslation();
+  const [data, setData] = useState<ApplicantionPaginationType | null>(null);
+
+  const handleGet = async () => {
+    try {
+      const res = await getApplications();
+      setData(res.data);
+    } catch (error) {
+      console.log("error getApplications: ", error);
+    }
+  };
+
+  useEffect(() => {
+    handleGet();
+  }, []);
+
+  console.log("data", data?.applications)
+
   return (
     <div>
       <div
@@ -11,28 +32,14 @@ const Index = () => {
       >
         <h4 className="py-3 mb-0">
         <span className="text-muted fw-light">
-          <Link to={'/'}>Asosiy</Link> / {' '}
+          <Link to={'/'}>{t('home')}</Link> / {' '}
         </span>
-        Buyurtmalar
+        {t('orders')}
       </h4>
       </div>
       <div className="card">
         <div className="card-body">
-          <div
-            className="d-flex flex-column-reverse flex-md-row align-items-center justify-content-between mb-3"
-          >
-            <div className="d-flex align-items-center">
-              <label
-                className="form-label text-nowrap mb-0 me-2"
-                >Размер стр:</label>
-              <select id="page-size-label" className="form-select">
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-              </select>
-            </div>
-          </div>
-          <div className="table-responsive mb-4">
+          <div className="table-responsive">
             <table className="table table-striped table-hover">
               <thead>
                 <tr>
@@ -70,9 +77,10 @@ const Index = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                <td>1</td>
-                <td><Link to={'/order/view/2'}>Umra ziyorati 2024</Link></td>
+              {data?.applications?.map((x, idx) => (
+                <tr key={"order-list-item-id" + 1}>
+                <td>{idx + 1}</td>
+                <td><Link to={`/order/view/${x.id}`}>Umra ziyorati 2024</Link></td>
                 <td>
                   Esonov Omon
                 </td>
@@ -89,10 +97,10 @@ const Index = () => {
                   </button>
                 </td>
                 </tr>
+              ))}
               </tbody>
             </table>
           </div>
-          <Pagination/>
         </div>
       </div>
     </div>

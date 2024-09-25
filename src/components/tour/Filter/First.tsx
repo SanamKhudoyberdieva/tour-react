@@ -12,6 +12,7 @@ import { getName } from "../../../utils";
 import i18n from "../../../utils/i18n";
 import DateSelector from "./Calendar";
 import { TourCalendarType } from "../../../store/types/tour/calendar";
+import { useTranslation } from "react-i18next";
 
 const FilterOne = ({
   handleFilterChange,
@@ -32,6 +33,7 @@ const FilterOne = ({
   fetchData: () => Promise<void>;
   setFilters: Dispatch<SetStateAction<FiltersStateType>>;
 }) => {
+  const { t } = useTranslation();
   const [toursData, setToursData] = useState<TourPaginationType | null>(null);
   const [calendar, setCalendar] = useState<TourCalendarType[] | []>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -75,7 +77,7 @@ const FilterOne = ({
         <div className="row">
           <div className="col-md-4">
             <div className="mb-2">
-              <label className="form-label">тур</label>
+              <label className="form-label">{t('tour-pack-name')}</label>
               <select
                 className="form-select"
                 onChange={handleFilterChange}
@@ -94,7 +96,7 @@ const FilterOne = ({
             </div>
             <div className="d-flex flex-column">
               <label htmlFor="date-picker" className="form-label">
-                вылет от
+                {t('departure-from')}
               </label>
               <DateSelector
                 selectedDate={selectedDate}
@@ -108,7 +110,7 @@ const FilterOne = ({
           </div>
           <div className="col-md-4">
             <div className="mb-2">
-              <label className="form-label">ночей</label>
+              <label className="form-label">{t('night')}</label>
               <select
                 className="form-select"
                 onChange={handleFilterChange}
@@ -188,7 +190,7 @@ const FilterOne = ({
           </div> */}
           <div className="col-md-4 d-flex flex-column justify-content-between">
             <div>
-              <label className="form-label me-4">питание</label>
+              <label className="form-label me-4">{t('food')}</label>
               <input
                 className="form-control"
                 value={filters.nutrition_type}
@@ -241,10 +243,10 @@ const FilterOne = ({
                   });
                 }}
               >
-                Clear
+                {t('clear')}
               </button>
               <button className="btn btn-primary" onClick={fetchData}>
-                Search
+                {t('search')}
               </button>
             </div>
           </div>

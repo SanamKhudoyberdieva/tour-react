@@ -72,7 +72,7 @@ const Navbar: React.FC<NavbarProps> = ({ setIsShowAside }) => {
                         <Link to={`/admin/view/${admin.id}`}>
                           <img
                             src={noPhotoImage}
-                            alt=""
+                            alt="no photo"
                             className="w-px-40 h-auto rounded-circle"
                           />
                         </Link>

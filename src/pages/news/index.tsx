@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Pagination from "../../components/Pagination";
 import NewsTable from "../../components/news/NewsTable";
 
 const Index = () => {

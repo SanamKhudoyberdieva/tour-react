@@ -74,6 +74,7 @@ export * from "./role/getById";
 export * from "./role/getAll";
 export * from "./role/create";
 export * from "./role/update";
+export * from "./role/delete";
 
 export * from "./modules/getModule";
 export * from "./modules/getModuleItem";

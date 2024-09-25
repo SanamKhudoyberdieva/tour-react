@@ -105,7 +105,7 @@ const Create = () => {
           <div className="d-flex mb-4 align-items-center justify-content-between">
             <h4 className="py-3 mb-0">
               <span className="text-muted fw-light">
-                <Link to={"/"}>Asosiy</Link> /{" "}
+                <Link to={"/"}>{t('home')}</Link> /{" "}
               </span>
               <span className="text-muted fw-light">
                 <Link to={"/tour"}>Tur Paketlar</Link> /{" "}

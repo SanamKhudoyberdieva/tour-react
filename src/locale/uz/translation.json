@@ -1,6 +1,118 @@
 {
     "required": "Zarur",
     "login": "Tizimga kirish",
+    "log-out": "Chiqish",
     "username": "Foydalanuvchi nomi",
-    "password": "Parol"
+    "password": "Parol",
+    "dashboard": "Boshqaruv paneli",
+    "tour-package": "Tur paket",
+    "orders": "Buyurtmalar",
+    "airways": "Havo yo'llari",
+    "hostels": "Mehmonxonalar",
+    "rooms": "Xonalar",
+    "admins": "Adminlar",
+    "role": "Rol",
+    "news": "Yangiliklar",
+    "organizations": "Tashkilotlar",
+    "cities": "Shaharlar",
+    "extra-packages": "Qo'shimcha paketlar",
+    "welcome-admin": "Xush kelibsiz, administrator",
+    "are-you-sure-you-want-to-delete": "Haqiqatan ham oʻchirib tashlamoqchimisiz?",
+    "home": "Asosiy sahifa",
+    "position-in-the-list": "Ro'yxatdagi pozitsiya",
+    "add-organization": "Tashkilot qo'shish",
+    "name": "Nomi",
+    "director": "Direktor",
+    "city": "Shahar",
+    "application-count": "Sotuvlar soni",
+    "worker-count": "Ishchilar soni",
+    "created-at": "Yaratilgan",
+    "create": "Yaratish",
+    "back": "Orqaga",
+    "description": "Tavsif",
+    "address": "Manzil",
+    "save": "Qo'shish",
+    "id": "Identifikator",
+    "created": "Yaratuvchi",
+    "updated": "Yangilovchi",
+    "updated-at": "Yangilangan",
+    "edit": "O'zgartirish",
+    "add-news": "Yangilik qo'shish",
+    "image": "Rasm",
+    "roles": "Rollar",
+    "add-role": "Rol qo'shish",
+    "active": "Faol",
+    "key": "Kalit",
+    "comment": "Izoh",
+    "add-admin": "Administrator qo'shish",
+    "fullname": "To'liq ism",
+    "phone-number": "Telefon raqami",
+    "orders-number": "Buyurtmalar soni",
+    "last-visit": "Oxirgi tashrif",
+    "organization": "Tashkilot",
+    "count": "Mumkin (kishi)",
+    "stars": "Yulduzlar",
+    "tour-packages": "Tur paketlari",
+    "page-size": "Sahifa hajmi:",
+    "tour-pack-name": "Tur paket nomi",
+    "time": "Vaqtlar",
+    "night": "Kecha",
+    "food": "Ovqat",
+    "price": "Narx",
+    "tickets": "Chiptalar",
+    "flight-location": "Uchish joyi",
+    "package-contents": "Paket tarkibi",
+    "departure-from": "dan ketish",
+    "adults": "kattalar",
+    "clear": "O'chirish",
+    "search": "Qidirish",
+    "select-a-flying-date": "Uchish sanasini tanlash"
+
+    
+
+
+
+
+
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    
+    
+
+
+
+
+
+
+
+
+
 }

@@ -42,8 +42,8 @@ const Create = () => {
   const formik = useFormik({
     initialValues,
     validationSchema: object({
-      title: string().required("Необходимо заполнить «Название»."),
-      key: string().required("Необходимо заполнить «Ключ»."),
+      title: string().required(t('required')),
+      key: string().required(t('required')),
     }),
     onSubmit,
   });
@@ -116,9 +116,6 @@ const Create = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               ></textarea>
-              {formik.errors.comment && formik.touched.comment && (
-                <div className="text-danger">{formik.errors.comment}</div>
-              )}
             </div>
             <div className="col-12 d-flex align-items-center mb-3">
               <input

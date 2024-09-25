@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { object, string } from "yup";
+import { number, object, string } from "yup";
 import { createAdmin } from "../../api";
 import { RootState } from "../../store";
 import InputMask from "react-input-mask";
@@ -36,10 +36,11 @@ const Create = () => {
   const formik = useFormik({
     initialValues,
     validationSchema: object({
-      full_name: string().required(t('you-must-fill-in-fullname')),
-      username: string().required(t('you-must-fill-in-login')),
-      password: string().required(t('you-must-fill-in-password')),
-      phone: string().required(t('you-must-fill-in-phone')),
+      full_name: string().required(t('required')),
+      username: string().required(t('required')),
+      password: string().required(t('required')),
+      role_id: number().min(1, t('required')), 
+      organization_id: number().min(1, t('required')),
     }),
     onSubmit,
   });
@@ -114,9 +115,6 @@ const Create = () => {
                 onBlur={formik.handleBlur}
                 id="user-phone"
               />
-              {formik.errors.phone && formik.touched.phone && (
-                <div className="text-danger">{formik.errors.phone}</div>
-              )}
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label" htmlFor="user-password">
@@ -161,6 +159,9 @@ const Create = () => {
                   </option>
                 ))}
               </select>
+              {formik.errors.role_id && formik.touched.role_id && (
+                <div className="text-danger">{formik.errors.role_id}</div>
+              )}
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label" htmlFor="user-organization_id">
@@ -188,6 +189,9 @@ const Create = () => {
                   </option>
                 ))}
               </select>
+              {formik.errors.organization_id && formik.touched.organization_id && (
+                <div className="text-danger">{formik.errors.organization_id}</div>
+              )}
             </div>
           </div>
           <div className="d-flex align-items-center mb-3">

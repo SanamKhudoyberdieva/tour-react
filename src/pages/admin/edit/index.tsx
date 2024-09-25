@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { object, string } from 'yup';
+import { number, object, string } from 'yup';
 import InputMask from "react-input-mask";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
@@ -16,8 +16,6 @@ const Index = () => {
   const [data, setData] = useState<AdminType | null>(null);
   const { roles } = useSelector((state: RootState) => state.rolesReducer);
   const { organizations } = useSelector((state: RootState) => state.organizationsReducer);
-
-  console.log("data", data)
 
   const initialValues: AdminUpdateType = {
     full_name: "",
@@ -86,10 +84,11 @@ const Index = () => {
   const formik = useFormik({
     initialValues,
     validationSchema: object({
-      full_name: string().required(t('you-must-fill-in-fullname')),
-      username: string().required(t('you-must-fill-in-login')),
-      password: string().required(t('you-must-fill-in-password')),
-      phone: string().required(t('you-must-fill-in-phone')),
+      full_name: string().required(t('required')),
+      username: string().required(t('required')),
+      password: string().required(t('required')),
+      role_id: number().min(1, t('required')), 
+      organization_id: number().min(1, t('required')),
     }),
     onSubmit,
   });
@@ -208,9 +207,6 @@ const Index = () => {
                 onBlur={formik.handleBlur}
                 id="user-phone"
               />
-              {formik.errors.phone && formik.touched.phone && (
-                <div className="text-danger">{formik.errors.phone}</div>
-              )}
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label" htmlFor="user-password">
@@ -255,6 +251,9 @@ const Index = () => {
                   </option>
                 ))}
               </select>
+              {formik.errors.role_id && formik.touched.role_id && (
+                <div className="text-danger">{formik.errors.role_id}</div>
+              )}
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label" htmlFor="user-organization_id">
@@ -282,6 +281,9 @@ const Index = () => {
                   </option>
                 ))}
               </select>
+              {formik.errors.organization_id && formik.touched.organization_id && (
+                <div className="text-danger">{formik.errors.organization_id}</div>
+              )}
             </div>
           </div>
           <div className="d-flex align-items-center mb-3">

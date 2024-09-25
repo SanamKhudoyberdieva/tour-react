@@ -1,16 +1,16 @@
+import i18n from "../utils/i18n";
+import { getName } from "../utils";
 import { RootState } from "../store";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { HostelType } from "../store/types";
 import { useTranslation } from "react-i18next";
+import { setCities } from "../store/slices/citySlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setHostels } from "../store/slices/hostelSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createHotel, deleteHotel, getCities, getHotels, updateHotel } from "../api";
 import { faCheck, faPen, faPlus, faTrashCan, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { setCities } from "../store/slices/citySlice";
-import { getName } from "../utils";
-import i18n from "../utils/i18n";
 
 const Hostel = () => {
   const { t } = useTranslation();
@@ -23,8 +23,8 @@ const Hostel = () => {
   const [description_uz, setDescription_uz] = useState("");
   const [description_ru, setDescription_ru] = useState("");
   const [updateId, setUpdateId] = useState<number | null>(null);
-  const { hostels } = useSelector((state: RootState) => state.hostelsReducer);
   const { cities } = useSelector((state: RootState) => state.citiesReducer);
+  const { hostels } = useSelector((state: RootState) => state.hostelsReducer);
 
   const handleGetAll = async () => {
     try {
@@ -127,7 +127,7 @@ const Hostel = () => {
         <h4 className="py-3 mb-0">
           <span className="text-muted fw-light"
             ><Link to={'/'}>{t('home')}</Link> / </span>
-          {t('hotels')}
+          {t('hostels')}
         </h4>
       </div>
       <div className="card">

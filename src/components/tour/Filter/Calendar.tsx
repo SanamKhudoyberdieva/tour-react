@@ -8,6 +8,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { TourCalendarType } from "../../../store/types/tour/calendar";
+import { useTranslation } from "react-i18next";
 
 const DateSelector = ({
   calendar,
@@ -27,6 +28,7 @@ const DateSelector = ({
   ) => void;
   calendar: TourCalendarType[];
 }) => {
+  const { t } = useTranslation();
   const calendarMoments = calendar.map((date) => moment(date.date));
 
   const isDateSelectable = (date: moment.MomentInput) => {
@@ -85,7 +87,7 @@ const DateSelector = ({
       selected={selectedDate}
       onChange={(date) => handleDateChange(date)}
       filterDate={filterDates}
-      placeholderText="Select a flying date"
+      placeholderText={t('select-a-flying-date')}
       dateFormat="yyyy-MM-dd"
       dayClassName={customDayClass}
       className="form-control w-100"

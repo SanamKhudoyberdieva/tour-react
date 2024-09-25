@@ -1,12 +1,12 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import api from "../../api/api";
+import { useTranslation } from "react-i18next";
 import Pagination from "../../components/Pagination";
 import TourTable from "../../components/tour/TourTable";
-import FilterOne from "../../components/tour/Filter/First";
-// import { useTranslation } from "react-i18next";
 import { ChangeEvent, useEffect, useState } from "react";
-import { parseQuery, stringifyQuery } from "../../utils/queryUtils";
-import api from "../../api/api";
+import FilterOne from "../../components/tour/Filter/First";
 import { TourRoomType } from "../../store/types/tour/tourRoom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { parseQuery, stringifyQuery } from "../../utils/queryUtils";
 
 export interface FiltersStateType {
   adults_count: string;
@@ -31,7 +31,7 @@ export interface FiltersStateType {
 }
 
 const Index = () => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   const [data, setData] = useState<TourRoomType | null>(null);
 
   const navigate = useNavigate();
@@ -147,12 +147,12 @@ const Index = () => {
       <div className="d-flex mb-4 align-items-center justify-content-between">
         <h4 className="py-3 mb-0">
           <span className="text-muted fw-light">
-            <Link to={"/"}>Asosiy</Link> /{" "}
+            <Link to={"/"}>{t('home')}</Link> /{" "}
           </span>
-          Tur Paketlar
+          {t('tour-packages')}
         </h4>
         <Link className="btn btn-success" to={"/tour/create"}>
-          Yaratish
+          {t('create')}
         </Link>
       </div>
 
@@ -169,7 +169,7 @@ const Index = () => {
             <div className="d-flex flex-column-reverse flex-md-row align-items-center justify-content-between mb-3">
               <div className="d-flex align-items-center">
                 <label className="form-label text-nowrap mb-0 me-2">
-                  Размер стр:
+                  {t('page-size')}
                 </label>
                 <select
                   id="page-size-label"

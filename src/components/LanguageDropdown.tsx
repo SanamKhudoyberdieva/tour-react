@@ -1,29 +1,32 @@
-import { Dropdown } from "react-bootstrap";
+import { useTranslation } from 'react-i18next';
+import { Dropdown, DropdownMenu, DropdownToggle } from 'react-bootstrap';
 
 const LanguageDropdown = () => {
+  const { i18n } = useTranslation();
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
   return (
     <>
-      <Dropdown className="nav-item dropdown ml-auto">
-        <Dropdown.Toggle className="btn btn-outline-info dropdown-toggle" >
-          O'zbek
-        </Dropdown.Toggle>
-        <Dropdown.Menu className="dropdown-menu pr-dropdown-menu" >
+      <Dropdown className="nav-item dropdown ml-auto pr-lang-dropdown">
+        <DropdownToggle className="btn btn-outline-info dropdown-toggle" type="button" id="languageDropdown"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {i18n.language === 'ru' ? 'Русский' : i18n.language === 'uz' ? 'O\'zbek' : ''}
+        </DropdownToggle>
+        <DropdownMenu className="dropdown-menu pr-dropdown-menu" aria-labelledby="languageDropdown">
           <button
-            className="btn rounded-0 dropdown-item"
+            className={`btn rounded-0 dropdown-item ${i18n.language === 'ru' ? 'active' : ''}`}
+            onClick={() => changeLanguage('ru')}
           >
             Русский
           </button>
           <button
-            className="btn rounded-0 dropdown-item active"
+            className={`btn rounded-0 dropdown-item ${i18n.language === 'uz' ? 'active' : ''}`}
+            onClick={() => changeLanguage('uz')}
           >
             O'zbek
           </button>
-          <button
-            className="btn rounded-0 dropdown-item"
-          >
-            English
-          </button>
-        </Dropdown.Menu>
+        </DropdownMenu>
       </Dropdown>
     </>
   )

@@ -16,8 +16,11 @@ const rolesSlice = createSlice({
     setRoles(state, action: PayloadAction<RoleType[]>) {
       state.roles = action.payload;
     },
+    removeRole: (state, action: PayloadAction<number>) => {
+      state.roles = state.roles.filter(role => role.id !== action.payload);
+    },
   },
 });
 
-export const { setRoles } = rolesSlice.actions;
+export const { setRoles, removeRole } = rolesSlice.actions;
 export default rolesSlice.reducer;

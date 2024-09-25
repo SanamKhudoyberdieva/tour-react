@@ -54,10 +54,10 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h4 className="py-3 mb-4">Панель управления</h4>
+      <h4 className="py-3 mb-4">{t('dashboard')}</h4>
       <div className="card mb-4">
         <div className="header text-center p-3">
-          <h4 className="title">Добро пожаловать, администратор</h4>
+          <h4 className="title">{t('welcome-admin')}</h4>
         </div>
         <div className="content"></div>
       </div>
