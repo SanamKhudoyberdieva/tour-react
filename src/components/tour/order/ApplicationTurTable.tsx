@@ -1,21 +1,23 @@
+import { useTranslation } from "react-i18next";
 import { TourType } from "../../../store/types"
 import { formatDateToInputValue, getDescription, getName } from "../../../utils"
 
 const ApplicationTurTable = ({data}: {data: TourType}) => {
+  const { t } = useTranslation();
+
   return (
     <div className="card mb-3">
         <div className="card-body">
           <div className="table-responsive mb-4">
-            <h6>Тур</h6>
+            <h6>{t('tour-package')}</h6>
             <table className="table table-striped table-hover">
               <thead>
                 <tr>
-                  <th>Описание тура</th>
-                  <th>СПО</th>
-                  <th>Страна</th>
-                  <th>Продолжительность</th>
-                  <th>ночей</th>
-                  <th>Примечание</th>
+                  <th>{t('description')}</th>
+                  <th>{t('airways')}</th>
+                  <th>{t('city')}</th>
+                  <th>{t('duration')}</th>
+                  <th>{t('night')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -31,7 +33,6 @@ const ApplicationTurTable = ({data}: {data: TourType}) => {
                   </td>
                   <td>{formatDateToInputValue(data.from)}—{formatDateToInputValue(data.to)}</td>
                   <td>{data.night_count}</td>
-                  <td>CROWN HOTEL NHA TRANG - Special offer</td>
                 </tr>
               </tbody>
             </table>

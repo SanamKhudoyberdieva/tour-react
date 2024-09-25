@@ -66,31 +66,29 @@
     "adults": "kattalar",
     "clear": "O'chirish",
     "search": "Qidirish",
-    "select-a-flying-date": "Uchish sanasini tanlash"
-
-    
-
-
-
-
-
-
-
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
+    "select-a-flying-date": "Uchish sanasini tanlash",
+    "duration": "Davomiyligi",
+    "accommodation": "Turar joy",
+    "transport": "Transport",
+    "flight": "Reys",
+    "quantity": "Soni",
+    "mr-mrs": "Jinsi",
+    "man": "Erkak",
+    "woman": "Ayol",
+    "birthday": "Tug'ilgan sana",
+    "passport": "Pasport",
+    "visa": "Viza",
+    "expire-date": "Amal qilish muddati",
+    "need-visa": "Viza kerak",
+    "need-disabled-carriage": "Nogironlar uchun aravacha kerak",
+    "add-infant": "Chaqaloq qo'shish",
+    "remove-infant": "Chaqaloqni o'chirish",
+    "infant": "Chaqaloq",
+    "information-about-tourist": "Turistni ma'lumotlari",
+    "order-notes": "Buyurtma eslatmalari",
+    "calculate": "Qayta hisoblash",
+    "book": "Band qilish",
+    "sum": "so'm"
 
 
 
@@ -100,12 +98,10 @@
 
 
 
-    
 
 
 
-    
-    
+
 
 
 

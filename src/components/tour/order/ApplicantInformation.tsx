@@ -1,9 +1,9 @@
 import React from "react";
 import InputMask from "react-input-mask";
-import { Field, ErrorMessage, FormikErrors, FormikTouched } from "formik";
 import { useTranslation } from "react-i18next";
-import { ApplicantsCreateType } from "../../../store/types/tour/order/applicantsCreate";
 import { uploadApplicaitonFile } from "../../../api/application/file";
+import { Field, ErrorMessage, FormikErrors, FormikTouched } from "formik";
+import { ApplicantsCreateType } from "../../../store/types/tour/order/applicantsCreate";
 
 interface ApplicantInformationProps {
   index: number;
@@ -55,7 +55,7 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
       <form className="card-body">
         <div className="row">
           <div className="col-md-4 mb-3">
-            <label className="form-label">MR/MRS</label>
+            <label className="form-label">{t('mr-mrs')}</label>
             <select
               onChange={(e) =>
                 setFieldValue(
@@ -68,8 +68,8 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
               className="form-select"
             >
               <option value=""></option>
-              <option value="2">MR</option>
-              <option value="3">MRS</option>
+              <option value="2">{t('man')}</option>
+              <option value="3">{t('woman')}</option>
             </select>
           </div>
 
@@ -90,7 +90,7 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
           </div>
 
           <div className="col-md-4 col-6 mb-3">
-            <label className="form-label">Дата рождения</label>
+            <label className="form-label">{t('birthday')}</label>
             <Field
               type="date"
               name={`applicants[${index}].birthday`}
@@ -99,7 +99,7 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
             />
           </div>
           <div className="col-md-4 col-6 mb-3">
-            <label className="form-label">Passport</label>
+            <label className="form-label">{t('passport')}</label>
             <input
               type="file"
               name={`applicants[${index}].passport`}
@@ -124,7 +124,7 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
             />
           </div>
           <div className="col-md-4 col-6 mb-3">
-            <label className="form-label">Visa</label>
+            <label className="form-label">{t('visa')}</label>
             <input
               type="file"
               name={`applicants[${index}].visa_file`}
@@ -150,7 +150,7 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
           </div>
 
           <div className="col-md-4 col-6 mb-3">
-            <label className="form-label">Действителен до</label>
+            <label className="form-label">{t('expire-date')}</label>
             <Field
               type="date"
               name={`applicants[${index}].expire_date`}
@@ -178,7 +178,7 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
               }
               onBlur={(e) => {
                 handleBlur(e);
-                handlePhoneBlur(e); // Call the phone formatting on blur
+                handlePhoneBlur(e); 
               }}
               id="user-phone"
             />
@@ -192,7 +192,7 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
                 id="need-visa"
               />
               <label className="form-check-label" htmlFor="need-visa">
-                Need visa
+                {t('need-visa')}
               </label>
             </div>
           </div>
@@ -208,7 +208,7 @@ const ApplicantInformation: React.FC<ApplicantInformationProps> = ({
                 className="form-check-label"
                 htmlFor="need_disabled_carriage"
               >
-                need_disabled_carriage
+                 {t('need-disabled-carriage')}
               </label>
             </div>
           </div>

@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
 import { Formik, Form } from "formik";
-import { Link, useLocation, useParams } from "react-router-dom";
-import ApplicationTurTable from "../../../components/tour/order/ApplicationTurTable";
-import ApplicationHotelTable from "../../../components/tour/order/ApplicationHotelTable";
-import ApplicationTransportTable from "../../../components/tour/order/ApplicationTransportTable";
-import ApplicantInformation from "../../../components/tour/order/ApplicantInformation";
-import ApplicationNotes from "../../../components/tour/order/ApplicationNotes";
-import ApplicationExtraPackages from "../../../components/tour/order/ApplicationExtraPackages";
-import { ApplicantsCreateType } from "../../../store/types/tour/order/applicantsCreate";
-import { TourType } from "../../../store/types";
-import { createApplicant, getTour } from "../../../api";
-import { useTranslation } from "react-i18next";
-import { uploadApplicaitonFile } from "../../../api/application/file";
-import InfantInformation from "../../../components/tour/order/InfantInformation";
-import { getName } from "../../../utils";
 import i18n from "../../../utils/i18n";
+import { getName } from "../../../utils";
+import { useTranslation } from "react-i18next";
+import { TourType } from "../../../store/types";
+import React, { useEffect, useState } from "react";
+import { createApplicant, getTour } from "../../../api";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { uploadApplicaitonFile } from "../../../api/application/file";
+import ApplicationNotes from "../../../components/tour/order/ApplicationNotes";
+import InfantInformation from "../../../components/tour/order/InfantInformation";
+import ApplicationTurTable from "../../../components/tour/order/ApplicationTurTable";
+import ApplicantInformation from "../../../components/tour/order/ApplicantInformation";
+import { ApplicantsCreateType } from "../../../store/types/tour/order/applicantsCreate";
+import ApplicationHotelTable from "../../../components/tour/order/ApplicationHotelTable";
+import ApplicationExtraPackages from "../../../components/tour/order/ApplicationExtraPackages";
+import ApplicationTransportTable from "../../../components/tour/order/ApplicationTransportTable";
 
 const TourOrder: React.FC = () => {
   const { t } = useTranslation();
@@ -217,7 +217,7 @@ const TourOrder: React.FC = () => {
                 };
                 return (
                   <div key={index} className="mb-3">
-                    <h6>Информация о туристе {index + 1}</h6>
+                    <h6>{t('information-about-tourist')} {index + 1}</h6>
                     <ApplicantInformation
                       values={values}
                       handleChange={handleChange}
@@ -234,7 +234,7 @@ const TourOrder: React.FC = () => {
                         {!adultsHasInfant.find((x) => x.index === index)
                           ?.has ? (
                           <button
-                            className="btn btn-secondary btn-sm"
+                            className="btn btn-secondary btn-sm mt-3"
                             onClick={handleAddInfant}
                             type="button"
                           >
@@ -242,7 +242,7 @@ const TourOrder: React.FC = () => {
                           </button>
                         ) : (
                           <button
-                            className="btn btn-secondary btn-sm"
+                            className="btn btn-secondary btn-sm mb-4 mt-3"
                             onClick={() => handleRemoveInfant(index)}
                             type="button"
                           >
@@ -284,17 +284,17 @@ const TourOrder: React.FC = () => {
                 <div className="col-md-5">
                   <div className="card">
                     <div className="card-body">
-                      <div className="dt-total-price">{total} USD</div>
+                      <div className="dt-total-price">{total} {t('sum')}</div>
                       <div className="d-flex justify-content-around">
                         <button
                           type="button"
                           onClick={() => calculateSum(values)}
                           className="btn btn-primary"
                         >
-                          Пересчитать
+                          {t('calculate')}
                         </button>
                         <button type="submit" className="btn btn-primary">
-                          Бронировать
+                          {t('book')}
                         </button>
                       </div>
                     </div>

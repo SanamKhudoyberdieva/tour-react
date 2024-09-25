@@ -1,8 +1,8 @@
 import React from "react";
-import { Field, ErrorMessage, FormikErrors } from "formik";
-import { useTranslation } from "react-i18next";
-import { ApplicantsCreateType } from "../../../store/types/tour/order/applicantsCreate";
 import { AxiosResponse } from "axios";
+import { useTranslation } from "react-i18next";
+import { Field, ErrorMessage, FormikErrors } from "formik";
+import { ApplicantsCreateType } from "../../../store/types/tour/order/applicantsCreate";
 
 interface InfantInformationProps {
   index: number;
@@ -40,7 +40,7 @@ const InfantInformation: React.FC<InfantInformationProps> = ({
       <div className="card-body">
         <div className="row">
           <div className="col-md-4 mb-3">
-            <label className="form-label">INF</label>
+            <label className="form-label">{t('infant')}</label>
             <select
               onChange={(e) =>
                 setFieldValue(
@@ -53,7 +53,7 @@ const InfantInformation: React.FC<InfantInformationProps> = ({
               className="form-select"
             >
               <option value="0"></option>
-              <option value="1">INF</option>
+              <option value="1">{t('infant')}</option>
             </select>
             <ErrorMessage
               name={`applicants[${adults + index}].applicant_type`}
@@ -79,7 +79,7 @@ const InfantInformation: React.FC<InfantInformationProps> = ({
           </div>
 
           <div className="col-md-4 col-6 mb-3">
-            <label className="form-label">Дата рождения</label>
+            <label className="form-label">{t('birthday')}</label>
             <Field
               type="date"
               name={`applicants[${adults + index}].birthday`}
@@ -88,7 +88,7 @@ const InfantInformation: React.FC<InfantInformationProps> = ({
             />
           </div>
           <div className="col-md-4 col-6 mb-3">
-            <label className="form-label">Passport</label>
+            <label className="form-label">{t('passport')}</label>
             <input
               type="file"
               name={`applicants[${adults + index}].passport`}
@@ -112,7 +112,7 @@ const InfantInformation: React.FC<InfantInformationProps> = ({
             />
           </div>
           <div className="col-md-4 col-6 mb-3">
-            <label className="form-label">Visa</label>
+            <label className="form-label">{t('visa')}</label>
             <input
               type="file"
               name={`applicants[${adults + index}].visa_file`}
@@ -137,7 +137,7 @@ const InfantInformation: React.FC<InfantInformationProps> = ({
           </div>
 
           <div className="col-md-4 col-6 mb-3">
-            <label className="form-label">Действителен до</label>
+            <label className="form-label">{t("expire-date")}</label>
             <Field
               type="date"
               name={`applicants[${adults + index}].expire_date`}
@@ -154,7 +154,7 @@ const InfantInformation: React.FC<InfantInformationProps> = ({
                 id="need-visa"
               />
               <label className="form-check-label" htmlFor="need-visa">
-                Need visa
+                {t('need-visa')}
               </label>
             </div>
           </div>

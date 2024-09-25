@@ -66,7 +66,29 @@
     "adults": "взрослых",
     "clear": "Очистить",
     "search": "Поиск",
-    "select-a-flying-date": "Выберите летную дату"
+    "select-a-flying-date": "Выберите летную дату",
+    "duration": "Продолжительность",
+    "accommodation": "Проживание",
+    "transport": "Транспорт",
+    "flight": "Полет",
+    "quantity": "Количество",
+    "mr-mrs": "Mr/Mrs",
+    "man": "Мужчина",
+    "woman": "Женщина",
+    "birthday": "Дата рождения",
+    "passport": "Паспорт",
+    "visa": "Виза",
+    "expire-date": "Действительно до",
+    "need-visa": "Нужна виза",
+    "need-disabled-carriage": "Нужна коляска для инвалидов",
+    "add-infant": "Добавить ребенка",
+    "remove-infant": "Удалить ребенка",
+    "infant": "Младенец",
+    "information-about-tourist": "Информация о туристе",
+    "order-notes": "Примечания к заказу",
+    "calculate": "Пересчитать",
+    "book": "Бронировать",
+    "sum": "сум"
 
 
 
