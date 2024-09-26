@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { TourType } from "../../../store/types";
 import React, { useEffect, useState } from "react";
 import { createApplicant, getTour } from "../../../api";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { uploadApplicaitonFile } from "../../../api/application/file";
 import ApplicationNotes from "../../../components/tour/order/ApplicationNotes";
 import InfantInformation from "../../../components/tour/order/InfantInformation";
@@ -15,6 +15,7 @@ import { ApplicantsCreateType } from "../../../store/types/tour/order/applicants
 import ApplicationHotelTable from "../../../components/tour/order/ApplicationHotelTable";
 import ApplicationExtraPackages from "../../../components/tour/order/ApplicationExtraPackages";
 import ApplicationTransportTable from "../../../components/tour/order/ApplicationTransportTable";
+import useToast from "../../../utils/useToast";
 
 const TourOrder: React.FC = () => {
   const { t } = useTranslation();
@@ -22,7 +23,9 @@ const TourOrder: React.FC = () => {
     { extra_package_id: number; total: number; count: number }[]
   >([]);
   const [isLoaded, setIsloaded] = useState<boolean>(false);
+  const navigate = useNavigate();
   const location = useLocation();
+  const { showToast } = useToast();
   const queryParams = new URLSearchParams(location.search);
   const adults_count = queryParams.get("adults_count") || "1";
   const tour_room_id = queryParams.get("tour_room_id");
@@ -83,8 +86,11 @@ const TourOrder: React.FC = () => {
   const handleSubmit = async (data: ApplicantsCreateType) => {
     try {
       await createApplicant(data);
-    } catch (error) {
-      console.error("Error submitting form:", error);
+      showToast(t("successfully-created"), { type: "success" });
+      navigate("/order", { replace: true });
+    } catch (error: any) {
+      showToast(error.response.data.message, { type: "error" });
+      console.error("Error submitting form:", error.response.data);
     }
   };
 
@@ -122,15 +128,15 @@ const TourOrder: React.FC = () => {
       <div className="d-flex mb-4 align-items-center justify-content-between">
         <h4 className="py-3 mb-0">
           <span className="text-muted fw-light">
-            <Link to={"/"}>{t('home')}</Link> /{' '}
+            <Link to={"/"}>{t("home")}</Link> /{" "}
           </span>
           <span className="text-muted fw-light">
-            <Link to={"/tour"}>{t('tour-packages')}</Link> /
-          </span>
-          {' '} {getName(tourData, i18n.language)}
+            <Link to={"/tour"}>{t("tour-packages")}</Link> /
+          </span>{" "}
+          {getName(tourData, i18n.language)}
         </h4>
         <Link className="btn btn-info" to={"/tour"}>
-          {t('back')}
+          {t("back")}
         </Link>
       </div>
       <ApplicationTurTable data={tourData} />
@@ -217,7 +223,9 @@ const TourOrder: React.FC = () => {
                 };
                 return (
                   <div key={index} className="mb-3">
-                    <h6>{t('information-about-tourist')} {index + 1}</h6>
+                    <h6>
+                      {t("information-about-tourist")} {index + 1}
+                    </h6>
                     <ApplicantInformation
                       values={values}
                       handleChange={handleChange}
@@ -284,17 +292,19 @@ const TourOrder: React.FC = () => {
                 <div className="col-md-5">
                   <div className="card">
                     <div className="card-body">
-                      <div className="dt-total-price">{total} {t('sum')}</div>
+                      <div className="dt-total-price">
+                        {total} {t("sum")}
+                      </div>
                       <div className="d-flex justify-content-around">
                         <button
                           type="button"
                           onClick={() => calculateSum(values)}
                           className="btn btn-primary"
                         >
-                          {t('calculate')}
+                          {t("calculate")}
                         </button>
                         <button type="submit" className="btn btn-primary">
-                          {t('book')}
+                          {t("book")}
                         </button>
                       </div>
                     </div>
