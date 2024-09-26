@@ -7,6 +7,26 @@ body {
   border-radius: 50%;
 }
 
+.carousel-caption .text {
+  color: #000 !important;
+}
+
+.pr-main-carousel {
+  margin-bottom: 4.75rem;
+}
+.pr-main-carousel .carousel-item {
+  position: relative;
+  border-radius: 0;
+}
+.pr-main-carousel .carousel-item .img-fluid {
+  height: 22.5rem;
+  object-fit: cover;
+  width: 100% !important;
+}
+.pr-main-carousel .carousel-inner {
+  border-radius: 0.5rem;
+}
+
 .pr-input-result-container {
   display: none;
   position: absolute;

@@ -1,12 +1,10 @@
-import { Carousel } from "react-bootstrap";
-import Banner from "../../public/img/monte.png";
-import Banner2 from "../../public/img/monte.png";
+import { Carousel, Image } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { TourRoomType } from "../store/types/tour/tourRoom";
-import { deleteTour, getTours } from "../api";
+import { deleteTour, getNews, getTours } from "../api";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { formatDateToInputValue, getName } from "../utils";
+import { formatDateToInputValue, getDescription, getName } from "../utils";
 import i18n from "../utils/i18n";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -16,12 +14,35 @@ import {
   faPlaneDeparture,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import { NewsListType, NewsType } from "../store/types";
 
 const Dashboard = () => {
   const { t } = useTranslation();
   const [data, setData] = useState<TourRoomType | null>(null);
+  const [banner, setBanner] = useState<NewsListType | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const handleShow = () => setShowModal(true);
+
+  const CustomPrevIcon = () => (
+    <span className="carousel-control-prev-icon"></span>
+  );
+
+  const CustomNextIcon = () => (
+    <span className="carousel-control-next-icon"></span>
+  );
+
+  const handleGetBanners = async () => {
+    try {
+      const res = await getNews();
+      setBanner(res.data);
+    } catch (error) {
+      console.log("Error fetching getNews: ", error);
+    }
+  };
+
+  useEffect(() => {
+    handleGetBanners()
+  }, []);
 
   const handleGet = async () => {
     try {
@@ -48,8 +69,6 @@ const Dashboard = () => {
     handleGet();
   }, []);
 
-  console.log("data", data);
-
   if (!data) return;
 
   return (
@@ -61,43 +80,28 @@ const Dashboard = () => {
         </div>
         <div className="content"></div>
       </div>
-      <Carousel>
-        <div className="carousel-inner">
-          <Carousel.Item>
-            <img className="d-block w-100" src={Banner} alt="Banner" />
-          </Carousel.Item>
-          <Carousel.Item>
-            <img className="d-block w-100" src={Banner2} alt="Banner" />
-          </Carousel.Item>
-          <div>
-            <img className="d-block w-100" src={Banner} alt="Banner" />
-          </div>
-        </div>
-        <a
-          className="carousel-control-prev"
-          href="#carouselExample"
-          role="button"
-          data-bs-slide="prev"
+      <div className="pr-main-carousel">
+        <Carousel
+          prevIcon={<CustomPrevIcon />}
+          nextIcon={<CustomNextIcon />}
         >
-          <span
-            className="carousel-control-prev-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="visually-hidden">Previous</span>
-        </a>
-        <a
-          className="carousel-control-next"
-          href="#carouselExample"
-          role="button"
-          data-bs-slide="next"
-        >
-          <span
-            className="carousel-control-next-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="visually-hidden">Next</span>
-        </a>
-      </Carousel>
+          {banner?.news.map((x: NewsType, idx) => (
+            <Carousel.Item interval={4000} key={"banner-index-" + idx}>
+              <Image
+                src={`https://backend.poytaxt-team.uz/public/news/${x.image}`}
+                width={1380}
+                height={360}
+                className="d-block w-100 img-fluid"
+                alt="banner"
+              />
+              <div className="carousel-caption d-none d-md-block">
+                <h5 className="text">{getName(x, i18n.language)}</h5>
+                <p className="text">{getDescription(x, i18n.language)}</p>
+              </div>
+            </Carousel.Item>
+          ))}
+        </Carousel>
+      </div>
 
       {data && (
         <div className="card">
