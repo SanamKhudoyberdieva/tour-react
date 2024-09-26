@@ -57,6 +57,16 @@ const Sidebar: React.FC<SidebarProps> = ({ setIsShowAside }) => {
         </li>
         <li
           className={`menu-item ${
+            location.pathname.includes("packages") && "active"
+          }`}
+        >
+          <Link to={"/packages"} className="menu-link">
+            <FontAwesomeIcon className="menu-icon tf-icons" icon={faTicket} />
+            <div>{t("packages")}</div>
+          </Link>
+        </li>
+        <li
+          className={`menu-item ${
             location.pathname.includes("tour") &&
             !location.pathname.includes("/tour/order") &&
             "active"

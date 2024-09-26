@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { createTourNavigate } from "../../../api/tour/navigate";
@@ -35,10 +34,10 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
     navigations: array().of(
       object().shape({
         name_uz: string().required(
-          t("Необходимо заполнить «Название на узбекском».").toString()
+          t("required").toString()
         ),
         name_ru: string().required(
-          t("Необходимо заполнить «Название на русском».").toString()
+          t("required").toString()
         ),
       })
     ),

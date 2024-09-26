@@ -5,6 +5,8 @@ import { TourType } from "./tour";
 export interface TourRoomType extends PaginationType {
   tours: [
     {
+      to: string;
+      from: string;
       id: 2;
       tour: TourType;
       tour_id: 1;

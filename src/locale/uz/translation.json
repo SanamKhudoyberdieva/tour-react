@@ -88,5 +88,26 @@
     "order-notes": "Buyurtma eslatmalari",
     "calculate": "Qayta hisoblash",
     "book": "Band qilish",
-    "sum": "so'm"
+    "sum": "so'm",
+    "type": "Tarif",
+    "time-from": "Vaqtdan",
+    "time-to": "Vaqtgacha",
+    "baby-price": "Bolalar narxi",
+    "child-price": "Chaqaloqlar narxi",
+    "visa-price": "Viza narxi",
+    "city-to": "Qo'nish joyi",
+    "remove": "O'chirish",
+    "add": "Qo'shish",
+    "place-by-request": "So'rov bo'yicha joylashtirish",
+    "next": "Keyingisi",
+    "navigation": "Navigatsiya"
+
+
+
+
+
+
+
+
+
 }

@@ -87,7 +87,7 @@ const CreateRoomInfo: React.FC<CreateRoomInfoProps> = ({ formik, rooms }) => {
                       className="form-label"
                       htmlFor={`tour-room-gender-${index}`}
                     >
-                      {t("gender")}
+                      {t("mr-mrs")}
                     </label>
                     <select
                       className="form-select"
@@ -103,12 +103,12 @@ const CreateRoomInfo: React.FC<CreateRoomInfoProps> = ({ formik, rooms }) => {
                       }}
                       onBlur={formik.handleBlur}
                     >
-                      <option value="">{t("choose-gender")}</option>
-                      <option value={1}>{t("men")}</option>
-                      <option value={2}>{t("women")}</option>
+                      <option value=""></option>
+                      <option value={1}>{t("man")}</option>
+                      <option value={2}>{t("woman")}</option>
                     </select>
                   </div>
-                  <div className="col-md-4 mb-3 d-flex align-items-end">
+                  <div className="col-md-12 mb-3 d-flex align-items-end">
                     <button
                       type="button"
                       className="btn btn-danger"

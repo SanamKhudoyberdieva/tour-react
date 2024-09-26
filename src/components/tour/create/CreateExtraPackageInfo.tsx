@@ -148,8 +148,8 @@ const CreateExtraPackageInfo = ({ id }: { id: number }) => {
             <thead>
               <tr>
                 <th>#</th>
-                <th>Дополнительные услуги</th>
-                <th>цена</th>
+                <th>{t('extra-packages')}</th>
+                <th>{t('price')}</th>
                 <th></th>
               </tr>
             </thead>

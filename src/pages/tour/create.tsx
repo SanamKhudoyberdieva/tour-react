@@ -15,7 +15,6 @@ import CreateAirwaysInfo from "../../components/tour/create/CreateAirwaysInfo";
 const Create = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
   const { rooms } = useSelector((state: RootState) => state.roomsReducer);
   const { cities } = useSelector((state: RootState) => state.citiesReducer);
   const { airways } = useSelector((state: RootState) => state.airwaysReducer);
@@ -61,8 +60,8 @@ const Create = () => {
   };
 
   const validationSchema = object({
-    name_uz: string().required("Необходимо заполнить «Название на узбекском»."),
-    name_ru: string().required("Необходимо заполнить «Название на русском»."),
+    name_uz: string().required(t('required')),
+    name_ru: string().required(t('required')),
   });
 
   const formatDates = (values: TourCreateType) => {
@@ -108,12 +107,12 @@ const Create = () => {
                 <Link to={"/"}>{t('home')}</Link> /{" "}
               </span>
               <span className="text-muted fw-light">
-                <Link to={"/tour"}>Tur Paketlar</Link> /{" "}
+                <Link to={"/tour"}>{t('tour-packages')}</Link> /{" "}
               </span>
-              Yaratish
+              {t('create')}
             </h4>
             <Link className="btn btn-info" to={"/tour"}>
-              Orqaga
+              {t('back')}
             </Link>
           </div>
           <CreateGeneralInfo formik={formik} cities={cities} />

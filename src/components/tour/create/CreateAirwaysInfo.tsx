@@ -55,7 +55,7 @@ const CreateAirwaysInfo: React.FC<CreateAirwaysInfoProps> = ({
                   </div>
                   <div className="col-md-4 mb-3">
                     <label className="form-label" htmlFor={`tour-airways-city_from-${index}`}>
-                      {t("city-from")}
+                      {t("departure-from")}
                     </label>
                     <select
                       className="form-select"

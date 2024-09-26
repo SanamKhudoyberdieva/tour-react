@@ -33,15 +33,15 @@ const TourViewTable = ({ data }: { data: TourType }) => {
                 <td>{data.description_ru}</td>
               </tr>
               <tr>
-                <th>{t("night-count")}</th>
+                <th>{t("night")}</th>
                 <td>{data.night_count}</td>
               </tr>
               <tr>
-                <th>{t("registration-date")}</th>
+                <th>{t("created-at")}</th>
                 <td>{formateDate(data.created_at)}</td>
               </tr>
               <tr>
-                <th>{t("nutrition-type")}</th>
+                <th>{t("food")}</th>
                 <td>{data.nutrition_type}</td>
               </tr>
               <tr>
@@ -70,7 +70,7 @@ const TourViewTable = ({ data }: { data: TourType }) => {
         </div>
       </div>
 
-      <h5>{t("hotels")}</h5>
+      <h5>{t("hostels")}</h5>
       <div className="card mb-3">
         <div className="card-body">
           <table className="table table-striped table-bordered detail-view">
@@ -78,7 +78,7 @@ const TourViewTable = ({ data }: { data: TourType }) => {
               {data.hotels.map((x, index) => (
                 <tr key={index}>
                   <th>{index + 1}</th>
-                  <td>{getName(x, i18n.language)}</td>
+                  <td>{getName(x.hotel, i18n.language)}</td>
                   <td>{formateDate(x.from)} - {formateDate(x.to)}</td>
                   <td>{x.price} {t('sum')}</td>
                 </tr>
@@ -122,7 +122,7 @@ const TourViewTable = ({ data }: { data: TourType }) => {
         </div>
       </div>
 
-      <h5>{t("room-prices")}</h5>
+      <h5>{t("rooms")}</h5>
       <div className="card">
         <div className="card-body">
           <table className="table table-striped table-bordered detail-view">

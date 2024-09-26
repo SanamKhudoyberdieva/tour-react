@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
 import { getTour } from '../../../api';
+import i18n from '../../../utils/i18n';
+import { getName } from '../../../utils';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TourType } from '../../../store/types';
 import { Link, useParams } from 'react-router-dom';
 import TourViewTable from '../../../components/tour/TourViewTable';
-import { getName } from '../../../utils';
-import i18n from '../../../utils/i18n';
 
 const Index = () => {
   const param = useParams();
@@ -28,8 +28,6 @@ const Index = () => {
 
   if (!data) return <></>;
 
-  console.log("data", data)
-
   return (
     <>
       <div
@@ -39,7 +37,7 @@ const Index = () => {
           <span className="text-muted fw-light"
             ><Link to={'/'}>{t('home')}</Link> / </span>
           <span className="text-muted fw-light"
-            ><Link to={'/tour'}>{t('tours')} </Link>
+            ><Link to={'/packages'}>{t('tour-packages')} </Link>
             / </span>
             {getName(data, i18n.language)}
         </h4>

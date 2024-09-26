@@ -1,9 +1,9 @@
 import React from "react";
+import i18n from "../../../utils/i18n";
 import { useTranslation } from "react-i18next";
 import { FormikProps, FieldArray } from "formik";
-import { HostelType, TourCreateType } from "../../../store/types";
 import { formatDateToInputValue, getName } from "../../../utils";
-import i18n from "../../../utils/i18n";
+import { HostelType, TourCreateType } from "../../../store/types";
 
 interface CreateHostelInfoProps {
   formik: FormikProps<TourCreateType>;
@@ -62,7 +62,7 @@ const CreateHostelInfo: React.FC<CreateHostelInfoProps> = ({
                       className="form-label"
                       htmlFor={`tour-hostels-nutrition_type-${index}`}
                     >
-                      {t("nutrition-type")}
+                      {t("food")}
                     </label>
                     <div className="d-flex">
                       <input

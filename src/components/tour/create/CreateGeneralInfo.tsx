@@ -48,7 +48,7 @@ const CreateGeneralInfo: React.FC<CreateAirwaysInfoProps> = ({
           </div>
           <div className="col-md-3 mb-3">
             <label className="form-label" htmlFor="tour-tarif_type">
-              {t("tarif-type")}
+              {t("type")}
             </label>
             <div className="d-flex">
               <input
@@ -64,7 +64,7 @@ const CreateGeneralInfo: React.FC<CreateAirwaysInfoProps> = ({
           </div>
           <div className="col-md-3 mb-3">
             <label className="form-label" htmlFor="tour-night_count">
-              ночей
+              {t('night')}
             </label>
             <input
               type="number"
@@ -81,7 +81,7 @@ const CreateGeneralInfo: React.FC<CreateAirwaysInfoProps> = ({
           </div>
           <div className="col-md-3 mb-3">
             <label className="form-label" htmlFor="tour-city_from">
-              {t("city-from")}
+              {t("departure-from")}
             </label>
             <select
               className="form-select"
@@ -215,7 +215,7 @@ const CreateGeneralInfo: React.FC<CreateAirwaysInfoProps> = ({
           </div>
           <div className="col-md-3 mb-3">
             <label className="form-label" htmlFor="tour-nutrition_type">
-              {t("nutrition-type")}
+              {t("food")}
             </label>
             <div className="d-flex">
               <input

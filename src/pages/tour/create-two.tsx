@@ -18,15 +18,15 @@ const CreateTwo = () => {
       <div className="d-flex mb-4 align-items-center justify-content-between">
         <h4 className="py-3 mb-0">
           <span className="text-muted fw-light">
-            <Link to={"/"}>Asosiy</Link> /{" "}
+            <Link to={"/"}>{t('home')}</Link> /{" "}
           </span>
           <span className="text-muted fw-light">
-            <Link to={"/tour"}>Tur Paketlar</Link> /{" "}
+            <Link to={"/tour"}>{t("tour-packages")}</Link> /{" "}
           </span>
-          Yaratish
+          {t('create')}
         </h4>
         <Link className="btn btn-info" to={"/tour"}>
-          Orqaga
+          {t('back')}
         </Link>
       </div>
       <CreateExtraPackageInfo id={id} />

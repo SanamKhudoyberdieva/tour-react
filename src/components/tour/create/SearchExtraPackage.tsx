@@ -1,11 +1,11 @@
-import { Dispatch, SetStateAction, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import { useTranslation } from "react-i18next";
+import { createTourExtraPackage } from "../../../api";
 import ExtraPackagesResult from "./ExtraPackagesResult";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Dispatch, SetStateAction, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { createTourExtraPackage } from "../../../api";
 import { ExtraPackageGetType } from "../../../store/types/extraPackage/get";
 
 const SearchExtraPackage = ({
@@ -61,7 +61,7 @@ const SearchExtraPackage = ({
           type="text"
           className="form-control"
           id="add-extra-package"
-          placeholder="Search..."
+          placeholder={t('search')}
           value={searchPackage}
           onChange={(e) => setSearchPackage(e.target.value)}
         />

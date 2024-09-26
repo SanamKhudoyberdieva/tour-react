@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import MainLayout from "./layout";
 import Dashboard from "./pages/dashboard";
 import Tour from "./pages/tour";
+import AllTour from "./pages/allTours";
 import TourCreate from "./pages/tour/create";
 import TourView from "./pages/tour/view/index";
 import TourCreateTwo from "./pages/tour/create-two";
@@ -43,6 +44,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
 
           <Route path="/tour" element={<Tour />} />
+          <Route path="/packages" element={<AllTour />} />
           <Route path="/tour/create" element={<TourCreate />} />
           <Route path="/tour/view/:id" element={<TourView />} />
           <Route path="/tour/create-two" element={<TourCreateTwo />} />
