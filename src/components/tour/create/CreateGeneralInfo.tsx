@@ -1,8 +1,8 @@
+import { FormikProps } from "formik";
+import i18n from "../../../utils/i18n";
 import { useTranslation } from "react-i18next";
 import { CityType, TourCreateType } from "../../../store/types";
-import { FormikProps } from "formik";
 import { formatDateToInputValue, getName } from "../../../utils";
-import i18n from "../../../utils/i18n";
 interface CreateAirwaysInfoProps {
   formik: FormikProps<TourCreateType>;
   cities: CityType[];
