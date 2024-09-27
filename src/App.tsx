@@ -3,6 +3,7 @@ import MainLayout from "./layout";
 import Dashboard from "./pages/dashboard";
 import Tour from "./pages/tour";
 import AllTour from "./pages/allTours";
+import TourEdit from "./pages/allTours/update/[id]"
 import TourCreate from "./pages/tour/create";
 import TourView from "./pages/tour/view/index";
 import TourCreateTwo from "./pages/tour/create-two";
@@ -44,6 +45,7 @@ function App() {
 
           <Route path="/tour" element={<Tour />} />
           <Route path="/packages" element={<AllTour />} />
+          <Route path="/packages/edit/:id" element={<TourEdit />} />
           <Route path="/tour/create" element={<TourCreate />} />
           <Route path="/tour/view/:id" element={<TourView />} />
           <Route path="/tour/create-two" element={<TourCreateTwo />} />

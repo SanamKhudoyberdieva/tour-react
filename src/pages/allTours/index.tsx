@@ -128,7 +128,7 @@ const AllTour = () => {
                         <td>{/* {x.ordered_place} / {x.place_count} */}</td>
                         <td>Toshkent</td>
                         <td>
-                          <Link className="btn p-1" to={"/"}>
+                          <Link className="btn p-1" to={`/packages/edit/${x.id}`}>
                             <FontAwesomeIcon icon={faPen} />
                           </Link>
                           <button

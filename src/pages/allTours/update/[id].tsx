@@ -1,5 +1,5 @@
 import moment from "moment";
-import { createTour, getTour } from "../../../api";
+import { getTour, updateTour } from "../../../api";
 import { RootState } from "../../../store";
 import { useSelector } from "react-redux";
 import { useFormik } from "formik";
@@ -84,14 +84,14 @@ const Update = () => {
     };
   };
 
-  const onSubmit = async (values: TourCreateType) => {
+  const onSubmit = async () => {
+    if (!params.id) return;
+    const id = parseInt(params.id, 10);
     try {
-      const formattedValues = formatDates(values);
-      const res = await createTour(formattedValues);
-      if (!res.data.id) return;
-      navigate(`/tour/create-two?id=${res.data.id}`, { replace: true });
+      await updateTour(id, formik.values);
+      navigate("/packages", { replace: true });
     } catch (error) {
-      console.log("error createTour: ", error);
+      console.log("error updateTour: ", error);
     }
   };
 
@@ -120,40 +120,40 @@ const Update = () => {
       values: {
         airways: [
           {
-            airway_id: 0,
-            city_from_id: 0,
-            city_to_id: 0,
-            from: "",
-            position: 0,
-            to: "",
+            airway_id: data.airway_id,
+            city_from_id: data.city_from_id,
+            city_to_id: data.city_to_id,
+            from: data.from,
+            position: data.position,
+            to: data.to,
           },
         ],
-        baby_price: 0,
-        child_price: 0,
-        city_from_id: 0,
-        description_ru: "",
-        description_uz: "",
-        nutrition_type: "",
-        from: "",
+        baby_price: data.baby_price,
+        child_price: data.child_price,
+        city_from_id: data.city_from_id,
+        description_ru: data.description_ru,
+        description_uz: data.description_uz,
+        // nutrition_type: data.nutrition_type,
+        from: data.from,
         hotels: [
           {
-            from: "",
-            hotel_id: 0,
-            nutrition_type: "",
-            position: 0,
-            price: 0,
-            to: "",
+            from: data.from,
+            hotel_id: data.hotel_id,
+            nutrition_type: data.nutrition_type,
+            position: data.position,
+            price: data.price,
+            to: data.to,
           },
         ],
-        name_ru: "",
-        name_uz: "",
-        night_count: 0,
-        place_by_request: false,
-        position: 0,
-        rooms: [{ count: 0, gender: 0, price: 0, room_id: 0 }],
-        tarif_type: "",
-        to: "",
-        visa_price: 0,
+        name_ru: data.name_ru,
+        name_uz: data.name_uz,
+        night_count: data.night_count,
+        place_by_request: data.place_by_request,
+        position: data.position,
+        // rooms: [{ count: data.count, gender: data.gender, price: data.price, room_id: data.room_id }],
+        tarif_type: data.tarif_type,
+        to: data.to,
+        visa_price: data.visa_price,
       },
     }));
   }, [data]);
@@ -174,7 +174,7 @@ const Update = () => {
           <span className="text-muted fw-light">
             <Link to={"/tour"}>{t("tour-packages")}</Link> /{" "}
           </span>
-          {t("create")}
+          {t("update")}
         </h4>
         <Link className="btn btn-info" to={"/tour"}>
           {t("back")}
@@ -230,7 +230,7 @@ const Update = () => {
             </div>
             <div>
               <button type="submit" className="btn btn-success">
-                {t("next")}
+                {t("save")}
               </button>
             </div>
           </div>
