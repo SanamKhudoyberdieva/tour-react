@@ -7,13 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchExtraPackage from "./SearchExtraPackage";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
-import { TourCreateExtraPackageCreateType } from "../../../store/types/tour/create-two/extraPackage";
 import { createTourExtraPackage, getTour } from "../../../api";
-import { useFormik } from "formik";
-import { TourCreateExtraPackageUpdateType } from "../../../store/types/tour/create-two/extraPackageUpdate";
 import { useEffect, useState } from "react";
 import { ExtraPackageGetType } from "../../../store/types/extraPackage/get";
 import { getName } from "../../../utils";
@@ -21,41 +15,12 @@ import i18n from "../../../utils/i18n";
 
 const CreateExtraPackageInfo = ({ id }: { id: number }) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { extraPackages } = useSelector(
-    (state: RootState) => state.extraPackagesReducer
-  );
   const [updateId, setUpdateId] = useState<number | null>(null);
   const [price, setPrice] = useState(0);
   const [selectedPackage, setSelectedPackage] = useState<number[]>([]);
   const [tourPackages, setTourPackages] = useState<ExtraPackageGetType[] | []>(
     []
   );
-
-  interface ExtraPackagesListType {
-    packages: TourCreateExtraPackageUpdateType[];
-  }
-
-  const initialValues: ExtraPackagesListType = {
-    packages: [{ extra_package_id: 0, id: 0, price: 0 }],
-  };
-
-  const onSubmit = async (values: ExtraPackagesListType) => {
-    try {
-      const obj = values.packages.map((x) => {
-        return {
-          extra_package_id: x.extra_package_id,
-          price: x.price,
-          tour_id: id,
-        };
-      });
-      await createTourExtraPackage(id, obj);
-      handleGetTour(id);
-      // navigate("/tour", { replace: true });
-    } catch (error) {
-      console.log("error createTourExtraPackage: ", error);
-    }
-  };
 
   const handleGetTour = async (id: number) => {
     try {
@@ -103,11 +68,6 @@ const CreateExtraPackageInfo = ({ id }: { id: number }) => {
     setPrice(x.price);
     setUpdateId(x.id);
   };
-
-  const formik = useFormik({
-    initialValues,
-    onSubmit,
-  });
 
   useEffect(() => {
     handleGetTour(id);

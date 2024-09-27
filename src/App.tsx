@@ -33,12 +33,11 @@ import City from "./pages/city";
 import ExtraPackage from "./pages/extraPackage";
 
 function App() {
-
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route element={<MainLayout />} >
+        <Route element={<MainLayout />}>
           {/* Public Routes */}
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
@@ -82,11 +81,10 @@ function App() {
           <Route path="/role/create" element={<RoleCreate />} />
           <Route path="/role/view/:id" element={<RoleView />} />
           <Route path="/role/edit/:id" element={<RoleUpdate />} />
-
         </Route>
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
 export default App;

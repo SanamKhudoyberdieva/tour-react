@@ -4,7 +4,7 @@ import { createTourNavigate } from "../../../api/tour/navigate";
 import { FieldArray, Formik, FormikProps } from "formik";
 import { TourCreateNavigateType } from "../../../store/types/tour/create-two/navigate";
 import { formatDateToInputValue } from "../../../utils";
-import { object, string, array } from "yup";
+// import { object, string, array } from "yup";
 import moment from "moment";
 
 const CreatePackageContentInfo = ({ id }: { id: number }) => {
@@ -30,18 +30,18 @@ const CreatePackageContentInfo = ({ id }: { id: number }) => {
     ],
   };
 
-  const validationSchema = object({
-    navigations: array().of(
-      object().shape({
-        name_uz: string().required(
-          t("required").toString()
-        ),
-        name_ru: string().required(
-          t("required").toString()
-        ),
-      })
-    ),
-  });
+  // const validationSchema = object({
+  //   navigations: array().of(
+  //     object().shape({
+  //       name_uz: string().required(
+  //         t("required").toString()
+  //       ),
+  //       name_ru: string().required(
+  //         t("required").toString()
+  //       ),
+  //     })
+  //   ),
+  // });
 
   const formatDates = (values: NavigationsListType) => {
     return {

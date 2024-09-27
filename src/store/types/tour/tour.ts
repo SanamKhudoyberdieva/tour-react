@@ -66,6 +66,6 @@ export interface TourType extends NameDescType, ActionsType {
     price: number
   }[];
   application: null;
-  navigate: null | NavigationType[];
+  navigate: NavigationType[];
   visa_price: number;
 }

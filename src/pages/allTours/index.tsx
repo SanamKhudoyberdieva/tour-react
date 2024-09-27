@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { TourRoomType } from "../store/types/tour/tourRoom";
-import { deleteTour, getTours } from "../api";
+import { deleteTour, getTours } from "../../api";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { formatDateToInputValue, getName } from "../utils";
-import i18n from "../utils/i18n";
+import { formatDateToInputValue, getName } from "../../utils";
+import i18n from "../../utils/i18n";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFile,
@@ -13,13 +12,19 @@ import {
   faPlaneDeparture,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import TourNavigationModal from "../components/modals/TourNavigationModal";
+import TourNavigationModal from "../../components/modals/TourNavigationModal";
+import { TourPaginationType } from "../../store/types/tour/all";
+import { NavigationType } from "../../store/types/tour/navigation";
 
 const AllTour = () => {
   const { t } = useTranslation();
-  const [data, setData] = useState<TourRoomType | null>(null);
+  const [data, setData] = useState<TourPaginationType | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const handleShow = () => setShowModal(true);
+  const [navigate, setNavigate] = useState<NavigationType[]>([]);
+  const handleShow = (x: NavigationType[]) => {
+    setNavigate(x);
+    setShowModal(true);
+  };
 
   const handleGet = async () => {
     try {
@@ -46,7 +51,7 @@ const AllTour = () => {
     handleGet();
   }, []);
 
-  console.log('data.tours', data?.tours)
+  console.log("data.tours", data);
 
   if (!data) return;
 
@@ -55,12 +60,12 @@ const AllTour = () => {
       <div className="d-flex mb-4 align-items-center justify-content-between">
         <h4 className="py-3 mb-0">
           <span className="text-muted fw-light">
-            <Link to={"/"}>{t('home')}</Link> /{" "}
+            <Link to={"/"}>{t("home")}</Link> /{" "}
           </span>
-          {t('tour-packages')}
+          {t("tour-packages")}
         </h4>
         <Link className="btn btn-success" to={"/tour/create"}>
-          {t('create')}
+          {t("create")}
         </Link>
       </div>
 
@@ -109,17 +114,18 @@ const AllTour = () => {
                           </div>
                         </td>
                         <td>
-                          <button className="btn p-1" onClick={handleShow}>
+                          <button
+                            className="btn p-1"
+                            onClick={() => handleShow(x.navigate)}
+                          >
                             <FontAwesomeIcon icon={faFile} />
                           </button>
                         </td>
                         <td>{x.night_count}</td>
                         <td>{x.nutrition_type}</td>
-                        <td>{getName(x.room_prices.room, i18n.language)}</td>
-                        <td>{x.price}</td>
-                        <td>
-                          {x.ordered_place} / {x.place_count}
-                        </td>
+                        {/* <td>{getName(x.room_prices.room, i18n.language)}</td> */}
+                        {/* <td>{x.price}</td> */}
+                        <td>{/* {x.ordered_place} / {x.place_count} */}</td>
                         <td>Toshkent</td>
                         <td>
                           <Link className="btn p-1" to={"/"}>
@@ -132,19 +138,17 @@ const AllTour = () => {
                             <FontAwesomeIcon icon={faTrash} />
                           </button>
                         </td>
-                        {x.navigate && (
-                          <TourNavigationModal
-                            showModal={showModal}
-                            setShowModal={setShowModal}
-                            navigation={x.navigate}
-                          />
-                        )}
                       </tr>
                     ))}
                 </tbody>
               </table>
             </div>
           </div>
+          <TourNavigationModal
+            showModal={showModal}
+            setShowModal={setShowModal}
+            navigation={navigate}
+          />
         </div>
       )}
     </div>

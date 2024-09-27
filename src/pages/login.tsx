@@ -1,10 +1,10 @@
-import { authAdmin } from '../api';
-import { useFormik } from 'formik';
-import { object, string } from 'yup';
-import { useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import { setAuthAdmin } from '../store/slices/loginSlice';
+import { authAdmin } from "../api";
+import { useFormik } from "formik";
+import { object, string } from "yup";
+import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { setAuthAdmin } from "../store/slices/loginSlice";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,27 +12,27 @@ const Login = () => {
   const { t } = useTranslation();
 
   const initialValues = {
-    username: '',
-    password: ''
-  }
+    username: "",
+    password: "",
+  };
 
-  const onSubmit = async (values: { username: string, password: string }) => {
+  const onSubmit = async (values: { username: string; password: string }) => {
     try {
       const response = await authAdmin({
         username: values.username,
-        password: values.password
+        password: values.password,
       });
       dispatch(setAuthAdmin(response.data));
       navigate("/", { replace: true });
     } catch (error) {
-      console.error('Error setAuthAdmin:', error);
+      console.error("Error setAuthAdmin:", error);
     }
   };
 
   const validationSchema = object({
     username: string().required(t("required")),
     password: string().required(t("required")),
-  })
+  });
 
   const formik = useFormik({
     initialValues,
@@ -42,9 +42,7 @@ const Login = () => {
 
   return (
     <main>
-      <h5 className="card-header">
-        Poytaxt
-      </h5>
+      <h5 className="card-header">Poytaxt</h5>
       <div className="card-body">
         <div className="d-flex align-items-center justify-content-center h-px-500">
           <form
@@ -88,6 +86,6 @@ const Login = () => {
       </div>
     </main>
   );
-}
+};
 
 export default Login;
