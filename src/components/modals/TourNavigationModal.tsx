@@ -1,19 +1,19 @@
 import { Modal } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import { Dispatch, SetStateAction } from "react";
 import { formatDateToInputValue } from "../../utils";
 import { NavigationType } from "../../store/types/tour/navigation";
-import { useTranslation } from "react-i18next";
 
 const TourNavigationModal = ({
-  navigations,
+  navigation,
   showModal,
   setShowModal,
 }: {
-  navigations: NavigationType[] | null;
+  navigation: NavigationType[] | null;
   showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
 }) => {
-  if (!navigations) return <div></div>;
+  if (!navigation) return <div></div>;
   const { t } = useTranslation();
   const handleClose = () => setShowModal(false);
   return (
@@ -23,7 +23,7 @@ const TourNavigationModal = ({
       </Modal.Header>
       <Modal.Body>
         <ul className="nav flex-column">
-          {navigations.map((x, idx) => (
+          {navigation.map((x, idx) => (
             <div
               className="nav-item d-flex"
               key={"tour-navigation-item-index-" + idx}

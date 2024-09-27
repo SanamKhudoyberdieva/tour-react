@@ -24,6 +24,17 @@ const TourTable = ({
 
   const handleShow = () => setShowModal(true);
 
+  const getRowClassName = (orderedPlace: number, placeCount: number) => {
+    const remainingPlaces = placeCount - orderedPlace;
+    if (remainingPlaces < 5) {
+      return "table-danger";
+    } else if (remainingPlaces <= 10) {
+      return "table-warning";
+    } else {
+      return "table-success";
+    }
+  };
+
   return (
     <div className="table-responsive mb-4">
       <table className="table table-striped table-hover">
@@ -44,7 +55,7 @@ const TourTable = ({
         </thead>
         <tbody>
           {data.tours.map((x, idx) => (
-            <tr className="table-danger" key={"tour-table-application-" + idx}>
+            <tr className={getRowClassName(x.ordered_place, x.place_count)} key={"tour-table-application-" + idx}>
               <td>{idx + 1}</td>
               <td>
                 <Link
@@ -88,7 +99,7 @@ const TourTable = ({
                 <TourNavigationModal
                   showModal={showModal}
                   setShowModal={setShowModal}
-                  navigations={x.tour.navigate}
+                  navigation={x.tour.navigate}
                 />
               )}
             </tr>

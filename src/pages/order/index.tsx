@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { ApplicantionPaginationType } from "../../store/types/tour/order/applicationPaginationList";
+import { getName } from "../../utils";
+import i18n from "../../utils/i18n";
 
 const Index = () => {
   const { t } = useTranslation();
@@ -23,7 +25,7 @@ const Index = () => {
     handleGet();
   }, []);
 
-  console.log("data", data?.applications)
+  console.log("data", data)
 
   return (
     <div>
@@ -44,16 +46,14 @@ const Index = () => {
               <thead>
                 <tr>
                 <th>#</th>
-                <th>Tur nomi</th>
-                <th>Asosiy Buyurtmachi</th>
-                <th>Telefon Raqam</th>
-                <th>Yaratuvchi</th>
-                <th>To'lov holati</th>
-                <th>TO'lovgacha muddat</th>
+                <th>{t('tour-package')}</th>
+                <th>{t('created')}</th>
+                <th>{t('price')}</th>
+                <th>{t('status')}</th>
+                <th>To'lovgacha muddat</th>
                 <th>&nbsp;</th>
                 </tr>
                 <tr>
-                <td></td>
                 <td></td>
                 <td>
                     <input
@@ -80,12 +80,11 @@ const Index = () => {
               {data?.applications?.map((x, idx) => (
                 <tr key={"order-list-item-id" + 1}>
                 <td>{idx + 1}</td>
-                <td><Link to={`/order/view/${x.id}`}>Umra ziyorati 2024</Link></td>
+                <td><Link to={`/order/view/${x.id}`}>{getName(x.tour, i18n.language)}</Link></td>
                 <td>
-                  Esonov Omon
+                  {x.created?.full_name}
                 </td>
-                <td>+998 99 613 22 33</td>
-                <td>Markaziy filyal</td>
+                <td>111</td>
                 <td>Kutilmoqda</td>
                 <td>23 soat</td>
                 <td>

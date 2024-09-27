@@ -132,13 +132,13 @@ const AllTour = () => {
                             <FontAwesomeIcon icon={faTrash} />
                           </button>
                         </td>
-                        {/* {x.tour.navigate && (
+                        {x.navigate && (
                           <TourNavigationModal
                             showModal={showModal}
                             setShowModal={setShowModal}
-                            navigations={x.tour.navigate}
+                            navigation={x.navigate}
                           />
-                        )} */}
+                        )}
                       </tr>
                     ))}
                 </tbody>
