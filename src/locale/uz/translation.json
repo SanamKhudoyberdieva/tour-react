@@ -101,5 +101,7 @@
     "place-by-request": "So'rov bo'yicha joylashtirish",
     "next": "Keyingisi",
     "navigation": "Navigatsiya",
-    "packages": "Barcha paketlar"
+    "packages": "Barcha paketlar",
+    "no": "Yo'q",
+    "yes": "Ha"
 }

@@ -6,14 +6,13 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { formateDate } from "../../utils";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AdminListType } from "../../store/types";
 import { deleteAdmin, getAdmins } from "../../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "../Pagination";
-import { parseQuery, stringifyQuery } from "../../utils/queryUtils";
 
 export interface FiltersStateType {
   name: string;
