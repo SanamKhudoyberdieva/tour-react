@@ -3,7 +3,6 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
 import ReactPaginate from "react-paginate";
 
@@ -16,11 +15,9 @@ const Pagination = ({
   recordsFiltered: number;
   recordsTotal: number;
   currPage: number;
-  handlePageChange: (selectedItem: { selected: number; }) => void
+  handlePageChange: (selectedItem: { selected: number }) => void;
 }) => {
   const { t } = useTranslation();
-
-  if (recordsTotal <= recordsFiltered) return;
 
   if (recordsFiltered > recordsTotal) recordsFiltered = recordsTotal;
 
@@ -32,8 +29,7 @@ const Pagination = ({
       <ReactPaginate
         pageRangeDisplayed={1}
         forcePage={currPage - 1}
-        pageCount={Math.ceil(recordsTotal / 10)}
-        marginPagesDisplayed={2}
+        pageCount={Math.ceil(recordsTotal / recordsFiltered)}
         previousLabel={
           <button className="page-link">
             <FontAwesomeIcon icon={faChevronLeft} />
