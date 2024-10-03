@@ -5,8 +5,6 @@ import { OrganizationType } from "../../store/types";
 const OrganizationViewTable = ({ data }: { data: OrganizationType }) => {
   const { t } = useTranslation();
 
-  console.log("data", data);
-
   return (
     <table className="table table-striped table-bordered detail-view">
       <tbody>

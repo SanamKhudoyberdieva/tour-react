@@ -5,8 +5,6 @@ import { useTranslation } from "react-i18next";
 const AdminViewTable = ({ data }: { data: AdminType }) => {
   const { t } = useTranslation();
 
-  console.log("data", data)
-
   return (
     <table
       className="table table-striped table-bordered detail-view"

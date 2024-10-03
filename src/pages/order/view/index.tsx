@@ -30,8 +30,6 @@ const Index = () => {
 
   if (!data) return <></>;
 
-  console.log("data", data)
-
   return (
     <div>
       <div
