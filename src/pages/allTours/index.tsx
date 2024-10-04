@@ -134,13 +134,14 @@ const AllTour = () => {
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Tur</th>
-                    <th>Vaqtlar</th>
+                    <th>{t('tour-package')}</th>
+                    <th>{t('time')}</th>
                     <th>&nbsp;</th>
-                    <th>Kecha</th>
-                    <th>Ovqat</th>
-                    <th>Xonalar</th>
-                    <th>Narxi</th>
+                    <th>{t('night')}</th>
+                    <th>{t('food')}</th>
+                    <th>{t('room')}</th>
+                    <th>{t('price')}</th>
+                    <th>{t('active')}</th>
                     <th>&nbsp;</th>
                   </tr>
                 </thead>
@@ -181,7 +182,15 @@ const AllTour = () => {
                         {/* <td>{getName(x.room_prices.room, i18n.language)}</td> */}
                         {/* <td>{x.price}</td> */}
                         <td>{/* {x.ordered_place} / {x.place_count} */}</td>
-                        <td>Toshkent</td>
+                        <td></td>
+                        <td>
+                          <input
+                            type="checkbox"
+                            name="is_deleted"
+                            disabled
+                            checked={!x.is_deleted}
+                          ></input>
+                        </td>
                         <td>
                           <Link className="btn p-1" to={`/packages/edit/${x.id}`}>
                             <FontAwesomeIcon icon={faPen} />

@@ -40,6 +40,19 @@ const Index = () => {
     }
   };
 
+  const getStatusLabel = (status: number) => {
+    switch (status) {
+      case 0:
+        return t('new'); 
+      case 1:
+        return t('paid'); 
+      case 2:
+        return t('cancelled'); // 
+      default:
+        return t('unknown'); 
+    }
+  };
+
   const handlePageClick = (event: { selected: number }) => {
     setCurrPage(event.selected + 1);
   };
@@ -126,14 +139,14 @@ const Index = () => {
               </thead>
               <tbody>
               {data?.applications?.map((x, idx) => (
-                <tr key={"order-list-item-id" + 1}>
+                <tr key={`orders-list-item-id-${x.id}`}>
                 <td>{idx + 1}</td>
                 <td><Link to={`/order/view/${x.id}`}>{getName(x.tour, i18n.language)}</Link></td>
                 <td>
                   {x.created?.full_name}
                 </td>
                 <td>{x.total}</td>
-                <td>Kutilmoqda</td>
+                <td>{getStatusLabel(x.status)}</td>
                 <td>
                   <input
                     type="checkbox"
@@ -144,7 +157,7 @@ const Index = () => {
                 </td>
                 <td>{formateDate(x.created_at)}</td>
                 <td>
-                  <Link className="btn p-1" to={'/order/edit'}>
+                  <Link className="btn p-1" to={`/order/edit/${x.id}`}>
                     <FontAwesomeIcon icon={faPen}/>
                   </Link>
                   <button className="btn p-1" onClick={() => handleDelete(x.id)}>

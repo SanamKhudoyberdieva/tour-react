@@ -25,6 +25,7 @@ import RoleView from "./pages/roles/view/view";
 import RoleUpdate from "./pages/roles/update/[id]";
 import Order from "./pages/order/index";
 import OrderView from "./pages/order/view/index";
+import OrderEdit from "./pages/order/edit/index";
 import Login from "./pages/login";
 import News from "./pages/news/index";
 import NewsCreate from "./pages/news/create";
@@ -63,6 +64,7 @@ function App() {
 
           <Route path="/order" element={<Order />} />
           <Route path="/order/view/:id" element={<OrderView />} />
+          <Route path="/order/edit/:id" element={<OrderEdit />} />
 
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/create" element={<AdminCreate />} />

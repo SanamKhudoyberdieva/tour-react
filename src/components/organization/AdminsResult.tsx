@@ -23,7 +23,7 @@ const AdminsResult = ({
       );
     }
   };
-console.log("admin", admin)
+
   return (
     <div className="pr-input-result-container">
       {admin &&
