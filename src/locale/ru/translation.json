@@ -47,6 +47,7 @@
     "add-admin": "Добавить администратора",
     "fullname": "Полное имя",
     "phone-number": "Номер телефона",
+    "second-phone-number": "Второй номер телефона",
     "orders-number": "Количество заказов",
     "last-visit": "Последний визит",
     "organization": "Организация",
@@ -101,5 +102,13 @@
     "place-by-request": "Место по запросу",
     "next": "Далее",
     "navigation": "Навигация",
-    "packages": "Все пакеты"
+    "packages": "Все пакеты",
+    "no": "Нет",
+    "yes": "Да",
+    "showing-entries": "Показаны записи",
+    "of": "из",
+    "new": "Новый",
+    "paid": "Оплаченный",
+    "cancelled": "Отменено",
+    "status": "Статус"
 }

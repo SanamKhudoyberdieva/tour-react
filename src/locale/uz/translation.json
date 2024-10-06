@@ -46,7 +46,8 @@
     "comment": "Izoh",
     "add-admin": "Administrator qo'shish",
     "fullname": "To'liq ism",
-    "phone-number": "Telefon raqami",
+    "phone-number": "Telefon raqam",
+    "second-phone-number": "Ikkinchi telefon raqam",
     "orders-number": "Buyurtmalar soni",
     "last-visit": "Oxirgi tashrif",
     "organization": "Tashkilot",
@@ -101,5 +102,13 @@
     "place-by-request": "So'rov bo'yicha joylashtirish",
     "next": "Keyingisi",
     "navigation": "Navigatsiya",
-    "packages": "Barcha paketlar"
+    "packages": "Barcha paketlar",
+    "no": "Yo'q",
+    "yes": "Ha",
+    "showing-entries": "Elementlarni ko'rsatmoqda",
+    "of": "tani",
+    "new": "Yangi",
+    "paid": "To'langan",
+    "cancelled": "Bekor qilingan",
+    "status": "Status"
 }
