@@ -4,50 +4,51 @@ import { RootState } from "../../../store";
 import { useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
-import { TourCreateType, TourType } from "../../../store/types";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import CreateRoomInfo from "../../../components/tour/create/CreateRoomInfo";
-import CreateHostelInfo from "../../../components/tour/create/CreateHostelInfo";
-import CreateGeneralInfo from "../../../components/tour/create/CreateGeneralInfo";
-import CreateAirwaysInfo from "../../../components/tour/create/CreateAirwaysInfo";
 import { useEffect, useState } from "react";
+import { TourUpdateType } from "../../../store/types/tour/update";
+import UpdateGeneralInfo from "../../../components/tour/update/UpdateGeneralInfo";
+import UpdateAirwaysInfo from "../../../components/tour/update/UpdateAirwaysInfo";
+import UpdateHostelInfo from "../../../components/tour/update/UpdateHostelInfo";
+import UpdateExtraPackageInfo from "../../../components/tour/update/UpdateExtraPackageInfo";
+import UpdatePackageContentInfo from "../../../components/tour/update/UpdatePackageContentInfo";
 
 const Update = () => {
   const { t } = useTranslation();
   const params = useParams();
   const navigate = useNavigate();
-  const [data, setData] = useState<TourType | null>(null);
+  const [data, setData] = useState<TourUpdateType | null>(null);
   const { rooms } = useSelector((state: RootState) => state.roomsReducer);
   const { cities } = useSelector((state: RootState) => state.citiesReducer);
   const { airways } = useSelector((state: RootState) => state.airwaysReducer);
   const { hostels } = useSelector((state: RootState) => state.hostelsReducer);
 
-  const initialValues: TourCreateType = {
+  const initialValues: TourUpdateType = {
     airways: [
       {
-        airway_id: 0,
-        city_from_id: 0,
-        city_to_id: 0,
+        id: 0,
+        city_from: null,
+        city_to: null,
         from: "",
         position: 0,
         to: "",
+        airway: null,
       },
     ],
     baby_price: 0,
     child_price: 0,
-    city_from_id: 0,
     description_ru: "",
     description_uz: "",
     nutrition_type: "",
     from: "",
     hotels: [
       {
-        from: "",
-        hotel_id: 0,
-        nutrition_type: "",
+        id: 0,
         position: 0,
         price: 0,
+        from: "",
         to: "",
+        hotel: null,
       },
     ],
     name_ru: "",
@@ -55,10 +56,24 @@ const Update = () => {
     night_count: 0,
     place_by_request: false,
     position: 0,
-    rooms: [{ count: 0, gender: 0, price: 0, room_id: 0 }],
+    rooms: null,
     tarif_type: "",
     to: "",
     visa_price: 0,
+    id: 0,
+    is_closed: false,
+    is_deleted: false,
+    created: {
+      id: 0,
+      full_name: "",
+    },
+    created_at: "",
+    updated: null,
+    updated_at: null,
+    room_prices: [],
+    extra_packages: [],
+    application: null,
+    navigate: [],
   };
 
   // const validationSchema = object({
@@ -66,7 +81,7 @@ const Update = () => {
   //   name_ru: string().required(t("required")),
   // });
 
-  const formatDates = (values: TourCreateType) => {
+  const formatDates = (values: TourUpdateType) => {
     return {
       ...values,
       from: moment(values.from).format(),
@@ -118,42 +133,34 @@ const Update = () => {
     formik.setFormikState((state) => ({
       ...state,
       values: {
-        airways: [
-          {
-            airway_id: data.airway_id,
-            city_from_id: data.city_from_id,
-            city_to_id: data.city_to_id,
-            from: data.from,
-            position: data.position,
-            to: data.to,
-          },
-        ],
+        airways: data.airways,
         baby_price: data.baby_price,
         child_price: data.child_price,
-        city_from_id: data.city_from_id,
         description_ru: data.description_ru,
         description_uz: data.description_uz,
-        // nutrition_type: data.nutrition_type,
+        nutrition_type: data.nutrition_type,
         from: data.from,
-        hotels: [
-          {
-            from: data.from,
-            hotel_id: data.hotel_id,
-            nutrition_type: data.nutrition_type,
-            position: data.position,
-            price: data.price,
-            to: data.to,
-          },
-        ],
+        hotels: data.hotels,
         name_ru: data.name_ru,
         name_uz: data.name_uz,
         night_count: data.night_count,
         place_by_request: data.place_by_request,
         position: data.position,
-        // rooms: [{ count: data.count, gender: data.gender, price: data.price, room_id: data.room_id }],
+        rooms: data.rooms,
         tarif_type: data.tarif_type,
         to: data.to,
         visa_price: data.visa_price,
+        id: data.id,
+        is_closed: data.is_closed,
+        is_deleted: data.is_deleted,
+        created: data.created,
+        created_at: data.created_at,
+        updated: data.updated,
+        updated_at: data.updated_at,
+        room_prices: data.room_prices,
+        extra_packages: data.extra_packages,
+        application: data.application,
+        navigate: data.navigate,
       },
     }));
   }, [data]);
@@ -180,12 +187,16 @@ const Update = () => {
           {t("back")}
         </Link>
       </div>
-      <CreateGeneralInfo formik={formik} cities={cities} />
-      {airways && cities && (
-        <CreateAirwaysInfo formik={formik} airways={airways} cities={cities} />
+      {formik.values && <UpdateGeneralInfo formik={formik} />}
+      {formik.values && airways && cities && (
+        <UpdateAirwaysInfo formik={formik} airways={airways} cities={cities} />
       )}
-      <CreateHostelInfo formik={formik} hostels={hostels} />
-      <CreateRoomInfo formik={formik} rooms={rooms} />
+      {/* <UpdateHostelInfo formik={formik} hostels={hostels} /> */}
+      {/* <UpdateRoomInfo formik={formik} rooms={rooms} /> */}
+      {/*
+       */}
+      {/* <UpdateExtraPackageInfo formik={formik} id={formik.values.id} />
+      <UpdatePackageContentInfo formik={formik} id={formik.values.id} /> */}
       {/* <CreateExtraPackageInfo id={id} />
       <CreatePackageContentInfo id={id} /> */}
       <div className="card">

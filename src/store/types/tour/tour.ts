@@ -3,6 +3,7 @@ import { ActionsType } from "../general/actions";
 import { NavigationType } from "./navigation";
 
 export interface TourType extends NameDescType, ActionsType {
+  airway_id: any;
   id: number;
   tarif_type: string;
   place_by_request: boolean;
